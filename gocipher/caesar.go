@@ -13,9 +13,9 @@ func CaesarEncipher(text string, key int) string {
 	runes := []rune(text)
 	for i, char := range runes {
 		if char >= 'A' && char <= 'Z' {
-			runes[i] = mod(char+shift-'A', 26) + 'A'
+			runes[i] = modRune(char+shift-'A', 26) + 'A'
 		} else if char >= 'a' && char <= 'z' {
-			runes[i] = mod(char+shift-'a', 26) + 'a'
+			runes[i] = modRune(char+shift-'a', 26) + 'a'
 		}
 	}
 	return string(runes)

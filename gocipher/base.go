@@ -19,7 +19,7 @@ func RestorePunctuation(original string, modified string) (string, error) {
 	res, chars := []rune(original), []rune(modified)
 	count := 0
 	for i, char := range res {
-		if isAlpha(char) {
+		if isAlpha, _ := isAlpha(char); isAlpha {
 			res[i] = chars[count]
 			count++
 		}
@@ -48,14 +48,23 @@ func a2i(char rune) int {
 	return -1
 }
 
-func i2a(i int) rune {
-	return 'A' + rune(mod(1, 26))
+func i2a(i int, isUpper bool) rune {
+	if !isUpper {
+		return 'a' + rune(mod(i, 26))
+	}
+	return 'A' + rune(mod(i, 26))
 }
 
-func isAlpha(char rune) bool {
-	return char >= 'A' && char <= 'Z' || char >= 'a' && char <= 'z'
+func isAlpha(char rune) (bool, bool) {
+	isUpper := char >= 'A' && char <= 'Z'
+	isAlpha := isUpper || char >= 'a' && char <= 'z'
+	return isAlpha, isUpper
 }
 
-func mod(a rune, b rune) rune {
+func mod(a int, b int) int {
+	return (a%b + b) % b
+}
+
+func modRune(a rune, b rune) rune {
 	return (a%b + b) % b
 }
