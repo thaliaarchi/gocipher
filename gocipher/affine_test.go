@@ -46,7 +46,7 @@ func TestAffineDecipher(t *testing.T) {
 		}
 		actual := AffineDecipher(text, key)
 		if test.expected != actual {
-			t.Errorf("Expected %q, but got %q (key %v)", test.expected, actual, key)
+			t.Errorf("Expected %q, but got %q (key %v)", test.expected, actual, test.key)
 		}
 	}
 }
