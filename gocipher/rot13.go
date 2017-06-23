@@ -1,9 +1,7 @@
 package gocipher
 
 /*
- * implements rot13 cipher
- * Author: James Lyons
- * Created: 2014-02-09
+ * Implements ROT-13 cipher
  * http://www.practicalcryptography.com/ciphers/rot13-cipher/
  */
 

@@ -1,7 +1,7 @@
 package gocipher
 
 /*
- * implements atbash cipher
+ * Implements atbash cipher
  * Author: James Lyons
  * Created: 2014-02-09
  */

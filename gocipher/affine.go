@@ -1,9 +1,8 @@
 package gocipher
 
 /*
- * implements affine substitution cipher
+ * Implements affine substitution cipher
  * Author: James Lyons
- * Created: 2012-04-28
  * http://www.practicalcryptography.com/ciphers/affine-cipher/
  */
 

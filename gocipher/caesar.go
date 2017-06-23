@@ -1,9 +1,8 @@
 package gocipher
 
 /*
- * implements Caesar substitution cipher
+ * Implements Caesar substitution cipher
  * Author: James Lyons
- * Created: 2012-04-28
  * http://www.practicalcryptography.com/ciphers/caesar-cipher/
  */
 

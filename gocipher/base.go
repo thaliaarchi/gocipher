@@ -1,10 +1,9 @@
 package gocipher
 
 /*
- * base cipher object that other ciphers extend
+ * Base cipher object that other ciphers extend
  * really only provides mappings a2i and i2a for letter->int->letter conversions
  * Author: James Lyons
- * Created: 2012-04-28
  */
 
 import (
@@ -13,8 +12,8 @@ import (
 	"strings"
 )
 
-// If punctuation was accidently removed, use this function to restore it.
-// requires the original string with punctuation.
+// RestorePunctuation - If punctuation was accidently removed, use this function to restore it.
+// Requires the original string with punctuation.
 func RestorePunctuation(original string, modified string) (string, error) {
 	res, chars := []rune(original), []rune(modified)
 	count := 0
