@@ -34,9 +34,6 @@
     | [dCode](http://www.dcode.fr/barcode-128)
 - Base 26 Cipher
     | [dCode](http://www.dcode.fr/base-26-cipher)
-- Base64
-    | [dCode](http://www.dcode.fr/base-64-coding)
-    | [Rumkin.com](http://rumkin.com/tools/cipher/base64.php)
 - Base91 Cipher
     | [dCode](http://www.dcode.fr/base-91-encoding)
 - Bazeries Cipher
@@ -96,8 +93,6 @@
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/mechanical-era/lorenz/)
 - LSPK90 Clockwise
     | [dCode](http://www.dcode.fr/lspk90-cw-leet-speak-90-degrees-clockwise)
-- MD5
-    | [dCode](http://www.dcode.fr/md5-hash)
 - Mexican Army Cipher Wheel
     | [dCode](http://www.dcode.fr/mexican-army-cipher-wheel)
 - Modulo Cipher
@@ -142,8 +137,6 @@
         | [dCode](http://www.dcode.fr/nihilist-cipher)
 - Porta Cipher
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/porta/)
-- UUEncode Cipher
-    | [dCode](http://www.dcode.fr/uu-encoding)
 - Rail-fence (ZigZag) Cipher
     | [dCode](http://www.dcode.fr/rail-fence-cipher)
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/rail-fence/)
@@ -157,11 +150,9 @@
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/running-key/)
 - Scytale Cipher
     | [dCode](http://www.dcode.fr/scytale-cipher)
-- SHA-1
-    | [dCode](http://www.dcode.fr/sha1-hash)
 - Shift Cipher
     | [dCode](http://www.dcode.fr/shift-cipher)
-    - ROT Cipher
+    - ✔ **ROT Cipher**
         | [dCode](http://www.dcode.fr/rot-cipher)
         - ✔ **Caesar Cipher**
             | [dCode](http://www.dcode.fr/caesar-cipher)
@@ -173,6 +164,7 @@
                 | [dCode](http://www.dcode.fr/rot-13-cipher)
                 | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/rot13/)
                 | [Rumkin.com](http://rumkin.com/tools/cipher/rot13.php)
+            - ✔ **ROT-18**
         - ✔ **ROT-5**
             | [dCode](http://www.dcode.fr/rot5-cipher)
         - ✔ **ROT-47**
@@ -207,6 +199,36 @@
         | [Rumkin.com](http://rumkin.com/tools/cipher/vigenere-autokey.php)
 - XOR Cipher
     | [dCode](http://www.dcode.fr/xor-cipher)
+
+## Hashes and Bases
+
+- ASCII85
+    | [dCode](http://www.dcode.fr/ascii-85-encoding)
+    | [Web Utils](http://www.webutils.pl/Ascii85)
+- Base64
+    | [dCode](http://www.dcode.fr/base-64-coding)
+    | [Rumkin.com](http://rumkin.com/tools/cipher/base64.php)
+- Crypt
+    | [Web Utils](http://www.webutils.pl/Crypt-Hash-Calculator)
+- HAVAL
+    | [Web Utils](http://www.webutils.pl/Haval-Hash-Calculator)
+- MD5
+    | [dCode](http://www.dcode.fr/md5-hash)
+    | [Web Utils](http://www.webutils.pl/MD5_Calculator)
+- RIPEMD
+    | [Web Utils](http://www.webutils.pl/RIPEMD_Calculator)
+- SHA-1
+    | [dCode](http://www.dcode.fr/sha1-hash)
+    | [Web Utils](http://www.webutils.pl/SHA1_Calculator)
+- Tiger
+    | [Web Utils](http://www.webutils.pl/Tiger-Hash-Calculator)
+- URL Encode
+    | [Web Utils](http://www.webutils.pl/Crypt-Hash-Calculator)
+- UUEncode
+    | [dCode](http://www.dcode.fr/uu-encoding)
+    | [Web Utils](http://www.webutils.pl/UUencode)
+- XXEncode
+    | [Web Utils](http://www.webutils.pl/XXencode)
 
 ## Graphical
 
@@ -267,3 +289,8 @@
 - [dCode](http://www.dcode.fr/tools-list#cryptography)
 - [Practical Cryptography](http://www.practicalcryptography.com/ciphers/)
 - [Rumkin.com](http://rumkin.com/tools/cipher/)
+- [Web Utils](http://www.webutils.pl/)
+
+## Libraries
+
+- [Caesar Salad (JS)](https://github.com/schnittstabil/caesar-salad)
