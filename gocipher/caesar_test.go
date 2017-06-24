@@ -62,13 +62,13 @@ type caesarKeyedTest struct {
 func TestCaesarKeyedEncipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	tests := []caesarKeyedTest{
-		{"heloabcdfgijkmnpqrstuvwxyzHELOABCDFGIJKMNPQRSTUVWXYZ", 0, "Hello"},
-		{"orldabcefghijkmnpqstuvxyzwORLDABCEFGHIJKMNPQSTUVXYZW", 1, "World"},
-		{"wxbcadefghijklmnopqrstuvzyWXBCADEFGHIJKLMNOPQRSTUVZY", 2, "ZYWXZBC"},
+		{"helowrdabcfgijkmnpqstuvxyzHELOWRDABCFGIJKMNPQSTUVXYZ", 0, "Hello, World!"},
+		{"ywxbcadefghijklmnopqrstuvzYWXBCADEFGHIJKLMNOPQRSTUVZ", 1, "ZYWXZBC"},
+		{"cdefghijklmnopqrstuvwxyzabCDEFGHIJKLMNOPQRSTUVWXYZAB", 2, "ABCDEF"},
 		{"efghijklmnopqrstuvwxyzabcdEFGHIJKLMNOPQRSTUVWXYZABCD", 4, ""},
 		{"hijklmnopqrstuvwxyzabcdefgHIJKLMNOPQRSTUVWXYZABCDEFG", 7, "!@#$%"},
-		{"hijklmnopqtuvwxyzcaesrbdfgHIJKLMNOPQTUVWXYZCAESRBDFG", 9, "CAESAR"},
-		{"zshiftabcdegjklmnopqruvwxyZSHIFTABCDEGJKLMNOPQRUVWXY", -1, "SHIFT"}}
+		{"hijklmnopqtuvwxyzcaesrbdfgHIJKLMNOPQTUVWXYZCAESRBDFG", 9, "Caesar"},
+		{"zshiftabcdegjklmnopqruvwxyZSHIFTABCDEGJKLMNOPQRUVWXY", -1, "shift"}}
 	for _, test := range tests {
 		output := CaesarKeyedEncipher(text, test.shift, test.key)
 		if output != test.expected {
@@ -80,9 +80,9 @@ func TestCaesarKeyedEncipher(t *testing.T) {
 func TestCaesarKeyedDecipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	tests := []caesarKeyedTest{
-		{"heloabcdfgijkmnpqrstuvwxyzHELOABCDFGIJKMNPQRSTUVWXYZ", 0, "Hello"},
-		{"xyzworldabcefghijkmnpqstuvXYZWORLDABCEFGHIJKMNPQSTUV", 3, "World"},
-		{"rstuvzywxbcadefghijklmnopqRSTUVZYWXBCADEFGHIJKLMNOPQ", 5, "ZYWXZBC"},
+		{"helowrdabcfgijkmnpqstuvxyzHELOWRDABCFGIJKMNPQSTUVXYZ", 0, "Hello, World!"},
+		{"tuvzywxbcadefghijklmnopqrsTUVZYWXBCADEFGHIJKLMNOPQRS", 3, "ZYWXZBC"},
+		{"vwxyzabcdefghijklmnopqrstuVWXYZABCDEFGHIJKLMNOPQRSTU", 5, "ABCDEF"},
 		{"stuvwxyzabcdefghijklmnopqrSTUVWXYZABCDEFGHIJKLMNOPQR", 8, ""},
 		{"pqrstuvwxyzabcdefghijklmnoPQRSTUVWXYZABCDEFGHIJKLMNO", 11, "!@#$%"},
 		{"jklmnopqtuvwxyzcaesrbdfghiJKLMNOPQTUVWXYZCAESRBDFGHI", 15, "CAESAR"},

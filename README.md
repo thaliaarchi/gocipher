@@ -208,9 +208,10 @@
 - ASCII85
     | [dCode](http://www.dcode.fr/ascii-85-encoding)
     | [Web Utils](http://www.webutils.pl/Ascii85)
-- Base64
+- ✔ **Base64**
     | [dCode](http://www.dcode.fr/base-64-coding)
     | [Rumkin.com](http://rumkin.com/tools/cipher/base64.php)
+    | [Wikibooks](https://en.wikibooks.org/wiki/Algorithm_Implementation/Miscellaneous/Base64)
 - Crypt
     | [Web Utils](http://www.webutils.pl/Crypt-Hash-Calculator)
 - HAVAL
@@ -299,3 +300,4 @@
 ## Libraries
 
 - [Caesar Salad (JS)](https://github.com/schnittstabil/caesar-salad)
+- [CryptoJS](https://code.google.com/archive/p/crypto-js/)
