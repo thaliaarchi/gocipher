@@ -3,7 +3,6 @@ package gocipher
 import (
 	"errors"
 	"regexp"
-	"strings"
 )
 
 // RestorePunctuation - If punctuation was accidently removed, use this function to restore it.
@@ -23,13 +22,15 @@ func RestorePunctuation(original string, modified string) (string, error) {
 	return string(res), nil
 }
 
+// RemovePunctuation removes any non alphabetic chars from a string.
 func RemovePunctuation(text string) string {
-	return removePattern(text, "[^A-Z]")
+	return removePattern(text, "[^A-Za-z]")
 }
 
+// removePattern removes any chars matching a Regular Expression from a string.
 func removePattern(text string, pattern string) string {
 	re := regexp.MustCompile(pattern)
-	return re.ReplaceAllString(strings.ToUpper(text), "")
+	return re.ReplaceAllString(text, "")
 }
 
 func a2i(char rune) int {
@@ -48,16 +49,20 @@ func i2a(i int, isUpper bool) rune {
 	return 'A' + rune(mod(i, 26))
 }
 
+// isAlpha returns whether a rune is alphabetical and whether a rune is upper case.
+// Only considers A-Z and a-z.
 func isAlpha(char rune) (bool, bool) {
 	isUpper := char >= 'A' && char <= 'Z'
 	isAlpha := isUpper || char >= 'a' && char <= 'z'
 	return isAlpha, isUpper
 }
 
+// mod returns the modulus `a mod b` in the interval [0, b).
 func mod(a int, b int) int {
 	return (a%b + b) % b
 }
 
+// mod returns the modulus `a mod b` in the interval [0, b) for runes.
 func modRune(a rune, b rune) rune {
 	return (a%b + b) % b
 }

@@ -42,7 +42,7 @@ func TestRotDecipherCaps(t *testing.T) {
 func TestRotEncipherRange(t *testing.T) {
 	var text = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	var expected = "abcdefghijklmnopqrstuvwxyz0123456789NOPQRSTUVWXYZABCDEFGHIJKLM0123456789"
-	actual := RotEncipherRange(text, 13, 'A', 'Z') // Only change A-Z, not lowercase
+	actual := RotEncipherRange(text, 13, 'A', 'Z') // Only changes A-Z, not lowercase
 	if expected != actual {
 		t.Errorf("Expected %q, but got %q", expected, actual)
 	}
@@ -51,7 +51,7 @@ func TestRotEncipherRange(t *testing.T) {
 func TestRotDecipherRange(t *testing.T) {
 	var text = "abcdefghijklmnopqrstuvwxyz0123456789NOPQRSTUVWXYZABCDEFGHIJKLM0123456789"
 	var expected = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	actual := RotDecipherRange(text, 13, 'A', 'Z') // Only change A-Z, not lowercase
+	actual := RotDecipherRange(text, 13, 'A', 'Z') // Only changes A-Z, not lowercase
 	if expected != actual {
 		t.Errorf("Expected %q, but got %q", expected, actual)
 	}

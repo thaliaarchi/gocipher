@@ -13,6 +13,7 @@ import (
  * ROT-47 cipher
  */
 
+// RotEncipher enciphers string using ROT cipher with alphabet according to key.
 func RotEncipher(text string, key int, alphabet string) string {
 	size := len(alphabet)
 	alphaRunes := []rune(alphabet)
@@ -63,6 +64,7 @@ func RotEncipherRange(text string, key int, min, max rune) string {
 	}
 	return string(runes)
 }
+
 func RotDecipherRange(text string, key int, min, max rune) string {
 	return RotEncipherRange(text, -key, min, max)
 }
