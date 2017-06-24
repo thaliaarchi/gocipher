@@ -21,7 +21,7 @@ func KeyedAlphabet(key string, alphabet string) string {
 }
 
 // KeyedAlphabetRange creates an alphabet in a range of chars starting with a keyword.
-// Uppercase and Lowercase are considered different characters.
+// Uppercase and lowercase are considered different characters.
 // e.g. "HELLO, WORLD!", 'A', 'Z' becomes "HELOWRDABCFGIJKMNPQSTUVXYZ"
 func KeyedAlphabetRange(key string, min, max rune) string {
 	chars := []rune(key)
@@ -45,7 +45,7 @@ func RestorePunctuation(original string, modified string) (string, error) {
 	res, chars := []rune(original), []rune(modified)
 	count := 0
 	for i, char := range res {
-		if isAlpha, _ := isAlpha(char); isAlpha {
+		if char >= 'A' && char <= 'Z' || char >= 'a' && char <= 'z' {
 			res[i] = chars[count]
 			count++
 		}
@@ -67,29 +67,16 @@ func removePattern(text string, pattern string) string {
 	return re.ReplaceAllString(text, "")
 }
 
-// a2i returns the number 0-25 corresponding to
-func alphaIndex(char rune) int {
-	if char >= 'A' && char <= 'Z' {
-		return int(char - 'A')
-	} else if char >= 'a' && char <= 'z' {
-		return int(char - 'a')
+func mapAlpha(text string, f func(i int, char, a, z rune) rune) string {
+	runes := []rune(text)
+	for i, char := range runes {
+		if char >= 'A' && char <= 'Z' {
+			runes[i] = f(i, char, 'A', 'Z')
+		} else if char >= 'a' && char <= 'z' {
+			runes[i] = f(i, char, 'a', 'z')
+		}
 	}
-	return -1
-}
-
-func indexToRune(i int, isUpper bool) rune {
-	if !isUpper {
-		return 'a' + rune(mod(i, 26))
-	}
-	return 'A' + rune(mod(i, 26))
-}
-
-// isAlpha returns whether a rune is alphabetical and whether a rune is upper case.
-// Only considers A-Z and a-z.
-func isAlpha(char rune) (bool, bool) {
-	isUpper := char >= 'A' && char <= 'Z'
-	isAlpha := isUpper || char >= 'a' && char <= 'z'
-	return isAlpha, isUpper
+	return string(runes)
 }
 
 // mod returns the modulus `a mod b` in the interval [0, b).

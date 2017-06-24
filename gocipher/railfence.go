@@ -1,9 +1,6 @@
 package gocipher
 
-import (
-	"errors"
-	"fmt"
-)
+import "errors"
 
 /*
  * Rail-fence (ZigZag) cipher
@@ -16,9 +13,9 @@ type RailfenceKey struct {
 }
 
 // NewRailfenceKey creates a RailfenceKey.
-func NewRailfenceKey(rails int) (*RailfenceKey, error) { // key=5
+func NewRailfenceKey(rails int) (*RailfenceKey, error) {
 	if rails <= 0 {
-		return nil, fmt.Errorf("invalid key: %d must be greater than zero", rails)
+		return nil, errors.New("key must be greater than zero")
 	}
 	return &RailfenceKey{rails}, nil
 }

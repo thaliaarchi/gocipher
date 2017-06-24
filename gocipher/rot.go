@@ -57,6 +57,8 @@ func RotDecipherCaps(text string, key int, alphabet string) string {
 	return RotEncipherCaps(text, -key, alphabet)
 }
 
+// RotEncipherRange enciphers string using ROT cipher with ranged alphabet according to key.
+// Uppercase and lowercase are considered different characters.
 func RotEncipherRange(text string, key int, min, max rune) string {
 	size := max - min + 1
 	shift := rune(key)
@@ -69,6 +71,8 @@ func RotEncipherRange(text string, key int, min, max rune) string {
 	return string(runes)
 }
 
+// RotDecipherRange deciphers string using ROT cipher with ranged alphabet according to key.
+// Uppercase and lowercase are considered different characters.
 func RotDecipherRange(text string, key int, min, max rune) string {
 	return RotEncipherRange(text, -key, min, max)
 }

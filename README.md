@@ -68,8 +68,6 @@
         | [Rumkin.com](http://rumkin.com/tools/cipher/ubchi.php)
 - Consonants/Vowels Rank cipher
     | [dCode](http://www.dcode.fr/consonants-vowels-rank-cipher)
-- Cryptogram Assistant
-    | [Rumkin.com](http://rumkin.com/tools/cipher/cryptogram.php)
 - Deranged Alphabet cipher
     | [dCode](http://www.dcode.fr/deranged-alphabet-generator)
 - Enigma cipher
@@ -122,7 +120,7 @@
         | [dCode](http://www.dcode.fr/trithemius-ave-maria)
 - Navajo Code
     | [dCode](http://www.dcode.fr/navajo-code)
-- One Time Pad
+- ✔ **One Time Pad**
     | [Rumkin.com](http://rumkin.com/tools/cipher/otp.php)
 - Playfair cipher
     | [dCode](http://www.dcode.fr/playfair-cipher)
@@ -208,6 +206,13 @@
 - ASCII85
     | [dCode](http://www.dcode.fr/ascii-85-encoding)
     | [Web Utils](http://www.webutils.pl/Ascii85)
+    | [Wikipedia](https://en.wikipedia.org/wiki/Ascii85)
+- Base16
+    | [Wikipedia](https://en.wikipedia.org/wiki/Base64)
+- Base32
+    | [Wikipedia](https://en.wikipedia.org/wiki/Base32)
+- Base58
+    | [Wikipedia](https://en.wikipedia.org/wiki/Base58)
 - ✔ **Base64**
     | [dCode](http://www.dcode.fr/base-64-coding)
     | [Rumkin.com](http://rumkin.com/tools/cipher/base64.php)
@@ -283,6 +288,8 @@
     | [Web Utils](http://www.webutils.pl/Charset-Converter)
 - Crypto Solver
     | [Rumkin.com](http://rumkin.com/tools/cipher/cryptogram-solver.php)
+- Cryptogram Assistant
+    | [Rumkin.com](http://rumkin.com/tools/cipher/cryptogram.php)
 - Isogram Generator
     | [dCode](http://www.dcode.fr/isogram)
 - Text Manipulator
@@ -296,6 +303,7 @@
 - [Practical Cryptography](http://www.practicalcryptography.com/ciphers/)
 - [Rumkin.com](http://rumkin.com/tools/cipher/)
 - [Web Utils](http://www.webutils.pl/)
+- [Binary-to-text encoding on Wikipedia](https://en.wikipedia.org/wiki/Binary-to-text_encoding)
 
 ## Libraries
 
