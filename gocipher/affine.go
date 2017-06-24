@@ -6,6 +6,7 @@ package gocipher
 
 import "errors"
 
+// AffineKey is a key for an Affine cipher
 type AffineKey struct {
 	a, b, inva int
 }
@@ -31,7 +32,7 @@ func AffineEncipher(text string, key *AffineKey) string {
 	runes := []rune(text)
 	for i, char := range runes {
 		if isAlpha, isUpper := isAlpha(char); isAlpha {
-			runes[i] = i2a(key.a*a2i(char)+key.b, isUpper)
+			runes[i] = indexToRune(key.a*alphaIndex(char)+key.b, isUpper)
 		}
 	}
 	return string(runes)
@@ -42,7 +43,7 @@ func AffineDecipher(text string, key *AffineKey) string {
 	runes := []rune(text)
 	for i, char := range runes {
 		if isAlpha, isUpper := isAlpha(char); isAlpha {
-			runes[i] = i2a(key.inva*(a2i(char)-key.b), isUpper)
+			runes[i] = indexToRune(key.inva*(alphaIndex(char)-key.b), isUpper)
 		}
 	}
 	return string(runes)

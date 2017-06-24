@@ -33,7 +33,8 @@ func removePattern(text string, pattern string) string {
 	return re.ReplaceAllString(text, "")
 }
 
-func a2i(char rune) int {
+// a2i returns the number 0-25 corresponding to
+func alphaIndex(char rune) int {
 	if char >= 'A' && char <= 'Z' {
 		return int(char - 'A')
 	} else if char >= 'a' && char <= 'z' {
@@ -42,7 +43,7 @@ func a2i(char rune) int {
 	return -1
 }
 
-func i2a(i int, isUpper bool) rune {
+func indexToRune(i int, isUpper bool) rune {
 	if !isUpper {
 		return 'a' + rune(mod(i, 26))
 	}

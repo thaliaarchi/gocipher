@@ -141,7 +141,6 @@
     | [dCode](http://www.dcode.fr/rail-fence-cipher)
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/rail-fence/)
     | [Rumkin.com](http://rumkin.com/tools/cipher/railfence.php)
-    | [Geeksforgeeks.org](http://www.geeksforgeeks.org/rail-fence-cipher-encryption-decryption/)
     - Redefence Cipher
         | [dCode](http://www.dcode.fr/redefence-cipher)
 - Rotate
