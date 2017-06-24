@@ -74,49 +74,49 @@ func RotDecipherRange(text string, key int, min, max rune) string {
 }
 
 // Rot5Encipher enciphers string using ROT-5 cipher. Identical to Rot5Decipher.
-// e.g. `1234567890` becomes `5678901234`.
+// e.g. "1234567890" becomes "5678901234".
 func Rot5Encipher(text string) string {
 	return RotEncipherRange(text, 5, '0', '9')
 }
 
 // Rot5Decipher deciphers string using ROT-5 cipher. Identical to Rot5Encipher.
-// e.g. `5678901234` becomes `1234567890`.
+// e.g. "5678901234" becomes "1234567890".
 func Rot5Decipher(text string) string {
 	return Rot5Encipher(text)
 }
 
 // Rot13Encipher enciphers string using ROT-13 cipher. Identical to Rot13Decipher.
-// e.g. `ABCDEFGHIJKLM` becomes `NOPQRSTUVWXYZ`.
+// e.g. "ABCDEFGHIJKLM" becomes "NOPQRSTUVWXYZ".
 func Rot13Encipher(text string) string {
 	return CaesarEncipher(text, 13)
 }
 
 // Rot13Decipher deciphers string using ROT-13 cipher. Identical to Rot13Encipher.
-// e.g. `NOPQRSTUVWXYZ` becomes `ABCDEFGHIJKLM`.
+// e.g. "NOPQRSTUVWXYZ" becomes "ABCDEFGHIJKLM".
 func Rot13Decipher(text string) string {
 	return Rot13Encipher(text)
 }
 
 // Rot18Encipher enciphers string using ROT-18 cipher. Identical to Rot18Decipher.
-// e.g. `ABCXYZ012` becomes `STUFGHijk`.
+// e.g. "ABCXYZ012" becomes "STUFGHijk".
 func Rot18Encipher(text string) string {
 	return Rot13Encipher(Rot5Encipher(text))
 }
 
 // Rot18Decipher deciphers string using ROT-18 cipher. Identical to Rot18Encipher.
-// e.g. `STUFGHIJK` becomes `ABCXYZ012`.
+// e.g. "STUFGHIJK" becomes "ABCXYZ012".
 func Rot18Decipher(text string) string {
 	return Rot18Encipher(text)
 }
 
 // Rot47Encipher enciphers string using ROT-47 cipher. Identical to Rot47Decipher.
-// e.g. `ABCabc` becomes `pqr234`.
+// e.g. "ABCabc" becomes "pqr234".
 func Rot47Encipher(text string) string {
 	return RotEncipherRange(text, 47, '!', '~')
 }
 
 // Rot47Decipher deciphers string using ROT-47 cipher. Identical to Rot47Encipher.
-// e.g. `pqr234` becomes `ABCabc`.
+// e.g. "pqr234" becomes "ABCabc".
 func Rot47Decipher(text string) string {
 	return Rot47Encipher(text)
 }

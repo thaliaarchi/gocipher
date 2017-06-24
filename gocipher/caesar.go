@@ -1,8 +1,6 @@
 package gocipher
 
-import (
-	"strings"
-)
+import "strings"
 
 /*
  * Caesar cipher
@@ -30,7 +28,7 @@ func CaesarDecipher(text string, key int) string {
 
 // CaesarKeyedEncipher enciphers string using keyed Caesar cipher according to key.
 func CaesarKeyedEncipher(text string, shift int, key string) string {
-	alphabet := makeKeyedAlphabet(key)
+	alphabet := KeyedAlphabetRange(strings.ToUpper(key), 'A', 'Z')
 	alpha := []rune(alphabet)
 	s := rune(shift)
 	runes := []rune(text)
@@ -47,23 +45,4 @@ func CaesarKeyedEncipher(text string, shift int, key string) string {
 // CaesarKeyedDecipher deciphers string using keyed Caesar cipher according to key.
 func CaesarKeyedDecipher(text string, shift int, key string) string {
 	return CaesarKeyedEncipher(text, -shift, key)
-}
-
-func makeKeyedAlphabet(key string) string {
-	chars := []rune(strings.ToUpper(key))
-	alphabet := make([]rune, 26)
-	pos := 0
-	for _, char := range chars {
-		if char >= 'A' && char <= 'Z' && !strings.ContainsRune(string(alphabet), char) {
-			alphabet[pos] = char
-			pos++
-		}
-	}
-	for i := 'A'; i <= 'Z'; i++ {
-		if !strings.ContainsRune(string(alphabet), i) {
-			alphabet[pos] = i
-			pos++
-		}
-	}
-	return string(alphabet)
 }

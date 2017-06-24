@@ -3,7 +3,44 @@ package gocipher
 import (
 	"errors"
 	"regexp"
+	"strings"
 )
+
+// KeyedAlphabet creates an alphabet starting with a keyword.
+// e.g. "Hello, World!", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" becomes "HELOWRDABCFGIJKMNPQSTUVXYZ"
+func KeyedAlphabet(key string, alphabet string) string {
+	alphabet = strings.ToUpper(alphabet)
+	chars := []rune(strings.ToUpper(key) + alphabet)
+	alpha := ""
+	for _, char := range chars {
+		if !strings.ContainsRune(alpha, char) && strings.ContainsRune(alphabet, char) {
+			alpha += string(char)
+		}
+	}
+	return alpha
+}
+
+// KeyedAlphabetRange creates an alphabet in a range of chars starting with a keyword.
+// Uppercase and Lowercase are considered different characters.
+// e.g. "HELLO, WORLD!", 'A', 'Z' becomes "HELOWRDABCFGIJKMNPQSTUVXYZ"
+func KeyedAlphabetRange(key string, min, max rune) string {
+	chars := []rune(key)
+	alphabet := make([]rune, max-min+1)
+	pos := 0
+	for _, char := range chars {
+		if char >= min && char <= max && !strings.ContainsRune(string(alphabet), char) {
+			alphabet[pos] = char
+			pos++
+		}
+	}
+	for i := min; i <= max; i++ {
+		if !strings.ContainsRune(string(alphabet), i) {
+			alphabet[pos] = i
+			pos++
+		}
+	}
+	return string(alphabet)
+}
 
 // RestorePunctuation - If punctuation was accidently removed, use this function to restore it.
 // Requires the original string with punctuation.

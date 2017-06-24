@@ -1,9 +1,6 @@
 package gocipher
 
-import (
-	"math"
-	"strings"
-)
+import "math"
 
 /*
  * Statistics routines for cryptanalysis
@@ -53,20 +50,4 @@ func NgramFreqLog(text string, n int, floor float64) map[string]float64 {
 		freqs[ngram] = math.Log10(freq)
 	}
 	return freqs
-}
-
-// KeywordToKey - Convert a key word to a key by appending on the other letters of the alphabet.
-// e.g. MONARCHY -> MONARCHYBDEFGIJKLPQSTUVWXZ
-func KeywordToKey(word string, alphabet string) string { // alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-	word = strings.ToUpper(word)
-	alphabet = strings.ToUpper(alphabet)
-	chars := []rune(word + alphabet)
-	key := ""
-	for _, char := range chars {
-		if strings.ContainsRune(key, char) {
-			continue
-		}
-		key += string(char)
-	}
-	return key
 }
