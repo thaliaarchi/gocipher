@@ -3,17 +3,17 @@ package gocipher
 import "testing"
 
 type railfenceTest struct {
-	key      int
 	expected string
+	key      int
 }
 
 func TestRailfenceEncipher(t *testing.T) {
 	input := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	tests := []railfenceTest{
-		{3, "aeimquyCGKOSWbdfhjlnprtvxzBDFHJLNPRTVXZcgkoswAEIMQUY"},
-		{6, "akuEOYbjltvDFNPXZcimswCGMQWdhnrxBHLRVegoqyAIKSUfpzJT"},
-		{7, "amyKWblnxzJLVXckowAIMUYdjpvBHNTZeiquCGOSfhrtDFPRgsEQ"},
-		{8, "aoCQbnpBDPRcmqAEOSdlrzFNTeksyGMUfjtxHLVZgiuwIKWYhvJX"}}
+		{"aeimquyCGKOSWbdfhjlnprtvxzBDFHJLNPRTVXZcgkoswAEIMQUY", 3},
+		{"akuEOYbjltvDFNPXZcimswCGMQWdhnrxBHLRVegoqyAIKSUfpzJT", 6},
+		{"amyKWblnxzJLVXckowAIMUYdjpvBHNTZeiquCGOSfhrtDFPRgsEQ", 7},
+		{"aoCQbnpBDPRcmqAEOSdlrzFNTeksyGMUfjtxHLVZgiuwIKWYhvJX", 8}}
 	for _, test := range tests {
 		key, err1 := NewRailfenceKey(test.key)
 		if err1 != nil {
@@ -32,10 +32,10 @@ func TestRailfenceEncipher(t *testing.T) {
 func TestRailfenceDecipher(t *testing.T) {
 	input := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	tests := []railfenceTest{
-		{3, "anNobpOqcrPsdtQuevRwfxSygzTAhBUCiDVEjFWGkHXIlJYKmLZM"},
-		{6, "agrBLVMCshbitDNWOEujckvFPXQGwldmxHRYSIyneozJTZUKApfq"},
-		{7, "afoxGOWPHypgbhqzIQXRJAricjsBKSYTLCtkdluDMUZVNEvmenwF"},
-		{8, "aelszGOWPHAtmfbgnuBIQXRJCvohcipwDKSYTLExqjdkryFMUZVN"}}
+		{"anNobpOqcrPsdtQuevRwfxSygzTAhBUCiDVEjFWGkHXIlJYKmLZM", 3},
+		{"agrBLVMCshbitDNWOEujckvFPXQGwldmxHRYSIyneozJTZUKApfq", 6},
+		{"afoxGOWPHypgbhqzIQXRJAricjsBKSYTLCtkdluDMUZVNEvmenwF", 7},
+		{"aelszGOWPHAtmfbgnuBIQXRJCvohcipwDKSYTLExqjdkryFMUZVN", 8}}
 	for _, test := range tests {
 		key, err1 := NewRailfenceKey(test.key)
 		if err1 != nil {

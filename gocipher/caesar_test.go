@@ -7,7 +7,6 @@ type caesarTest struct {
 	key      int
 }
 
-// Test known plaintext->ciphertext pairs
 func TestCaesarEncipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	tests := []caesarTest{
@@ -26,7 +25,6 @@ func TestCaesarEncipher(t *testing.T) {
 	}
 }
 
-// Test known ciphertext->plaintext pairs
 func TestCaesarDecipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	tests := []caesarTest{
@@ -46,12 +44,11 @@ func TestCaesarDecipher(t *testing.T) {
 	}
 }
 
-// Punctuation should remain unmodified
 func TestCaesarPunctuation(t *testing.T) {
 	text := "!@$%%^&*()_-+={}[]|\":;<>,./?"
 	key := 14
 	actual := CaesarEncipher(text, key)
-	if text != actual {
+	if text != actual { // Punctuation should remain unmodified
 		t.Errorf("Expected %q, but got %q (key %d)", text, actual, key)
 	}
 }

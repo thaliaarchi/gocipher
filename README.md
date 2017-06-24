@@ -137,7 +137,7 @@
         | [dCode](http://www.dcode.fr/nihilist-cipher)
 - Porta Cipher
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/porta/)
-- Rail-fence (ZigZag) Cipher
+- ✔ **Rail-fence (ZigZag) Cipher**
     | [dCode](http://www.dcode.fr/rail-fence-cipher)
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/rail-fence/)
     | [Rumkin.com](http://rumkin.com/tools/cipher/railfence.php)

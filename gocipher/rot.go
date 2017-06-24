@@ -26,11 +26,13 @@ func RotEncipher(text string, key int, alphabet string) string {
 	return string(runes)
 }
 
+// RotDecipher deciphers string using ROT cipher with alphabet according to key.
 func RotDecipher(text string, key int, alphabet string) string {
 	return RotEncipher(text, -key, alphabet)
 }
 
-// Same as RotEncipher, but preserves capitaization
+// RotEncipherCaps enciphers string using ROT cipher with alphabet according to key.
+// Preserves capitalization.
 func RotEncipherCaps(text string, key int, alphabet string) string {
 	size := len(alphabet)
 	alphabet = strings.ToLower(alphabet)
@@ -49,6 +51,8 @@ func RotEncipherCaps(text string, key int, alphabet string) string {
 	return string(runes)
 }
 
+// RotDecipherCaps deciphers string using ROT cipher with alphabet according to key.
+// Preserves capitalization.
 func RotDecipherCaps(text string, key int, alphabet string) string {
 	return RotEncipherCaps(text, -key, alphabet)
 }
