@@ -164,11 +164,15 @@
                 | [dCode](http://www.dcode.fr/rot-13-cipher)
                 | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/rot13/)
                 | [Rumkin.com](http://rumkin.com/tools/cipher/rot13.php)
+                | [Web Utils](http://www.webutils.pl/ROTencode)
             - ✔ **ROT-18**
+                | [Web Utils](http://www.webutils.pl/ROTencode)
         - ✔ **ROT-5**
             | [dCode](http://www.dcode.fr/rot5-cipher)
+            | [Web Utils](http://www.webutils.pl/ROTencode)
         - ✔ **ROT-47**
             | [dCode](http://www.dcode.fr/rot-47-cipher)
+            | [Web Utils](http://www.webutils.pl/ROTencode)
 - Skip
     | [Rumkin.com](http://rumkin.com/tools/cipher/skip.php)
 - Straddle Checkerboard Cipher
@@ -275,6 +279,8 @@
 
 - Characters Type
     | [dCode](http://www.dcode.fr/characters-type)
+- Charset Converter
+    | [Web Utils](http://www.webutils.pl/Charset-Converter)
 - Crypto Solver
     | [Rumkin.com](http://rumkin.com/tools/cipher/cryptogram-solver.php)
 - Isogram Generator
