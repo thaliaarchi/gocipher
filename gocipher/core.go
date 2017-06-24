@@ -25,21 +25,18 @@ func KeyedAlphabet(key string, alphabet string) string {
 // e.g. "HELLO, WORLD!", 'A', 'Z' becomes "HELOWRDABCFGIJKMNPQSTUVXYZ"
 func KeyedAlphabetRange(key string, min, max rune) string {
 	chars := []rune(key)
-	alphabet := make([]rune, max-min+1)
-	pos := 0
+	alpha := ""
 	for _, char := range chars {
-		if char >= min && char <= max && !strings.ContainsRune(string(alphabet), char) {
-			alphabet[pos] = char
-			pos++
+		if !strings.ContainsRune(alpha, char) && char >= min && char <= max {
+			alpha += string(char)
 		}
 	}
 	for i := min; i <= max; i++ {
-		if !strings.ContainsRune(string(alphabet), i) {
-			alphabet[pos] = i
-			pos++
+		if !strings.ContainsRune(alpha, i) {
+			alpha += string(i)
 		}
 	}
-	return string(alphabet)
+	return alpha
 }
 
 // RestorePunctuation - If punctuation was accidently removed, use this function to restore it.
