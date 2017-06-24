@@ -1,11 +1,5 @@
 package gocipher
 
-/*
- * Base cipher object that other ciphers extend
- * really only provides mappings a2i and i2a for letter->int->letter conversions
- * Author: James Lyons
- */
-
 import (
 	"errors"
 	"regexp"

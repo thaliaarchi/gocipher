@@ -1,12 +1,10 @@
 package gocipher
 
 /*
- * Implements atbash cipher
- * Author: James Lyons
- * Created: 2014-02-09
+ * Atbash cipher
  */
 
-// AtbashEncipher -  Encipher string using Atbash cipher.
+// AtbashEncipher enciphers string using Atbash cipher.
 func AtbashEncipher(text string) string {
 	runes := []rune(text)
 	for i, char := range runes {
@@ -19,7 +17,7 @@ func AtbashEncipher(text string) string {
 	return string(runes)
 }
 
-// AtbashDecipher - Decipher string using the Atbash cipher.
+// AtbashDecipher deciphers string using the Atbash cipher.
 func AtbashDecipher(text string) string {
 	return AtbashEncipher(text)
 }

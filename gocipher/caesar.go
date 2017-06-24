@@ -1,12 +1,10 @@
 package gocipher
 
 /*
- * Implements Caesar substitution cipher
- * Author: James Lyons
- * http://www.practicalcryptography.com/ciphers/caesar-cipher/
+ * Caesar cipher
  */
 
-// CaesarEncipher - Encipher string using Caesar cipher according to key.
+// CaesarEncipher enciphers string using Caesar cipher according to key.
 func CaesarEncipher(text string, key int) string {
 	shift := rune(key)
 	runes := []rune(text)
@@ -20,7 +18,7 @@ func CaesarEncipher(text string, key int) string {
 	return string(runes)
 }
 
-// CaesarDecipher - Decipher string using Caesar cipher according to key.
+// CaesarDecipher deciphers string using Caesar cipher according to key.
 func CaesarDecipher(text string, key int) string {
 	return CaesarEncipher(text, -key)
 }

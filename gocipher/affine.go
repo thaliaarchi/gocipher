@@ -1,32 +1,18 @@
 package gocipher
 
 /*
- * Implements affine substitution cipher
- * Author: James Lyons
- * http://www.practicalcryptography.com/ciphers/affine-cipher/
+ * Affine cipher
  */
 
 import "errors"
-
-/*The Affine Cipher has two components to the key, numbers *a* and *b*.
-This cipher encrypts a letter according to the following equation::
-
-		c = (a*p + b)%26
-
-where c is the ciphertext letter, p the plaintext letter.
-*b* is an integer 0-25, *a* is an integer that has an inverse (mod 26).
-Allowable values for *a* are: 1,3,5,7,9,11,15,17,19,21,23,25
-For more info on the Affine cipher see
-http://www.practicalcryptography.com/ciphers/affine-cipher/.
-
-:param a: The multiplicative part of the key. Allowable values are: 1,3,5,7,9,11,15,17,19,21,23,25
-:param b: The additive part of the key. Allowable values are integers 0-25
-*/
 
 type AffineKey struct {
 	a, b, inva int
 }
 
+// NewAffineKey creates an AffineKey.
+// `a` is the multiplicative part of the key (allowable values are: 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, and 25).
+// `b` is the additive part of the key (allowable values are integers 0-25).
 func NewAffineKey(a, b int) (*AffineKey, error) {
 	inva := -1
 	for i := 1; i < 26; i += 2 {
@@ -40,7 +26,7 @@ func NewAffineKey(a, b int) (*AffineKey, error) {
 	return &AffineKey{a, b, inva}, nil
 }
 
-// AffineEncipher - Encipher string using affine cipher according to key.
+// AffineEncipher enciphers string using Affine cipher according to key.
 func AffineEncipher(text string, key *AffineKey) string {
 	runes := []rune(text)
 	for i, char := range runes {
@@ -51,7 +37,7 @@ func AffineEncipher(text string, key *AffineKey) string {
 	return string(runes)
 }
 
-// AffineDecipher - Decipher string using affine cipher according to key.
+// AffineDecipher deciphers string using Affine cipher according to key.
 func AffineDecipher(text string, key *AffineKey) string {
 	runes := []rune(text)
 	for i, char := range runes {

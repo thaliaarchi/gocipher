@@ -1,6 +1,10 @@
 package gocipher
 
-// LetterNumberEncrypt - Converts letters to the corresponding number.
+/*
+ * Letter-to-Number cipher
+ */
+
+// LetterNumberEncrypt converts letters to the corresponding number.
 // e.g. "ABC...XYZ" becomes []int{1, 2, 3 ... 24, 25, 26}
 func LetterNumberEncrypt(text string) []int {
 	runes := []rune(text)
@@ -15,7 +19,7 @@ func LetterNumberEncrypt(text string) []int {
 	return numbers
 }
 
-// LetterNumberDecrypt - Converts numbers to the corresponding letter.
+// LetterNumberDecrypt converts numbers to the corresponding letter.
 // e.g. []int{1, 2, 3 ... 24, 25, 26} becomes "ABC...XYZ"
 func LetterNumberDecrypt(numbers []int) string {
 	runes := make([]rune, len(numbers))
