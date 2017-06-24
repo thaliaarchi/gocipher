@@ -6,7 +6,7 @@ import (
 )
 
 /*
- * Rail-fence cipher
+ * Rail-fence (ZigZag) cipher
  * Algorithm adapted from http://www.practicalcryptography.com/ciphers/classical-era/rail-fence/
  */
 

@@ -52,3 +52,45 @@ func TestCaesarPunctuation(t *testing.T) {
 		t.Errorf("Expected %q, but got %q (key %d)", text, actual, key)
 	}
 }
+
+type caesarKeyedTest struct {
+	expected string
+	shift    int
+	key      string
+}
+
+func TestCaesarKeyedEncipher(t *testing.T) {
+	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	tests := []caesarKeyedTest{
+		{"heloabcdfgijkmnpqrstuvwxyzHELOABCDFGIJKMNPQRSTUVWXYZ", 0, "Hello"},
+		{"orldabcefghijkmnpqstuvxyzwORLDABCEFGHIJKMNPQSTUVXYZW", 1, "World"},
+		{"wxbcadefghijklmnopqrstuvzyWXBCADEFGHIJKLMNOPQRSTUVZY", 2, "ZYWXZBC"},
+		{"efghijklmnopqrstuvwxyzabcdEFGHIJKLMNOPQRSTUVWXYZABCD", 4, ""},
+		{"hijklmnopqrstuvwxyzabcdefgHIJKLMNOPQRSTUVWXYZABCDEFG", 7, "!@#$%"},
+		{"hijklmnopqtuvwxyzcaesrbdfgHIJKLMNOPQTUVWXYZCAESRBDFG", 9, "CAESAR"},
+		{"zshiftabcdegjklmnopqruvwxyZSHIFTABCDEGJKLMNOPQRUVWXY", -1, "SHIFT"}}
+	for _, test := range tests {
+		output := CaesarKeyedEncipher(text, test.shift, test.key)
+		if output != test.expected {
+			t.Errorf("Expected %q, but got %q (key: %q, shift: %d)", test.expected, output, test.key, test.shift)
+		}
+	}
+}
+
+func TestCaesarKeyedDecipher(t *testing.T) {
+	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	tests := []caesarKeyedTest{
+		{"heloabcdfgijkmnpqrstuvwxyzHELOABCDFGIJKMNPQRSTUVWXYZ", 0, "Hello"},
+		{"xyzworldabcefghijkmnpqstuvXYZWORLDABCEFGHIJKMNPQSTUV", 3, "World"},
+		{"rstuvzywxbcadefghijklmnopqRSTUVZYWXBCADEFGHIJKLMNOPQ", 5, "ZYWXZBC"},
+		{"stuvwxyzabcdefghijklmnopqrSTUVWXYZABCDEFGHIJKLMNOPQR", 8, ""},
+		{"pqrstuvwxyzabcdefghijklmnoPQRSTUVWXYZABCDEFGHIJKLMNO", 11, "!@#$%"},
+		{"jklmnopqtuvwxyzcaesrbdfghiJKLMNOPQTUVWXYZCAESRBDFGHI", 15, "CAESAR"},
+		{"hiftabcdegjklmnopqruvwxyzsHIFTABCDEGJKLMNOPQRUVWXYZS", -1, "SHIFT"}}
+	for _, test := range tests {
+		output := CaesarKeyedDecipher(text, test.shift, test.key)
+		if output != test.expected {
+			t.Errorf("Expected %q, but got %q (key: %q, shift: %d)", test.expected, output, test.key, test.shift)
+		}
+	}
+}
