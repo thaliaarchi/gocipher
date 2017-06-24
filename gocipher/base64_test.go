@@ -1,7 +1,9 @@
 package gocipher
 
-import "testing"
-import "encoding/base64"
+import (
+	"encoding/base64"
+	"testing"
+)
 
 func TestBase64Encode(t *testing.T) {
 	testBase64Encode(t, "Hello, World! ~~", "SGVsbG8sIFdvcmxkISB+fg$$", func(text string) string {
