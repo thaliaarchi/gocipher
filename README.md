@@ -110,7 +110,7 @@
         | [dCode](http://www.dcode.fr/keyboard-coordinates)
     - Keyboard Shift Cipher
         | [dCode](http://www.dcode.fr/keyboard-shift-cipher)
-    - Letter Number
+    - ✔ **Letter Number**
         | [dCode](http://www.dcode.fr/letter-number-cipher)
         | [Rumkin.com](http://rumkin.com/tools/cipher/numbers.php)
     - Morse Code
@@ -173,9 +173,9 @@
                 | [dCode](http://www.dcode.fr/rot-13-cipher)
                 | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/rot13/)
                 | [Rumkin.com](http://rumkin.com/tools/cipher/rot13.php)
-        - ROT-5
+        - ✔ **ROT-5**
             | [dCode](http://www.dcode.fr/rot5-cipher)
-        - ROT-47
+        - ✔ **ROT-47**
             | [dCode](http://www.dcode.fr/rot-47-cipher)
 - Skip
     | [Rumkin.com](http://rumkin.com/tools/cipher/skip.php)
@@ -241,6 +241,8 @@
 
 ## Algoriothms
 
+- Benford's Law
+    | [dCode](http://www.dcode.fr/benford-law)
 - Frequency Analysis
     | [dCode](http://www.dcode.fr/frequency-analysis)
     | [Rumkin.com](http://rumkin.com/tools/cipher/frequency.php)
