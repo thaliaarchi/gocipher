@@ -1,4 +1,4 @@
-# Gocipher
+# gocipher
 
 ## Ciphers
 
@@ -157,7 +157,7 @@
             | [dCode](http://www.dcode.fr/caesar-cipher)
             | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/caesar/)
             | [Rumkin.com](http://rumkin.com/tools/cipher/caesar.php)
-        - ✔ **Keyed caesar**
+        - ✔ **Keyed caesar cipher**
             | [Rumkin.com](http://rumkin.com/tools/cipher/caesar-keyed.php)
         - ✔ **ROT-5**
             | [dCode](http://www.dcode.fr/rot5-cipher)
@@ -225,8 +225,8 @@
     | [Web Utils](http://www.webutils.pl/SHA1_Calculator)
 - Tiger
     | [Web Utils](http://www.webutils.pl/Tiger-Hash-Calculator)
-- URL Encode
-    | [Web Utils](http://www.webutils.pl/Crypt-Hash-Calculator)
+- ✔ **URL encode**
+    | [Web Utils](http://www.webutils.pl/URLencode)
 - UUEncode
     | [dCode](http://www.dcode.fr/uu-encoding)
     | [Web Utils](http://www.webutils.pl/UUencode)
