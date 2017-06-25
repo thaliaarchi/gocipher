@@ -1,16 +1,15 @@
 package gocipher
 
-import "math"
+import "sort"
 
 /*
  * Cracks the Vigenère cipher by testing every possible key of given length and ordering by ngrams
  */
 
 // splitChunks splits a string into chunks.
-func splitChunks(text string, size int) []string {
+func splitChunks(text string, n int) []string {
 	runes := []rune(text)
 	len := len(runes)
-	n := int(math.Ceil(float64(len) / float64(size)))
 	chunks := make([]string, n)
 	for i := 0; i < n; i++ {
 		chunk := ""
@@ -75,4 +74,21 @@ func VigenerePossibilities(text string, keyLength int) []string {
 		res[i] = joinChunks(chunks)
 	}
 	return res
+}
+
+type possibility struct {
+	text    string
+	entropy float64
+}
+
+// SortPossibilities sorts strings by bigram entropy
+func SortPossibilities(possible []string) []possibility {
+	poss := make([]possibility, len(possible))
+	for i, p := range possible {
+		poss[i] = possibility{p, GetBigramEntropy(p)}
+	}
+	sort.Slice(poss, func(i, j int) bool {
+		return poss[i].entropy <= poss[j].entropy
+	})
+	return poss
 }
