@@ -24,7 +24,7 @@ func TestAffineEncipher(t *testing.T) {
 		}
 		actual := AffineEncipher(text, key)
 		if test.expected != actual {
-			t.Errorf("Expected %q, but got %q (key %v)", test.expected, actual, key)
+			t.Errorf("Expected %q, but got %q (text: %q, key %v)", test.expected, actual, text, key)
 		}
 	}
 }
@@ -46,7 +46,7 @@ func TestAffineDecipher(t *testing.T) {
 		}
 		actual := AffineDecipher(text, key)
 		if test.expected != actual {
-			t.Errorf("Expected %q, but got %q (key %v)", test.expected, actual, test.key)
+			t.Errorf("Expected %q, but got %q (text: %q, key %v)", test.expected, actual, text, test.key)
 		}
 	}
 }
@@ -60,6 +60,6 @@ func TestAffinePunctuation(t *testing.T) {
 	}
 	actual := AffineEncipher(text, key)
 	if text != actual {
-		t.Errorf("Expected %q, but got %q (key %v)", text, actual, key)
+		t.Errorf("Expected %q, but got %q (text: %q, key %v)", text, actual, text, key)
 	}
 }

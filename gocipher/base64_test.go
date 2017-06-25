@@ -43,7 +43,7 @@ func TestBase64DecodeRawURL(t *testing.T) {
 func testBase64Encode(t *testing.T, text, expected string, f func(string) string) {
 	actual := f(text)
 	if expected != actual {
-		t.Errorf("Expected %q, but got %q", expected, actual)
+		t.Errorf("Expected %q, but got %q (text: %q)", expected, actual, text)
 	}
 }
 
@@ -53,6 +53,6 @@ func testBase64Decode(t *testing.T, text, expected string, f func(string) (strin
 		t.Error("Unexpected error", err)
 	}
 	if expected != actual {
-		t.Errorf("Expected %q, but got %q", expected, actual)
+		t.Errorf("Expected %q, but got %q (text: %q)", expected, actual, text)
 	}
 }

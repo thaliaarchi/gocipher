@@ -1,10 +1,25 @@
 package gocipher
 
 import (
+	"crypto/rand"
 	"errors"
+	"math/big"
 	"regexp"
 	"strings"
 )
+
+// RandomKey creates a cryptographically secure pseudorandom key
+func RandomKey(length int) (string, error) {
+	runes := make([]rune, length)
+	for i := 0; i < length; i++ {
+		nBig, err := rand.Int(rand.Reader, big.NewInt(26))
+		if err != nil {
+			return "", err
+		}
+		runes[i] = rune(nBig.Int64()) + 'A'
+	}
+	return string(runes), nil
+}
 
 // KeyedAlphabet creates an alphabet starting with a keyword.
 // e.g. "Hello, World!", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" becomes "HELOWRDABCFGIJKMNPQSTUVXYZ"

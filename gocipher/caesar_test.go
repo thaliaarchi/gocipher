@@ -20,7 +20,7 @@ func TestCaesarEncipher(t *testing.T) {
 	for _, test := range tests {
 		output := CaesarEncipher(text, test.key)
 		if output != test.expected {
-			t.Errorf("Expected %q, but got %q (key: %d)", test.expected, output, test.key)
+			t.Errorf("Expected %q, but got %q (text: %q, key: %d)", test.expected, output, text, test.key)
 		}
 	}
 }
@@ -39,7 +39,7 @@ func TestCaesarDecipher(t *testing.T) {
 	for _, test := range tests {
 		output := CaesarDecipher(text, test.key)
 		if output != test.expected {
-			t.Errorf("Expected %q, but got %q (key: %d)", test.expected, output, test.key)
+			t.Errorf("Expected %q, but got %q (text: %q, key: %d)", test.expected, output, text, test.key)
 		}
 	}
 }
@@ -49,7 +49,7 @@ func TestCaesarPunctuation(t *testing.T) {
 	key := 14
 	actual := CaesarEncipher(text, key)
 	if text != actual { // Punctuation should remain unmodified
-		t.Errorf("Expected %q, but got %q (key %d)", text, actual, key)
+		t.Errorf("Expected %q, but got %q (text: %q, key %d)", text, actual, text, key)
 	}
 }
 
@@ -72,7 +72,7 @@ func TestCaesarKeyedEncipher(t *testing.T) {
 	for _, test := range tests {
 		output := CaesarKeyedEncipher(text, test.shift, test.key)
 		if output != test.expected {
-			t.Errorf("Expected %q, but got %q (key: %q, shift: %d)", test.expected, output, test.key, test.shift)
+			t.Errorf("Expected %q, but got %q (text: %q, key: %q, shift: %d)", test.expected, output, text, test.key, test.shift)
 		}
 	}
 }
@@ -90,7 +90,7 @@ func TestCaesarKeyedDecipher(t *testing.T) {
 	for _, test := range tests {
 		output := CaesarKeyedDecipher(text, test.shift, test.key)
 		if output != test.expected {
-			t.Errorf("Expected %q, but got %q (key: %q, shift: %d)", test.expected, output, test.key, test.shift)
+			t.Errorf("Expected %q, but got %q (text: %q, key: %q, shift: %d)", test.expected, output, text, test.key, test.shift)
 		}
 	}
 }
