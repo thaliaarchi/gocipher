@@ -29,11 +29,13 @@ func joinChunks(chunks []string) string {
 	pos := 0
 	for i := 0; i < size; i++ {
 		for _, chunk := range chunks {
-			res[pos] = []rune(chunk)[i]
-			pos++
+			if i < len(chunk) {
+				res[pos] = []rune(chunk)[i]
+				pos++
+			}
 		}
 	}
-	return string(res)
+	return string(res[:pos])
 }
 
 // cartesianProduct returns the cartestian product of multiple slices.

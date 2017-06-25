@@ -6,17 +6,17 @@ import (
 )
 
 func TestSplitChunks(t *testing.T) {
-	text := "ABCDEFGHIJKL"
+	text := "ABCDEFGHIJKLMN"
 	n := 3
-	expected := []string{"ADGJ", "BEHK", "CFIL"}
+	expected := []string{"ADGJM", "BEHKN", "CFIL"}
 	actual := splitChunks(text, n)
 	if !reflect.DeepEqual(expected, actual) {
 		t.Errorf("Expected %v, but got %v (text: %q, n: %d)", expected, actual, text, n)
 	}
 
-	text = "ABCD"
+	text = "ABCDE"
 	n = 2
-	expected = []string{"AC", "BD"}
+	expected = []string{"ACE", "BD"}
 	actual = splitChunks(text, n)
 	if !reflect.DeepEqual(expected, actual) {
 		t.Errorf("Expected %v, but got %v (text: %q, n: %d)", expected, actual, text, n)
@@ -24,15 +24,15 @@ func TestSplitChunks(t *testing.T) {
 }
 
 func TestJoinChunks(t *testing.T) {
-	chunks := []string{"ADGJ", "BEHK", "CFIL"}
-	expected := "ABCDEFGHIJKL"
+	chunks := []string{"ADGJM", "BEHKN", "CFIL"}
+	expected := "ABCDEFGHIJKLMN"
 	actual := joinChunks(chunks)
 	if expected != actual {
 		t.Errorf("Expected %q, but got %q (chunks: %v)", expected, actual, chunks)
 	}
 
-	chunks = []string{"AC", "BD"}
-	expected = "ABCD"
+	chunks = []string{"ACE", "BD"}
+	expected = "ABCDE"
 	actual = joinChunks(chunks)
 	if expected != actual {
 		t.Errorf("Expected %q, but got %q (chunks: %v)", expected, actual, chunks)
@@ -106,7 +106,8 @@ func TestVigenereCrack(t *testing.T) {
 	if expectedLen != len(actual) {
 		t.Errorf("Expected length %d, but got %d", expectedLen, len(actual))
 	}
-	if !reflect.DeepEqual(expected, actual[:len(expected)]) {
-		t.Errorf("Expected %v, but got %v (text: %q, keyLength: %d)", expected, actual, text, keyLength)
+	actualPart := actual[:len(expected)]
+	if !reflect.DeepEqual(expected, actualPart) {
+		t.Errorf("Expected %v (continued...), but got %v (text: %q, keyLength: %d)", expected, actualPart, text, keyLength)
 	}
 }
