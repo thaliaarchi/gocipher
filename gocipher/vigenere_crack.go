@@ -1,8 +1,6 @@
 package gocipher
 
-import (
-	"math"
-)
+import "math"
 
 /*
  * Cracks the Vigenère cipher by testing every possible key of given length and ordering by ngrams
@@ -27,35 +25,37 @@ func splitChunks(text string, size int) []string {
 // joinChunks joins chunks that were split by splitChunks.
 // Assumes first chunk has largest length.
 func joinChunks(chunks []string) string {
-	res := ""
 	size := len(chunks[0])
+	res := make([]rune, len(chunks)*size)
+	pos := 0
 	for i := 0; i < size; i++ {
 		for _, chunk := range chunks {
-			res += string(chunk[i])
+			res[pos] = []rune(chunk)[i]
+			pos++
 		}
 	}
-	return res
+	return string(res)
 }
 
-// cartesian creates a slice of all combinations of 2D array items.
+// cartesianProduct returns the cartestian product of multiple slices.
 // See: https://stackoverflow.com/a/15310051/3238709
-func cartesian(array [][]string) [][]string {
-	res := [][]string{}
-	max := len(array) - 1
-	var f func([]string, int)
-	f = func(arr []string, i int) {
-		len := len(array[i])
+func cartesianProduct(slices [][]string) [][]string {
+	product := [][]string{}
+	max := len(slices) - 1
+	var cartesian func([]string, int)
+	cartesian = func(slice []string, i int) {
+		len := len(slices[i])
 		for j := 0; j < len; j++ {
-			a := append(arr, array[i][j])
+			s := append(slice, slices[i][j])
 			if i == max {
-				res = append(res, a)
+				product = append(product, s)
 			} else {
-				f(a, i+1)
+				cartesian(s, i+1)
 			}
 		}
 	}
-	f([]string{}, 0)
-	return res
+	cartesian([]string{}, 0)
+	return product
 }
 
 // VigenerePossibilities returns all possible plaintexts for a Vigenère cipher for a given key length.
@@ -69,7 +69,7 @@ func VigenerePossibilities(text string, keyLength int) []string {
 		}
 		chunkShifts[i] = shifts
 	}
-	possible := cartesian(chunkShifts)
+	possible := cartesianProduct(chunkShifts)
 	res := make([]string, len(possible))
 	for i, chunks := range possible {
 		res[i] = joinChunks(chunks)

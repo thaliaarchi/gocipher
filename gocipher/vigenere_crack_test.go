@@ -2,7 +2,6 @@ package gocipher
 
 import (
 	"reflect"
-	"strings"
 	"testing"
 )
 
@@ -31,28 +30,31 @@ func TestJoinChunks(t *testing.T) {
 	if expected != actual {
 		t.Errorf("Expected %q, but got %q (chunks: %v)", expected, actual, chunks)
 	}
+
+	chunks = []string{"AC", "BD"}
+	expected = "ABCD"
+	actual = joinChunks(chunks)
+	if expected != actual {
+		t.Errorf("Expected %q, but got %q (chunks: %v)", expected, actual, chunks)
+	}
 }
 
-func TestCartesian(t *testing.T) {
+func TestCartesianProduct(t *testing.T) {
 	input := [][]string{
 		[]string{"ABC", "abc", "123"},
 		[]string{"DEF", "def", "456"},
 		[]string{"GHI", "ghi", "789"}}
-	expected := []string{
-		"ABC,DEF,GHI", "ABC,DEF,ghi", "ABC,DEF,789",
-		"ABC,def,GHI", "ABC,def,ghi", "ABC,def,789",
-		"ABC,456,GHI", "ABC,456,ghi", "ABC,456,789",
-		"abc,DEF,GHI", "abc,DEF,ghi", "abc,DEF,789",
-		"abc,def,GHI", "abc,def,ghi", "abc,def,789",
-		"abc,456,GHI", "abc,456,ghi", "abc,456,789",
-		"123,DEF,GHI", "123,DEF,ghi", "123,DEF,789",
-		"123,def,GHI", "123,def,ghi", "123,def,789",
-		"123,456,GHI", "123,456,ghi", "123,456,789"}
-	output := cartesian(input)
-	actual := make([]string, len(output))
-	for i, chunks := range output {
-		actual[i] = strings.Join(chunks, ",")
-	}
+	expected := [][]string{
+		[]string{"ABC", "DEF", "GHI"}, []string{"ABC", "DEF", "ghi"}, []string{"ABC", "DEF", "789"},
+		[]string{"ABC", "def", "GHI"}, []string{"ABC", "def", "ghi"}, []string{"ABC", "def", "789"},
+		[]string{"ABC", "456", "GHI"}, []string{"ABC", "456", "ghi"}, []string{"ABC", "456", "789"},
+		[]string{"abc", "DEF", "GHI"}, []string{"abc", "DEF", "ghi"}, []string{"abc", "DEF", "789"},
+		[]string{"abc", "def", "GHI"}, []string{"abc", "def", "ghi"}, []string{"abc", "def", "789"},
+		[]string{"abc", "456", "GHI"}, []string{"abc", "456", "ghi"}, []string{"abc", "456", "789"},
+		[]string{"123", "DEF", "GHI"}, []string{"123", "DEF", "ghi"}, []string{"123", "DEF", "789"},
+		[]string{"123", "def", "GHI"}, []string{"123", "def", "ghi"}, []string{"123", "def", "789"},
+		[]string{"123", "456", "GHI"}, []string{"123", "456", "ghi"}, []string{"123", "456", "789"}}
+	actual := cartesianProduct(input)
 	if !reflect.DeepEqual(expected, actual) {
 		t.Errorf("Expected %v, but got %v (input: %v)", expected, actual, input)
 	}
