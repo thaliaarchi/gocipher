@@ -94,6 +94,16 @@ func mapAlpha(text string, f func(i int, char, a, z rune) rune) string {
 	return string(runes)
 }
 
+// alphaIndex returns the number 0-25 corresponding to the letter
+func alphaIndex(char rune) rune {
+	if char >= 'A' && char <= 'Z' {
+		return char - 'A'
+	} else if char >= 'a' && char <= 'z' {
+		return char - 'a'
+	}
+	return -1
+}
+
 // mod returns the modulus `a mod b` in the interval [0, b).
 func mod(a int, b int) int {
 	return (a%b + b) % b

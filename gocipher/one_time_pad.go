@@ -11,7 +11,7 @@ func OneTimePadEncrypt(text, key string) (string, error) {
 	}
 	keyChars := []rune(key)
 	return mapAlpha(text, func(i int, char, a, z rune) rune {
-		return char + (keyChars[i] - a)
+		return modRune(char+alphaIndex(keyChars[i])-a, 26) + a
 	}), nil
 }
 
@@ -22,6 +22,6 @@ func OneTimePadDecrypt(text, key string) (string, error) {
 	}
 	keyChars := []rune(key)
 	return mapAlpha(text, func(i int, char, a, z rune) rune {
-		return char - (keyChars[i] - a)
+		return modRune(char-alphaIndex(keyChars[i])-a, 26) + a
 	}), nil
 }
