@@ -1,8 +1,6 @@
 package gocipher
 
-import (
-	"errors"
-)
+import "errors"
 
 // OneTimePadEncrypt encrypts text using a one-time pad
 func OneTimePadEncrypt(text, key string) (string, error) {

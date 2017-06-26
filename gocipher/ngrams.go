@@ -125,62 +125,49 @@ var bigramFreqs = []float64{
 	0.000000323810344282603, 0.00000188693410264413, 0.00000297762691153874, 0.0000023504047610072, 0.0000215248592155742, 0.00000163803448734747,
 	0.00000222696340725769, 0.000000038381893703688, 0.0000235748709709609, 0.0000266033915557344}
 
-func ngramIndex(ngram string) int {
+// getNgramFreq gets the frequency of an n-gram from a slice of frequencies.
+// If there are no occurances of that n-gram, returns `0, false`.
+func getNgramFreq(ngram []rune, freqs []float64) (float64, bool) {
 	var index int
 	for _, char := range ngram {
 		i := alphaIndex(char)
 		if i == -1 {
-			return -1
+			return 0, false
 		}
 		index = index*26 + int(i)
 	}
-	return index
+	if index == -1 {
+		return 0, false
+	}
+	return freqs[index], true
 }
 
-func getUnigramFreq(char rune) (float64, bool) {
-	if i := alphaIndex(char); i != -1 {
-		return unigramFreqs[i], true
+// GetNgramEntropy gets the entropy of a string according to English n-gram frequencies.
+func GetNgramEntropy(str string, n int, freqs []float64) float64 {
+	runes := []rune(str)
+	ngrams := make([][]rune, len(runes)-n+1)
+	for i := 0; i <= len(runes)-n; i++ {
+		ngrams[i] = runes[i : i+n]
 	}
-	return 0, false
-}
-
-func getBigramFreq(chars string) (float64, bool) {
-	if i := ngramIndex(chars); i != -1 {
-		return bigramFreqs[i], true
+	var sum float64
+	var ignored int
+	for _, ngram := range ngrams {
+		freq, hasFreq := getNgramFreq(ngram, freqs)
+		if hasFreq && freq != 0 {
+			sum += math.Log(freq)
+		} else {
+			ignored++
+		}
 	}
-	return 0, false
+	return -sum / math.Log(2) / float64(len(ngrams)-ignored)
 }
 
 // GetUnigramEntropy gets the entropy of a string according to English unigram frequencies.
 func GetUnigramEntropy(text string) float64 {
-	var sum float64
-	var ignored int
-	unigrams := []rune(text)
-	for _, char := range unigrams {
-		if freq, found := getUnigramFreq(char); found {
-			sum += math.Log(freq)
-		} else {
-			ignored++
-		}
-	}
-	return -sum / math.Log(2) / float64(len(unigrams)-ignored)
+	return GetNgramEntropy(text, 1, unigramFreqs)
 }
 
 // GetBigramEntropy gets the entropy of a string according to English bigram frequencies.
-func GetBigramEntropy(str string) float64 {
-	runes := []rune(str)
-	bigrams := make([]string, len(runes)-1)
-	for i := 0; i < len(runes)-1; i++ {
-		bigrams[i] = string(runes[i : i+2])
-	}
-	var sum float64
-	var ignored int
-	for _, pos := range bigrams {
-		if freq, hasFreq := getBigramFreq(pos); hasFreq && freq != 0 {
-			sum += math.Log(freq)
-		} else {
-			ignored++
-		}
-	}
-	return -sum / math.Log(2) / float64(len(bigrams)-ignored)
+func GetBigramEntropy(text string) float64 {
+	return GetNgramEntropy(text, 2, bigramFreqs)
 }
