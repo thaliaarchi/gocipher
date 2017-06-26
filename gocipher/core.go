@@ -10,9 +10,10 @@ import (
 
 // RandomKey creates a cryptographically secure pseudorandom key
 func RandomKey(length int) (string, error) {
+	maxNum := big.NewInt(26)
 	runes := make([]rune, length)
 	for i := 0; i < length; i++ {
-		nBig, err := rand.Int(rand.Reader, big.NewInt(26))
+		nBig, err := rand.Int(rand.Reader, maxNum)
 		if err != nil {
 			return "", err
 		}

@@ -46,10 +46,10 @@ func readNgramFile(fileName string) ([]*NgramEntry, map[string]*NgramEntry) {
 		countTotal += int(count)
 		fmt.Println(text, entry)
 	}
-	for i, entry := range ngrams {
-		ngrams[i].freq = float64(entry.count) / float64(countTotal)
-		fmt.Println(entry)
+	for i := range ngrams {
+		ngrams[i].freq = float64(ngrams[i].count) / float64(countTotal)
+		fmt.Println(ngrams[i])
 	}
-	fmt.Println(ngrams[0], ngramMap["A"])
+	fmt.Println(ngrams[0], ngramMap["E"])
 	return ngrams, ngramMap
 }
