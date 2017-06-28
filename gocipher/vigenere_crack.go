@@ -87,7 +87,7 @@ type possibility struct {
 func SortPossibilities(possible []string) []possibility {
 	poss := make([]possibility, len(possible))
 	for i, p := range possible {
-		poss[i] = possibility{p, GetBigramEntropy(p)}
+		poss[i] = possibility{p, englishBigrams.GetEntropy(p)}
 	}
 	sort.Slice(poss, func(i, j int) bool {
 		return poss[i].entropy <= poss[j].entropy
