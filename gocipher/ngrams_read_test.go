@@ -5,20 +5,28 @@ import (
 	"testing"
 )
 
+type Language struct {
+	name  string
+	files []int
+}
+
+var languages = []Language{
+	{"danish", []int{1, 2, 3, 4}},
+	{"english", []int{1, 2, 3, 4, 5}},
+	{"finnish", []int{1, 2, 3, 4}},
+	{"french", []int{1, 2, 3, 4}},
+	{"german", []int{1, 2, 3, 4}},
+	{"icelandic", []int{1, 2, 3, 4}},
+	{"polish", []int{1, 2, 3, 4}},
+	{"russian", []int{1, 2, 3, 4}},
+	{"spanish", []int{1, 2, 3, 4}},
+	{"swedish", []int{1, 2, 3, 4}}}
+
 func TestReadNgrams(t *testing.T) {
-	type fileData struct {
-		lang  string
-		file  string
-		count int
-	}
-	counts := []fileData{}
 	for _, lang := range languages {
 		for _, file := range lang.files {
-			_, _, count := readNgramFile("ngrams/" + lang.name + "_" + file + ".txt")
-			data := fileData{lang.name, file, count}
-			counts = append(counts, data)
-			fmt.Println(data)
+			set := ReadNgramFile("ngrams/" + lang.name + "_" + string('0'+file) + "-grams.txt")
+			fmt.Println(set.fileName)
 		}
 	}
-	fmt.Println(counts)
 }

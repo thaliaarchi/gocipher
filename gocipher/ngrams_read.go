@@ -8,39 +8,22 @@ import (
 	"strings"
 )
 
-type Language struct {
-	name  string
-	files []string
+type NgramSet struct {
+	fileName   string
+	ngrams     []*ngram
+	ngramMap   map[string]*ngram
+	n          int
+	totalCount int
 }
 
-var languages = []Language{
-	{"danish", []string{"monograms", "bigrams", "trigrams", "quadgrams"}},
-	{"english", []string{"monograms", "bigrams", "trigrams", "quadgrams", "quintgrams", "words"}},
-	{"finnish", []string{"monograms", "bigrams", "trigrams", "quadgrams"}},
-	{"french", []string{"monograms", "bigrams", "trigrams", "quadgrams"}},
-	{"german", []string{"monograms", "bigrams", "trigrams", "quadgrams"}},
-	{"icelandic", []string{"monograms", "bigrams", "trigrams", "quadgrams"}},
-	{"polish", []string{"monograms", "bigrams", "trigrams", "quadgrams"}},
-	{"russian", []string{"monograms", "bigrams", "trigrams", "quadgrams"}},
-	{"spanish", []string{"monograms", "bigrams", "trigrams", "quadgrams"}},
-	{"swedish", []string{"monograms", "bigrams", "trigrams", "quadgrams", "words"}}}
-
-/*type NgramSet struct {
-	fileName string
-	ngrams   []Ngram
-	ngramMap map[string]Ngram
-	n        int
-}*/
-
-type Ngram struct {
+type ngram struct {
 	chars string
 	count int
-	freq  float64
 }
 
-// readNgramFile reads and parses all n-grams from a file.
+// ReadNgramFile reads and parses all n-grams from a file.
 // See: https://stackoverflow.com/a/23667119/3238709.
-func readNgramFile(fileName string) ([]*Ngram, map[string]*Ngram, int) {
+func ReadNgramFile(fileName string) *NgramSet {
 	if fileName == "" {
 		fmt.Println("Filename must not be empty")
 		os.Exit(2)
@@ -49,9 +32,9 @@ func readNgramFile(fileName string) ([]*Ngram, map[string]*Ngram, int) {
 	if err != nil {
 		panic(fmt.Sprintf("error opening file %q: %v", fileName, err))
 	}
-	var ngrams []*Ngram
-	var ngramMap = make(map[string]*Ngram)
-	countTotal := 0
+	var ngrams []*ngram
+	var ngramMap = make(map[string]*ngram)
+	totalCount := 0
 	scanner := bufio.NewScanner(file)
 	for i := 0; scanner.Scan(); i++ {
 		if err := scanner.Err(); err != nil {
@@ -64,13 +47,10 @@ func readNgramFile(fileName string) ([]*Ngram, map[string]*Ngram, int) {
 		if err != nil {
 			fmt.Println("N-gram count cannot be parsed to integer:", text, err)
 		}
-		entry := &Ngram{chars: text[:split], count: int(count)}
+		entry := &ngram{chars: text[:split], count: int(count)}
 		ngrams = append(ngrams, entry)
 		ngramMap[entry.chars] = entry
-		countTotal += int(count)
+		totalCount += int(count)
 	}
-	for i := range ngrams {
-		ngrams[i].freq = float64(ngrams[i].count) / float64(countTotal)
-	}
-	return ngrams, ngramMap, countTotal
+	return &NgramSet{fileName, ngrams, ngramMap, 0, totalCount}
 }

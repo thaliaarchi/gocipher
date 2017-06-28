@@ -7,7 +7,6 @@ type affineTest struct {
 	key      []int
 }
 
-// Test known plaintext->ciphertext pairs
 func TestAffineEncipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	tests := []affineTest{
@@ -29,7 +28,6 @@ func TestAffineEncipher(t *testing.T) {
 	}
 }
 
-// Test known ciphertext->plaintext pairs
 func TestAffineDecipher(t *testing.T) {
 	text := "pmjgdaxurolifczwtqnkhebyvsPMJGDAXUROLIFCZWTQNKHEBYVS"
 	tests := []affineTest{
@@ -51,7 +49,6 @@ func TestAffineDecipher(t *testing.T) {
 	}
 }
 
-// Punctuation should remain unmodified
 func TestAffinePunctuation(t *testing.T) {
 	text := "!@$%%^&*()_-+={}[]|\":;<>,./?"
 	key, err := NewAffineKey(7, 8)
@@ -59,7 +56,7 @@ func TestAffinePunctuation(t *testing.T) {
 		t.Error("Key creation error")
 	}
 	actual := AffineEncipher(text, key)
-	if text != actual {
+	if text != actual { // Punctuation should remain unmodified
 		t.Errorf("Expected %q, but got %q (text: %q, key %v)", text, actual, text, key)
 	}
 }
