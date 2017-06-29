@@ -45,7 +45,7 @@
     - ✔ **Letter-to-number**
         | [dCode](http://www.dcode.fr/letter-number-cipher)
         | [Rumkin.com](http://rumkin.com/tools/cipher/numbers.php)
-    - Morse Code
+    - ✔ **Morse Code**
         | [dCode](http://www.dcode.fr/morse-code)
         | [Rumkin.com](http://rumkin.com/tools/cipher/morse.php)
         - Wabun Code
@@ -187,11 +187,11 @@
         | [Rumkin.com](http://rumkin.com/tools/cipher/vigenere-keyed.php)
     - Multiplication Vigenére cipher
         | [dCode](http://www.dcode.fr/multiplication-vigenere-cipher)
-    - ✔ **Trithemius cipher**
+    - ✔ **[Trithemius cipher](https://en.wikipedia.org/wiki/Tabula_recta#Trithemius_cipher)**
         | [dCode](http://www.dcode.fr/trithemius-cipher)
     - Vernam cipher
         | [dCode](http://www.dcode.fr/vernam-cipher)
-    - Vigenére Autokey (Autoclave cipher)
+    - [Vigenére autokey cipher (autoclave cipher)](https://en.wikipedia.org/wiki/Autokey_cipher)
         | [dCode](http://www.dcode.fr/autoclave-cipher)
         | [Rumkin.com](http://rumkin.com/tools/cipher/vigenere-autokey.php)
 - XOR cipher

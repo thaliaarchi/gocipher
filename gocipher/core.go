@@ -74,13 +74,12 @@ func RestorePunctuation(original string, modified string) (string, error) {
 
 // RemovePunctuation removes any non alphabetic chars from a string.
 func RemovePunctuation(text string) string {
-	return removePattern(text, "[^A-Za-z]")
+	return replacePattern(text, "[^A-Za-z]", "")
 }
 
-// removePattern removes any chars matching a Regular Expression from a string.
-func removePattern(text string, pattern string) string {
-	re := regexp.MustCompile(pattern)
-	return re.ReplaceAllString(text, "")
+// replacePattern replaces any matches to a Regular Expression in a string.
+func replacePattern(text, pattern, replace string) string {
+	return regexp.MustCompile(pattern).ReplaceAllString(text, replace)
 }
 
 func mapAlpha(text string, f func(i, char int) int) string {
