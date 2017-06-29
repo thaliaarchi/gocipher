@@ -29,14 +29,14 @@ func NewAffineKey(a, b int) (*AffineKey, error) {
 
 // AffineEncipher enciphers string using Affine cipher according to key.
 func AffineEncipher(text string, key *AffineKey) string {
-	return mapAlpha(text, func(i int, char, a, z rune) rune {
-		return rune(mod(key.a*int(char-a)+key.b, 26)) + a
+	return monoalphabetic(text, func(i, char int) int {
+		return key.a*char + key.b
 	})
 }
 
 // AffineDecipher deciphers string using Affine cipher according to key.
 func AffineDecipher(text string, key *AffineKey) string {
-	return mapAlpha(text, func(i int, char, a, z rune) rune {
-		return rune(mod(key.inva*(int(char-a)-key.b), 26)) + a
+	return monoalphabetic(text, func(i, char int) int {
+		return key.inva * (char - key.b)
 	})
 }

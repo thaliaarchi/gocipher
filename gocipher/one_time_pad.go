@@ -8,8 +8,8 @@ func OneTimePadEncrypt(text, key string) (string, error) {
 		return "", errors.New("key must be at least as long as the plaintext")
 	}
 	keyChars := []rune(key)
-	return mapAlpha(text, func(i int, char, a, z rune) rune {
-		return modRune(char+alphaIndex(keyChars[i])-a, 26) + a
+	return monoalphabetic(text, func(i, char int) int {
+		return char + alphaIndex(keyChars[i])
 	}), nil
 }
 
@@ -19,7 +19,7 @@ func OneTimePadDecrypt(text, key string) (string, error) {
 		return "", errors.New("key must be at least as long as the plaintext")
 	}
 	keyChars := []rune(key)
-	return mapAlpha(text, func(i int, char, a, z rune) rune {
-		return modRune(char-alphaIndex(keyChars[i])-a, 26) + a
+	return monoalphabetic(text, func(i, char int) int {
+		return char - alphaIndex(keyChars[i])
 	}), nil
 }
