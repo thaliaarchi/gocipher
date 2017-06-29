@@ -6,7 +6,7 @@ package gocipher
 
 // AtbashEncipher enciphers string using Atbash cipher.
 func AtbashEncipher(text string) string {
-	return monoalphabetic(text, func(i, char int) int {
+	return mapAlpha(text, func(i, char int) int {
 		return 25 - char
 	})
 }

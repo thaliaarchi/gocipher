@@ -83,7 +83,7 @@ func removePattern(text string, pattern string) string {
 	return re.ReplaceAllString(text, "")
 }
 
-func monoalphabetic(text string, f func(i, char int) int) string {
+func mapAlpha(text string, f func(i, char int) int) string {
 	runes := []rune(text)
 	for i, char := range runes {
 		if char >= 'A' && char <= 'Z' {
