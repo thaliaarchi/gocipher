@@ -187,7 +187,7 @@
         | [Rumkin.com](http://rumkin.com/tools/cipher/vigenere-keyed.php)
     - Multiplication Vigenére cipher
         | [dCode](http://www.dcode.fr/multiplication-vigenere-cipher)
-    - Trithemius cipher
+    - ✔ **Trithemius cipher**
         | [dCode](http://www.dcode.fr/trithemius-cipher)
     - Vernam cipher
         | [dCode](http://www.dcode.fr/vernam-cipher)
