@@ -42,7 +42,7 @@
     - ✔ **Letter-to-number**
         | [dCode](http://www.dcode.fr/letter-number-cipher)
         | [Rumkin.com](http://rumkin.com/tools/cipher/numbers.php)
-    - ✔ **Morse Code**
+    - ✔ **[Morse Code](https://en.wikipedia.org/wiki/Morse_code)**
         | [dCode](http://www.dcode.fr/morse-code)
         | [Rumkin.com](http://rumkin.com/tools/cipher/morse.php)
         - Wabun Code
