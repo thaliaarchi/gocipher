@@ -81,9 +81,9 @@ var prosignToMorse = map[string]string{
 }
 
 type Morse struct {
+	useProsigns bool
 	textToMorse map[string]string
 	morseToText map[string]string
-	useProsigns bool
 }
 
 func NewMorse(useProsigns bool) *Morse {
@@ -99,7 +99,7 @@ func NewMorse(useProsigns bool) *Morse {
 			morseToText[morse] = prosign
 		}
 	}
-	return &Morse{textToMorse, morseToText, useProsigns}
+	return &Morse{useProsigns, textToMorse, morseToText}
 }
 
 // Encode converts text into Morse code

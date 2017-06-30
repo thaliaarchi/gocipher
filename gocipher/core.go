@@ -26,8 +26,8 @@ func RandomKey(length int) (string, error) {
 // e.g. "Hello, World!", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" becomes "HELOWRDABCFGIJKMNPQSTUVXYZ"
 func KeyedAlphabet(key string, alphabet string) string {
 	alphabet = strings.ToUpper(alphabet)
-	chars := []rune(strings.ToUpper(key) + alphabet)
 	alpha := ""
+	chars := []rune(strings.ToUpper(key) + alphabet)
 	for _, char := range chars {
 		if !strings.ContainsRune(alpha, char) && strings.ContainsRune(alphabet, char) {
 			alpha += string(char)
@@ -40,8 +40,8 @@ func KeyedAlphabet(key string, alphabet string) string {
 // Uppercase and lowercase are considered different characters.
 // e.g. "HELLO, WORLD!", 'A', 'Z' becomes "HELOWRDABCFGIJKMNPQSTUVXYZ"
 func KeyedAlphabetRange(key string, min, max rune) string {
-	chars := []rune(key)
 	alpha := ""
+	chars := []rune(key)
 	for _, char := range chars {
 		if !strings.ContainsRune(alpha, char) && char >= min && char <= max {
 			alpha += string(char)
@@ -53,6 +53,17 @@ func KeyedAlphabetRange(key string, min, max rune) string {
 		}
 	}
 	return alpha
+}
+
+func RemoveDuplicates(text string) string {
+	res := ""
+	chars := []rune(text)
+	for _, char := range chars {
+		if !strings.ContainsRune(res, char) {
+			res += string(char)
+		}
+	}
+	return res
 }
 
 // RestorePunctuation - If punctuation was accidently removed, use this function to restore it.

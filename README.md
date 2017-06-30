@@ -115,7 +115,7 @@
     | [dCode](http://www.dcode.fr/deranged-alphabet-generator)
 - Four-Square cipher
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/four-square/)
-- Fractionated Morse cipher
+- ✔ **[Fractionated Morse cipher](https://en.wikipedia.org/wiki/Transposition_cipher#Fractionation)**
     | [dCode](http://www.dcode.fr/fractionated-morse)
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/fractionated-morse/)
 - Gold Bug cipher
