@@ -238,7 +238,7 @@
 ## Symmetric key encryption
 
 - [RC2](https://en.wikipedia.org/wiki/RC2)
-- [RC4](https://en.wikipedia.org/wiki/RC4)
+- ✔ **[RC4](https://en.wikipedia.org/wiki/RC4)**
 - [RC5](https://en.wikipedia.org/wiki/RC5)
 - [RC6](https://en.wikipedia.org/wiki/RC6)
 
