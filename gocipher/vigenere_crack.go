@@ -66,7 +66,7 @@ func VigenerePossibilities(text string, keyLength int) []string {
 	for i, chunk := range chunks {
 		shifts := make([]string, 26)
 		for j := 0; j < 26; j++ {
-			shifts[j] = CaesarEncipher(chunk, j)
+			shifts[j] = caesarEncipher(chunk, j)
 		}
 		chunkShifts[i] = shifts
 	}

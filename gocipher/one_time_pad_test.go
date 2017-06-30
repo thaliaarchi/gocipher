@@ -10,7 +10,7 @@ func TestOneTimePadEncrypt(t *testing.T) {
 	text := "Hello"
 	key := "XMCKL"
 	expected := "Eqnvz"
-	actual, err := OneTimePadEncrypt(text, key)
+	actual, err := NewOneTimePad(key).Encrypt(text)
 	if err != nil {
 		t.Error("Unexpected error", err)
 	}
@@ -21,7 +21,7 @@ func TestOneTimePadDecrypt(t *testing.T) {
 	text := "Eqnvz"
 	key := "XMCKL"
 	expected := "Hello"
-	actual, err := OneTimePadDecrypt(text, key)
+	actual, err := NewOneTimePad(key).Decrypt(text)
 	if err != nil {
 		t.Error("Unexpected error", err)
 	}

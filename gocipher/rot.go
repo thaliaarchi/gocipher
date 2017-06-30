@@ -13,8 +13,26 @@ import (
  * ROT-47 cipher
  */
 
-// RotEncipher enciphers string using ROT cipher with alphabet according to key.
-func RotEncipher(text string, key int, alphabet string) string {
+type ROT struct {
+	key      int
+	alphabet string
+}
+
+func NewROT(key int, alphabet string) *ROT {
+	return &ROT{key, alphabet}
+}
+
+// Encipher enciphers string using ROT cipher with alphabet according to key.
+func (r *ROT) Encipher(text string) string {
+	return rotEncipher(text, r.key, r.alphabet)
+}
+
+// Decipher deciphers string using ROT cipher with alphabet according to key.
+func (r *ROT) Decipher(text string) string {
+	return rotEncipher(text, -r.key, r.alphabet)
+}
+
+func rotEncipher(text string, key int, alphabet string) string {
 	size := len(alphabet)
 	alphaRunes := []rune(alphabet)
 	runes := []rune(text)
@@ -26,14 +44,9 @@ func RotEncipher(text string, key int, alphabet string) string {
 	return string(runes)
 }
 
-// RotDecipher deciphers string using ROT cipher with alphabet according to key.
-func RotDecipher(text string, key int, alphabet string) string {
-	return RotEncipher(text, -key, alphabet)
-}
-
-// RotEncipherCaps enciphers string using ROT cipher with alphabet according to key.
+// ROTEncipherCaps enciphers string using ROT cipher with alphabet according to key.
 // Preserves capitalization.
-func RotEncipherCaps(text string, key int, alphabet string) string {
+func ROTEncipherCaps(text string, key int, alphabet string) string {
 	size := len(alphabet)
 	alphabet = strings.ToLower(alphabet)
 	alphaRunes := []rune(alphabet)
@@ -51,15 +64,15 @@ func RotEncipherCaps(text string, key int, alphabet string) string {
 	return string(runes)
 }
 
-// RotDecipherCaps deciphers string using ROT cipher with alphabet according to key.
+// ROTDecipherCaps deciphers string using ROT cipher with alphabet according to key.
 // Preserves capitalization.
-func RotDecipherCaps(text string, key int, alphabet string) string {
-	return RotEncipherCaps(text, -key, alphabet)
+func ROTDecipherCaps(text string, key int, alphabet string) string {
+	return ROTEncipherCaps(text, -key, alphabet)
 }
 
-// RotEncipherRange enciphers string using ROT cipher with ranged alphabet according to key.
+// ROTEncipherRange enciphers string using ROT cipher with ranged alphabet according to key.
 // Uppercase and lowercase are considered different characters.
-func RotEncipherRange(text string, key int, min, max rune) string {
+func ROTEncipherRange(text string, key int, min, max rune) string {
 	size := max - min + 1
 	shift := rune(key)
 	runes := []rune(text)
@@ -71,56 +84,56 @@ func RotEncipherRange(text string, key int, min, max rune) string {
 	return string(runes)
 }
 
-// RotDecipherRange deciphers string using ROT cipher with ranged alphabet according to key.
+// ROTDecipherRange deciphers string using ROT cipher with ranged alphabet according to key.
 // Uppercase and lowercase are considered different characters.
-func RotDecipherRange(text string, key int, min, max rune) string {
-	return RotEncipherRange(text, -key, min, max)
+func ROTDecipherRange(text string, key int, min, max rune) string {
+	return ROTEncipherRange(text, -key, min, max)
 }
 
-// Rot5Encipher enciphers string using ROT-5 cipher. Identical to Rot5Decipher.
+// ROT5Encipher enciphers string using ROT-5 cipher. Identical to ROT5Decipher.
 // e.g. "1234567890" becomes "5678901234".
-func Rot5Encipher(text string) string {
-	return RotEncipherRange(text, 5, '0', '9')
+func ROT5Encipher(text string) string {
+	return ROTEncipherRange(text, 5, '0', '9')
 }
 
-// Rot5Decipher deciphers string using ROT-5 cipher. Identical to Rot5Encipher.
+// ROT5Decipher deciphers string using ROT-5 cipher. Identical to ROT5Encipher.
 // e.g. "5678901234" becomes "1234567890".
-func Rot5Decipher(text string) string {
-	return Rot5Encipher(text)
+func ROT5Decipher(text string) string {
+	return ROT5Encipher(text)
 }
 
-// Rot13Encipher enciphers string using ROT-13 cipher. Identical to Rot13Decipher.
+// ROT13Encipher enciphers string using ROT-13 cipher. Identical to ROT13Decipher.
 // e.g. "ABCDEFGHIJKLM" becomes "NOPQRSTUVWXYZ".
-func Rot13Encipher(text string) string {
-	return CaesarEncipher(text, 13)
+func ROT13Encipher(text string) string {
+	return caesarEncipher(text, 13)
 }
 
-// Rot13Decipher deciphers string using ROT-13 cipher. Identical to Rot13Encipher.
+// ROT13Decipher deciphers string using ROT-13 cipher. Identical to ROT13Encipher.
 // e.g. "NOPQRSTUVWXYZ" becomes "ABCDEFGHIJKLM".
-func Rot13Decipher(text string) string {
-	return Rot13Encipher(text)
+func ROT13Decipher(text string) string {
+	return ROT13Encipher(text)
 }
 
-// Rot18Encipher enciphers string using ROT-18 cipher. Identical to Rot18Decipher.
+// ROT18Encipher enciphers string using ROT-18 cipher. Identical to ROT18Decipher.
 // e.g. "ABCXYZ012" becomes "STUFGHijk".
-func Rot18Encipher(text string) string {
-	return Rot13Encipher(Rot5Encipher(text))
+func ROT18Encipher(text string) string {
+	return ROT13Encipher(ROT5Encipher(text))
 }
 
-// Rot18Decipher deciphers string using ROT-18 cipher. Identical to Rot18Encipher.
+// ROT18Decipher deciphers string using ROT-18 cipher. Identical to ROT18Encipher.
 // e.g. "STUFGHIJK" becomes "ABCXYZ012".
-func Rot18Decipher(text string) string {
-	return Rot18Encipher(text)
+func ROT18Decipher(text string) string {
+	return ROT18Encipher(text)
 }
 
-// Rot47Encipher enciphers string using ROT-47 cipher. Identical to Rot47Decipher.
+// ROT47Encipher enciphers string using ROT-47 cipher. Identical to ROT47Decipher.
 // e.g. "ABCabc" becomes "pqr234".
-func Rot47Encipher(text string) string {
-	return RotEncipherRange(text, 47, '!', '~')
+func ROT47Encipher(text string) string {
+	return ROTEncipherRange(text, 47, '!', '~')
 }
 
-// Rot47Decipher deciphers string using ROT-47 cipher. Identical to Rot47Encipher.
+// ROT47Decipher deciphers string using ROT-47 cipher. Identical to ROT47Encipher.
 // e.g. "pqr234" becomes "ABCabc".
-func Rot47Decipher(text string) string {
-	return Rot47Encipher(text)
+func ROT47Decipher(text string) string {
+	return ROT47Encipher(text)
 }

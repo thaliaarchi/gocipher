@@ -8,22 +8,22 @@ import "errors"
  */
 
 // RailfenceKey is a key for a Rail-fence cipher
-type RailfenceKey struct {
-	rails int
+type Railfence struct {
+	key int
 }
 
-// NewRailfenceKey creates a RailfenceKey.
-func NewRailfenceKey(rails int) (*RailfenceKey, error) {
+// NewRailfence creates a Railfence.
+func NewRailfence(rails int) (*Railfence, error) {
 	if rails <= 0 {
 		return nil, errors.New("key must be greater than zero")
 	}
-	return &RailfenceKey{rails}, nil
+	return &Railfence{rails}, nil
 }
 
-// RailfenceEncipher enciphers string using Rail-fence cipher according to key
-func RailfenceEncipher(text string, key *RailfenceKey) (string, error) {
+// Encipher enciphers string using Rail-fence cipher according to key
+func (r *Railfence) Encipher(text string) (string, error) {
 	chars := []rune(text)
-	rails := key.rails - 1
+	rails := r.key - 1
 	if rails > 2*len(chars)-1 {
 		return "", errors.New("key is too large for the text length")
 	}
@@ -53,14 +53,14 @@ func RailfenceEncipher(text string, key *RailfenceKey) (string, error) {
 	return string(res), nil
 }
 
-// RailfenceDecipher deciphers string using Rail-fence cipher according to key
-func RailfenceDecipher(text string, key *RailfenceKey) (string, error) {
+// Decipher deciphers string using Rail-fence cipher according to key
+func (r *Railfence) Decipher(text string) (string, error) {
 	text = RemovePunctuation(text)
 	chars := []rune(text)
 	if len(chars) < 1 {
 		return "", errors.New("text must not be empty")
 	}
-	rails := key.rails - 1
+	rails := r.key - 1
 	if rails > 2*len(chars)-1 {
 		return "", errors.New("key is too large for the text length")
 	}

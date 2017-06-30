@@ -19,11 +19,11 @@ func TestRailfenceEncipher(t *testing.T) {
 		{"amyKWblnxzJLVXckowAIMUYdjpvBHNTZeiquCGOSfhrtDFPRgsEQ", 7},
 		{"aoCQbnpBDPRcmqAEOSdlrzFNTeksyGMUfjtxHLVZgiuwIKWYhvJX", 8}}
 	for _, test := range tests {
-		key, err := NewRailfenceKey(test.key)
+		railfence, err := NewRailfence(test.key)
 		if err != nil {
 			t.Error("Unexpected error:", err)
 		}
-		actual, err := RailfenceEncipher(text, key)
+		actual, err := railfence.Encipher(text)
 		if err != nil {
 			t.Error("Unexpected error:", err)
 		}
@@ -39,11 +39,11 @@ func TestRailfenceDecipher(t *testing.T) {
 		{"afoxGOWPHypgbhqzIQXRJAricjsBKSYTLCtkdluDMUZVNEvmenwF", 7},
 		{"aelszGOWPHAtmfbgnuBIQXRJCvohcipwDKSYTLExqjdkryFMUZVN", 8}}
 	for _, test := range tests {
-		key, err := NewRailfenceKey(test.key)
+		railfence, err := NewRailfence(test.key)
 		if err != nil {
 			t.Error("Unexpected error:", err)
 		}
-		actual, err := RailfenceDecipher(text, key)
+		actual, err := railfence.Decipher(text)
 		if err != nil {
 			t.Error("Unexpected error:", err)
 		}

@@ -4,15 +4,21 @@ package gocipher
  * Trithemius cipher
  */
 
-// TrithemiusEncipher enciphers string using Trithemius cipher.
-func TrithemiusEncipher(text string) string {
+type Trithemius struct{}
+
+func NewTrithemius() *Trithemius {
+	return &Trithemius{}
+}
+
+// Encipher enciphers string using Trithemius cipher.
+func (t *Trithemius) Encipher(text string) string {
 	return mapAlpha(text, func(i, char int) int {
 		return char + i
 	})
 }
 
-// TrithemiusDecipher deciphers string using Trithemius cipher.
-func TrithemiusDecipher(text string) string {
+// Decipher deciphers string using Trithemius cipher.
+func (t *Trithemius) Decipher(text string) string {
 	return mapAlpha(text, func(i, char int) int {
 		return char - i
 	})

@@ -16,9 +16,6 @@
     | [dCode](http://www.dcode.fr/bacon-cipher)
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/baconian/)
     | [Rumkin.com](http://rumkin.com/tools/cipher/baconian.php)
-- Enigma cipher
-    | [dCode](http://www.dcode.fr/enigma-machine-cipher)
-    | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/mechanical-era/enigma/)
 - [Jefferson disk / Bazeries cylinder](https://en.wikipedia.org/wiki/Jefferson_disk),
   [M-94](https://en.wikipedia.org/wiki/M-94)
     | [dCode](http://www.dcode.fr/bazeries-cipher)
@@ -82,7 +79,6 @@
     - Trithemius Ave Maria
         | [dCode](http://www.dcode.fr/trithemius-ave-maria)
 
-
 - Alphabetical Ranks Added
     | [dCode](http://www.dcode.fr/alphabetical-ranks-added)
 - Bellaso cipher
@@ -125,8 +121,6 @@
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/hill/)
 - Ideograms cipher
     | [dCode](http://www.dcode.fr/ideograms)
-- Lorenz cipher
-    | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/mechanical-era/lorenz/)
 - LSPK90 Clockwise
     | [dCode](http://www.dcode.fr/lspk90-cw-leet-speak-90-degrees-clockwise)
 - Mexican Army cipher wheel
@@ -196,6 +190,16 @@
         | [Rumkin.com](http://rumkin.com/tools/cipher/vigenere-autokey.php)
 - XOR cipher
     | [dCode](http://www.dcode.fr/xor-cipher)
+
+## Mechanical ciphers
+
+- Enigma cipher
+    | [dCode](http://www.dcode.fr/enigma-machine-cipher)
+    | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/mechanical-era/enigma/)
+- Lorenz cipher
+    | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/mechanical-era/lorenz/)
+- [M-209](https://en.wikipedia.org/wiki/M-209)
+- [SIGABA](https://en.wikipedia.org/wiki/SIGABA)
 
 ## Binary-to-text encoding
 
@@ -283,6 +287,7 @@
     | [Rumkin.com](http://rumkin.com/tools/cipher/frequency.php)
 - Index of Coincidence
     | [dCode](http://www.dcode.fr/index-coincidence)
+- Middle squares method for pseurorandom number generation
 
 ## Utilities
 
@@ -313,9 +318,6 @@
 
 ## Libraries
 
-- [Caesar Salad (JS)](https://github.com/schnittstabil/caesar-salad)
-- [CryptoJS](https://code.google.com/archive/p/crypto-js/)
-
-
-
-Middle squares method for pseurorandom number generation
+- [Caesar Salad](https://github.com/schnittstabil/caesar-salad) (JavaScript)
+- [cipher-machines](https://github.com/keltia/cipher-machines) (Go)
+- [CryptoJS](https://code.google.com/archive/p/crypto-js/) (JavaScript)

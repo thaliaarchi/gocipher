@@ -9,13 +9,13 @@ import (
 func TestTrithemiusEncipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	expected := "acegikmoqsuwyacegikmoqsuwyACEGIKMOQSUWYACEGIKMOQSUWY"
-	actual := TrithemiusEncipher(text)
+	actual := NewTrithemius().Encipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestTrithemiusDecipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	expected := "aaaaaaaaaaaaaaaaaaaaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAA"
-	actual := TrithemiusDecipher(text)
+	actual := NewTrithemius().Decipher(text)
 	assert.Equal(t, expected, actual)
 }
