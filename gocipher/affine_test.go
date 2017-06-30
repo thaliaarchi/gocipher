@@ -1,6 +1,10 @@
 package gocipher
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 type affineTest struct {
 	expected string
@@ -22,9 +26,7 @@ func TestAffineEncipher(t *testing.T) {
 			t.Error("Key creation error")
 		}
 		actual := AffineEncipher(text, key)
-		if test.expected != actual {
-			t.Errorf("Expected %q, but got %q (text: %q, key %v)", test.expected, actual, text, key)
-		}
+		assert.Equal(t, test.expected, actual)
 	}
 }
 
@@ -43,9 +45,7 @@ func TestAffineDecipher(t *testing.T) {
 			t.Error("Key creation error")
 		}
 		actual := AffineDecipher(text, key)
-		if test.expected != actual {
-			t.Errorf("Expected %q, but got %q (text: %q, key %v)", test.expected, actual, text, test.key)
-		}
+		assert.Equal(t, test.expected, actual)
 	}
 }
 
@@ -56,7 +56,5 @@ func TestAffinePunctuation(t *testing.T) {
 		t.Error("Key creation error")
 	}
 	actual := AffineEncipher(text, key)
-	if text != actual { // Punctuation should remain unmodified
-		t.Errorf("Expected %q, but got %q (text: %q, key %v)", text, actual, text, key)
-	}
+	assert.Equal(t, text, actual) // Punctuation should remain unmodified
 }

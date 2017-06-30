@@ -1,8 +1,9 @@
 package gocipher
 
 import (
-	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSplitChunks(t *testing.T) {
@@ -10,33 +11,25 @@ func TestSplitChunks(t *testing.T) {
 	n := 3
 	expected := []string{"ADGJM", "BEHKN", "CFIL"}
 	actual := splitChunks(text, n)
-	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("Expected %v, but got %v (text: %q, n: %d)", expected, actual, text, n)
-	}
+	assert.Equal(t, expected, actual)
 
 	text = "ABCDE"
 	n = 2
 	expected = []string{"ACE", "BD"}
 	actual = splitChunks(text, n)
-	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("Expected %v, but got %v (text: %q, n: %d)", expected, actual, text, n)
-	}
+	assert.Equal(t, expected, actual)
 }
 
 func TestJoinChunks(t *testing.T) {
 	chunks := []string{"ADGJM", "BEHKN", "CFIL"}
 	expected := "ABCDEFGHIJKLMN"
 	actual := joinChunks(chunks)
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q (chunks: %v)", expected, actual, chunks)
-	}
+	assert.Equal(t, expected, actual)
 
 	chunks = []string{"ACE", "BD"}
 	expected = "ABCDE"
 	actual = joinChunks(chunks)
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q (chunks: %v)", expected, actual, chunks)
-	}
+	assert.Equal(t, expected, actual)
 }
 
 func TestCartesianProduct(t *testing.T) {
@@ -55,9 +48,7 @@ func TestCartesianProduct(t *testing.T) {
 		{"123", "def", "GHI"}, {"123", "def", "ghi"}, {"123", "def", "789"},
 		{"123", "456", "GHI"}, {"123", "456", "ghi"}, {"123", "456", "789"}}
 	actual := cartesianProduct(input)
-	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("Expected %v, but got %v (input: %v)", expected, actual, input)
-	}
+	assert.Equal(t, expected, actual)
 }
 
 func TestVigenerePossibilities(t *testing.T) {
@@ -70,20 +61,8 @@ func TestVigenerePossibilities(t *testing.T) {
 		"BODQ", "BPDR", "BQDS", "BRDT", "BSDU", "BTDV", "BUDW", "BVDX", "BWDY", "BXDZ", "BYDA", "BZDB", "BADC"} // ... 13 times more
 	expectedLen := 676 // 26^26
 	actual := VigenerePossibilities(text, keyLength)
-	hasError := false
-	if expectedLen != len(actual) {
-		t.Errorf("Expected length %d, but got %d", expectedLen, len(actual))
-		hasError = true
-	}
-	for i, value := range expected {
-		if value != actual[i] {
-			t.Errorf("Expected %q at index %d, but got %q", value, i, actual[i])
-			hasError = true
-		}
-	}
-	if hasError {
-		t.Errorf("Expected %v, but got %v (text: %q, keyLength: %d)", expected, actual, text, keyLength)
-	}
+	assert.Equal(t, expectedLen, len(actual))
+	assert.Equal(t, expected, actual[:len(expected)])
 }
 
 func TestVigenereCrack(t *testing.T) {
@@ -103,11 +82,6 @@ func TestVigenereCrack(t *testing.T) {
 	expectedLen := 676 // 26^26
 	poss := VigenerePossibilities(text, keyLength)
 	actual := SortPossibilities(poss)
-	if expectedLen != len(actual) {
-		t.Errorf("Expected length %d, but got %d", expectedLen, len(actual))
-	}
-	actualPart := actual[:len(expected)]
-	if !reflect.DeepEqual(expected, actualPart) {
-		t.Errorf("Expected %v (continued...), but got %v (text: %q, keyLength: %d)", expected, actualPart, text, keyLength)
-	}
+	assert.Equal(t, expectedLen, len(actual))
+	assert.Equal(t, expected, actual[:len(expected)])
 }

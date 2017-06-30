@@ -1,6 +1,10 @@
 package gocipher
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestMorseEncode(t *testing.T) {
 	morse := NewMorse(true)
@@ -11,9 +15,7 @@ func TestMorseEncode(t *testing.T) {
 	if err != nil {
 		t.Error("Unexpected error", err)
 	}
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q", expected, actual)
-	}
+	assert.Equal(t, expected, actual)
 }
 
 func TestMorseDecode(t *testing.T) {
@@ -25,7 +27,5 @@ func TestMorseDecode(t *testing.T) {
 	if err != nil {
 		t.Error("Unexpected error", err)
 	}
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q", expected, actual)
-	}
+	assert.Equal(t, expected, actual)
 }

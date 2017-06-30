@@ -1,6 +1,10 @@
 package gocipher
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestFracMorseEncipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -14,9 +18,7 @@ func TestFracMorseEncipher(t *testing.T) {
 	if err != nil {
 		t.Error("Unexpected error", err)
 	}
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q (key: %q)", expected, actual, key)
-	}
+	assert.Equal(t, expected, actual)
 }
 
 func TestFracMorseDecipher(t *testing.T) {
@@ -31,7 +33,5 @@ func TestFracMorseDecipher(t *testing.T) {
 	if err != nil {
 		t.Error("Unexpected error", err)
 	}
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q (key: %q)", expected, actual, key)
-	}
+	assert.Equal(t, expected, actual)
 }

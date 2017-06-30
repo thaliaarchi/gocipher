@@ -1,6 +1,10 @@
 package gocipher
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 type railfenceTest struct {
 	expected string
@@ -23,9 +27,7 @@ func TestRailfenceEncipher(t *testing.T) {
 		if err != nil {
 			t.Error("Unexpected error:", err)
 		}
-		if test.expected != actual {
-			t.Errorf("Expected %q, but got %q (text: %q, key %d)", test.expected, actual, text, test.key)
-		}
+		assert.Equal(t, test.expected, actual)
 	}
 }
 
@@ -45,8 +47,6 @@ func TestRailfenceDecipher(t *testing.T) {
 		if err != nil {
 			t.Error("Unexpected error:", err)
 		}
-		if test.expected != actual {
-			t.Errorf("Expected %q, but got %q (text: %q, key %d)", test.expected, actual, text, test.key)
-		}
+		assert.Equal(t, test.expected, actual)
 	}
 }

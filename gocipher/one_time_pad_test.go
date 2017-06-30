@@ -1,6 +1,10 @@
 package gocipher
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestOneTimePadEncrypt(t *testing.T) {
 	text := "Hello"
@@ -10,9 +14,7 @@ func TestOneTimePadEncrypt(t *testing.T) {
 	if err != nil {
 		t.Error("Unexpected error", err)
 	}
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q (text: %q, key: %q)", expected, actual, text, key)
-	}
+	assert.Equal(t, expected, actual)
 }
 
 func TestOneTimePadDecrypt(t *testing.T) {
@@ -23,7 +25,5 @@ func TestOneTimePadDecrypt(t *testing.T) {
 	if err != nil {
 		t.Error("Unexpected error", err)
 	}
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q (text: %q, key: %q)", expected, actual, text, key)
-	}
+	assert.Equal(t, expected, actual)
 }

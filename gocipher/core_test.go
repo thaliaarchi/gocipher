@@ -3,6 +3,8 @@ package gocipher
 import (
 	"regexp"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestRandomKey(t *testing.T) {
@@ -29,9 +31,7 @@ func TestKeyedAlphabet(t *testing.T) {
 	alphabet := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	expected := "HELOWRDABCFGIJKMNPQSTUVXYZ"
 	actual := KeyedAlphabet(key, alphabet)
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q (key: %q, alphabet: %q)", expected, actual, key, alphabet)
-	}
+	assert.Equal(t, expected, actual)
 }
 
 func TestKeyedAlphabetRange(t *testing.T) {
@@ -39,7 +39,5 @@ func TestKeyedAlphabetRange(t *testing.T) {
 	min, max := 'A', 'Z'
 	expected := "HELOWRDABCFGIJKMNPQSTUVXYZ"
 	actual := KeyedAlphabetRange(key, min, max)
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q (key: %q, min: %v, max %v)", expected, actual, key, min, max)
-	}
+	assert.Equal(t, expected, actual)
 }

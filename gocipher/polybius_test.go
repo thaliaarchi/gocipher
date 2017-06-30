@@ -3,6 +3,8 @@ package gocipher
 import (
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type polybiusTest struct {
@@ -25,9 +27,7 @@ func TestPolybiusEncipher(t *testing.T) {
 			t.Error("Unexpected error", err)
 		}
 		actual := p.Encipher(text)
-		if strings.ToUpper(actual) != strings.ToUpper(test.ciphertext) {
-			t.Errorf("Expected %q, but got %q", test.ciphertext, actual)
-		}
+		assert.Equal(t, strings.ToUpper(test.ciphertext), strings.ToUpper(actual))
 	}
 }
 
@@ -44,8 +44,6 @@ func TestPolybiusDecipher(t *testing.T) {
 			t.Error("Unexpected error", err)
 		}
 		actual := p.Decipher(test.ciphertext)
-		if strings.ToUpper(actual) != strings.ToUpper(text) {
-			t.Errorf("Expected %q, but got %q", text, actual)
-		}
+		assert.Equal(t, strings.ToUpper(text), strings.ToUpper(actual))
 	}
 }

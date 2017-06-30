@@ -3,6 +3,8 @@ package gocipher
 import (
 	"encoding/base64"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBase64Encode(t *testing.T) {
@@ -42,9 +44,7 @@ func TestBase64DecodeRawURL(t *testing.T) {
 
 func testBase64Encode(t *testing.T, text, expected string, f func(string) string) {
 	actual := f(text)
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q (text: %q)", expected, actual, text)
-	}
+	assert.Equal(t, expected, actual)
 }
 
 func testBase64Decode(t *testing.T, text, expected string, f func(string) (string, error)) {
@@ -52,7 +52,5 @@ func testBase64Decode(t *testing.T, text, expected string, f func(string) (strin
 	if err != nil {
 		t.Error("Unexpected error", err)
 	}
-	if expected != actual {
-		t.Errorf("Expected %q, but got %q (text: %q)", expected, actual, text)
-	}
+	assert.Equal(t, expected, actual)
 }

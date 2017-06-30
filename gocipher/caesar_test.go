@@ -1,6 +1,10 @@
 package gocipher
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 type caesarTest struct {
 	expected string
@@ -18,10 +22,8 @@ func TestCaesarEncipher(t *testing.T) {
 		{"jklmnopqrstuvwxyzabcdefghiJKLMNOPQRSTUVWXYZABCDEFGHI", 9},
 		{"zabcdefghijklmnopqrstuvwxyZABCDEFGHIJKLMNOPQRSTUVWXY", -1}}
 	for _, test := range tests {
-		output := CaesarEncipher(text, test.key)
-		if output != test.expected {
-			t.Errorf("Expected %q, but got %q (text: %q, key: %d)", test.expected, output, text, test.key)
-		}
+		actual := CaesarEncipher(text, test.key)
+		assert.Equal(t, test.expected, actual)
 	}
 }
 
@@ -37,10 +39,8 @@ func TestCaesarDecipher(t *testing.T) {
 		{"bcdefghijklmnopqrstuvwxyzaBCDEFGHIJKLMNOPQRSTUVWXYZA", -1},
 	}
 	for _, test := range tests {
-		output := CaesarDecipher(text, test.key)
-		if output != test.expected {
-			t.Errorf("Expected %q, but got %q (text: %q, key: %d)", test.expected, output, text, test.key)
-		}
+		actual := CaesarDecipher(text, test.key)
+		assert.Equal(t, test.expected, actual)
 	}
 }
 
@@ -48,9 +48,7 @@ func TestCaesarPunctuation(t *testing.T) {
 	text := "!@$%%^&*()_-+={}[]|\":;<>,./?"
 	key := 14
 	actual := CaesarEncipher(text, key)
-	if text != actual { // Punctuation should remain unmodified
-		t.Errorf("Expected %q, but got %q (text: %q, key %d)", text, actual, text, key)
-	}
+	assert.Equal(t, text, actual) // Punctuation should remain unmodified
 }
 
 type caesarKeyedTest struct {
@@ -70,10 +68,8 @@ func TestCaesarKeyedEncipher(t *testing.T) {
 		{"hijklmnopqtuvwxyzcaesrbdfgHIJKLMNOPQTUVWXYZCAESRBDFG", 9, "Caesar"},
 		{"zshiftabcdegjklmnopqruvwxyZSHIFTABCDEGJKLMNOPQRUVWXY", -1, "shift"}}
 	for _, test := range tests {
-		output := CaesarKeyedEncipher(text, test.shift, test.key)
-		if output != test.expected {
-			t.Errorf("Expected %q, but got %q (text: %q, key: %q, shift: %d)", test.expected, output, text, test.key, test.shift)
-		}
+		actual := CaesarKeyedEncipher(text, test.shift, test.key)
+		assert.Equal(t, test.expected, actual)
 	}
 }
 
@@ -88,9 +84,7 @@ func TestCaesarKeyedDecipher(t *testing.T) {
 		{"jklmnopqtuvwxyzcaesrbdfghiJKLMNOPQTUVWXYZCAESRBDFGHI", 15, "CAESAR"},
 		{"hiftabcdegjklmnopqruvwxyzsHIFTABCDEGJKLMNOPQRUVWXYZS", -1, "SHIFT"}}
 	for _, test := range tests {
-		output := CaesarKeyedDecipher(text, test.shift, test.key)
-		if output != test.expected {
-			t.Errorf("Expected %q, but got %q (text: %q, key: %q, shift: %d)", test.expected, output, text, test.key, test.shift)
-		}
+		actual := CaesarKeyedDecipher(text, test.shift, test.key)
+		assert.Equal(t, test.expected, actual)
 	}
 }

@@ -1,23 +1,23 @@
 package gocipher
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestGetUnigramEntropy(t *testing.T) {
 	text := "HELLOWORLD"
 	expected := 4.303018577099257
 	actual := englishUnigrams.GetEntropy(text)
-	if expected != actual {
-		t.Errorf("Expected %v, but got %v (text: %q)", expected, actual, text)
-	}
+	assert.Equal(t, expected, actual)
 }
 
 func TestGetBigramEntropy(t *testing.T) {
 	text := "HELLOWORLD"
 	expected := 7.86033946544012
 	actual := englishBigrams.GetEntropy(text)
-	if expected != actual {
-		t.Errorf("Expected %v, but got %v (text: %q)", expected, actual, text)
-	}
+	assert.Equal(t, expected, actual)
 }
 
 type language struct {
