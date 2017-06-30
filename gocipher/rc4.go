@@ -14,23 +14,16 @@ func NewRC4(key string) *RC4 {
 
 // Encipher enciphers string using RC4 according to key
 func (r *RC4) Encipher(text string) string {
-	s := make([]int, 256)
-	for i := 0; i < 256; i++ {
-		s[i] = i
-	}
-	j := 0
-	for i := 0; i < 256; i++ {
-		j = (j + s[i] + int(r.key[i%len(r.key)])) % 256
-		s[i], s[j] = s[j], s[i]
-	}
+	n := 256
+	s := rc4KSA(r.key, n)
 	i := 0
-	j = 0
+	j := 0
 	res := []byte(text)
 	for y := 0; y < len(text); y++ {
-		i = (i + 1) % 256
-		j = (j + s[i]) % 256
+		i = (i + 1) % n
+		j = (j + s[i]) % n
 		s[i], s[j] = s[j], s[i]
-		res[y] = byte(int(text[y]) ^ s[(s[i]+s[j])%256])
+		res[y] ^= byte(s[(s[i]+s[j])%n])
 	}
 	return string(res)
 }
@@ -38,4 +31,19 @@ func (r *RC4) Encipher(text string) string {
 // Decipher deciphers string using RC4 according to key
 func (r *RC4) Decipher(text string) string {
 	return r.Encipher(text)
+}
+
+// rc4KSA is the key-scheduling algorithm (KSA) for RC4.
+// Generates a state array based on the key.
+func rc4KSA(key string, n int) []int {
+	s := make([]int, n)
+	for i := 0; i < n; i++ {
+		s[i] = i
+	}
+	j := 0
+	for i := 0; i < n; i++ {
+		j = (j + s[i] + int(key[i%len(key)])) % n
+		s[i], s[j] = s[j], s[i]
+	}
+	return s
 }

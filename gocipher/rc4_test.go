@@ -16,11 +16,12 @@ var rc4Tests = []struct {
 	{"Wiki", "pedia", "\x10\x21\xBF\x04\x20"},
 	{"Secret", "Attack at dawn", "\x45\xA0\x1F\x64\x5F\xC3\x5B\x38\x35\x52\x54\x4B\x9B\xF5"}}
 
-func TestRC4(t *testing.T) {
+func TestRC4Symmetric(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	key := "Hello, World!"
 	rc4 := NewRC4(key)
-	actual := rc4.Decipher(rc4.Encipher(text))
+	ciphertext := rc4.Encipher(text)
+	actual := rc4.Decipher(ciphertext)
 	assert.Equal(t, text, actual)
 }
 
