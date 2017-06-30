@@ -24,82 +24,82 @@ func TestROTDecipher(t *testing.T) {
 func TestROTEncipherCaps(t *testing.T) {
 	var text = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	var expected = "stuvwxyz0123456789abcdefghijklmnopqrSTUVWXYZ0123456789ABCDEFGHijklmnopqr"
-	actual := ROTEncipherCaps(text, 18, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+	actual := rotEncipherCaps(text, 18, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 	assert.Equal(t, expected, actual)
 }
 
 func TestROTDecipherCaps(t *testing.T) {
 	var text = "stuvwxyz0123456789abcdefghijklmnopqrSTUVWXYZ0123456789ABCDEFGHijklmnopqr"
 	var expected = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHijklmnopqrSTUVWXYZ0123456789" // Loses capitalization on numbers
-	actual := ROTDecipherCaps(text, 18, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+	actual := rotEncipherCaps(text, -18, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 	assert.Equal(t, expected, actual)
 }
 
-func TestROTEncipherRange(t *testing.T) {
+func TestROTRangeEncipher(t *testing.T) {
 	var text = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	var expected = "abcdefghijklmnopqrstuvwxyz0123456789NOPQRSTUVWXYZABCDEFGHIJKLM0123456789"
-	actual := ROTEncipherRange(text, 13, 'A', 'Z') // Only changes A-Z, not lowercase
+	actual := NewROTRange(13, 'A', 'Z').Encipher(text) // Only changes A-Z, not lowercase
 	assert.Equal(t, expected, actual)
 }
 
-func TestROTDecipherRange(t *testing.T) {
+func TestROTRangeDecipher(t *testing.T) {
 	var text = "abcdefghijklmnopqrstuvwxyz0123456789NOPQRSTUVWXYZABCDEFGHIJKLM0123456789"
 	var expected = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	actual := ROTDecipherRange(text, 13, 'A', 'Z') // Only changes A-Z, not lowercase
+	actual := NewROTRange(13, 'A', 'Z').Decipher(text) // Only changes A-Z, not lowercase
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT5Encipher(t *testing.T) {
 	text := "0123456789"
 	expected := "5678901234"
-	actual := ROT5Encipher(text)
+	actual := NewROT5().Encipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT5Decipher(t *testing.T) {
 	text := "5678901234"
 	expected := "0123456789"
-	actual := ROT5Decipher(text)
+	actual := NewROT5().Decipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT13Encipher(t *testing.T) {
 	var text = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	var expected = "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM"
-	actual := ROT13Encipher(text)
+	actual := NewROT13().Encipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT13Decipher(t *testing.T) {
 	var text = "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM"
 	var expected = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	actual := ROT13Decipher(text)
+	actual := NewROT13().Decipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT18Encipher(t *testing.T) {
 	var text = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	var expected = "nopqrstuvwxyzabcdefghijklm5678901234NOPQRSTUVWXYZABCDEFGHIJKLM5678901234"
-	actual := ROT18Encipher(text)
+	actual := NewROT18().Encipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT18Decipher(t *testing.T) {
 	var text = "nopqrstuvwxyzabcdefghijklm5678901234NOPQRSTUVWXYZABCDEFGHIJKLM5678901234"
 	var expected = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	actual := ROT18Decipher(text)
+	actual := NewROT18().Decipher(text)
 	assert.Equal(t, expected, actual)
 }
 func TestROT47Encipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	expected := "23456789:;<=>?@ABCDEFGHIJKpqrstuvwxyz{|}~!\"#$%&'()*+"
-	actual := ROT47Encipher(text)
+	actual := NewROT47().Encipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT47Decipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	expected := "23456789:;<=>?@ABCDEFGHIJKpqrstuvwxyz{|}~!\"#$%&'()*+"
-	actual := ROT47Decipher(text)
+	actual := NewROT47().Decipher(text)
 	assert.Equal(t, expected, actual)
 }

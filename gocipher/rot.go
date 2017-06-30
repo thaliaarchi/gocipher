@@ -32,6 +32,7 @@ func (r *ROT) Decipher(text string) string {
 	return rotEncipher(text, -r.key, r.alphabet)
 }
 
+// Encipher enciphers string using ROT cipher with alphabet according to key.
 func rotEncipher(text string, key int, alphabet string) string {
 	size := len(alphabet)
 	alphaRunes := []rune(alphabet)
@@ -46,7 +47,7 @@ func rotEncipher(text string, key int, alphabet string) string {
 
 // ROTEncipherCaps enciphers string using ROT cipher with alphabet according to key.
 // Preserves capitalization.
-func ROTEncipherCaps(text string, key int, alphabet string) string {
+func rotEncipherCaps(text string, key int, alphabet string) string {
 	size := len(alphabet)
 	alphabet = strings.ToLower(alphabet)
 	alphaRunes := []rune(alphabet)
@@ -64,15 +65,31 @@ func ROTEncipherCaps(text string, key int, alphabet string) string {
 	return string(runes)
 }
 
-// ROTDecipherCaps deciphers string using ROT cipher with alphabet according to key.
-// Preserves capitalization.
-func ROTDecipherCaps(text string, key int, alphabet string) string {
-	return ROTEncipherCaps(text, -key, alphabet)
+type ROTRange struct {
+	key int
+	min rune
+	max rune
 }
 
-// ROTEncipherRange enciphers string using ROT cipher with ranged alphabet according to key.
+func NewROTRange(key int, min, max rune) *ROTRange {
+	return &ROTRange{key, min, max}
+}
+
+// Encipher enciphers string using ROT cipher with ranged alphabet according to key.
 // Uppercase and lowercase are considered different characters.
-func ROTEncipherRange(text string, key int, min, max rune) string {
+func (r *ROTRange) Encipher(text string) string {
+	return rotEncipherRange(text, r.key, r.min, r.max)
+}
+
+// Decipher deciphers string using ROT cipher with ranged alphabet according to key.
+// Uppercase and lowercase are considered different characters.
+func (r *ROTRange) Decipher(text string) string {
+	return rotEncipherRange(text, -r.key, r.min, r.max)
+}
+
+// rotEncipherRange enciphers string using ROT cipher with ranged alphabet according to key.
+// Uppercase and lowercase are considered different characters.
+func rotEncipherRange(text string, key int, min, max rune) string {
 	size := max - min + 1
 	shift := rune(key)
 	runes := []rune(text)
@@ -84,56 +101,38 @@ func ROTEncipherRange(text string, key int, min, max rune) string {
 	return string(runes)
 }
 
-// ROTDecipherRange deciphers string using ROT cipher with ranged alphabet according to key.
-// Uppercase and lowercase are considered different characters.
-func ROTDecipherRange(text string, key int, min, max rune) string {
-	return ROTEncipherRange(text, -key, min, max)
+// NewROT5 creates a ROTRange struct to encipher and decipher string using ROT-5 cipher.
+// e.g. "1234567890" <-> "5678901234". Encipher and Decipher are identical.
+func NewROT5() *ROTRange {
+	return &ROTRange{5, '0', '9'}
 }
 
-// ROT5Encipher enciphers string using ROT-5 cipher. Identical to ROT5Decipher.
-// e.g. "1234567890" becomes "5678901234".
-func ROT5Encipher(text string) string {
-	return ROTEncipherRange(text, 5, '0', '9')
+// NewROT13 creates a Caesar struct to encipher and decipher string using ROT-13 cipher.
+// e.g. "ABCDEFGHIJKLM" <-> "NOPQRSTUVWXYZ". Encipher and Decipher are identical.
+func NewROT13() *Caesar {
+	return NewCaesar(13)
 }
 
-// ROT5Decipher deciphers string using ROT-5 cipher. Identical to ROT5Encipher.
-// e.g. "5678901234" becomes "1234567890".
-func ROT5Decipher(text string) string {
-	return ROT5Encipher(text)
+type ROT18 struct{}
+
+func NewROT18() *ROT18 {
+	return &ROT18{}
 }
 
-// ROT13Encipher enciphers string using ROT-13 cipher. Identical to ROT13Decipher.
-// e.g. "ABCDEFGHIJKLM" becomes "NOPQRSTUVWXYZ".
-func ROT13Encipher(text string) string {
-	return caesarEncipher(text, 13)
-}
-
-// ROT13Decipher deciphers string using ROT-13 cipher. Identical to ROT13Encipher.
-// e.g. "NOPQRSTUVWXYZ" becomes "ABCDEFGHIJKLM".
-func ROT13Decipher(text string) string {
-	return ROT13Encipher(text)
-}
-
-// ROT18Encipher enciphers string using ROT-18 cipher. Identical to ROT18Decipher.
+// Encipher enciphers string using ROT-18 cipher. Identical to ROT18Decipher.
 // e.g. "ABCXYZ012" becomes "STUFGHijk".
-func ROT18Encipher(text string) string {
-	return ROT13Encipher(ROT5Encipher(text))
+func (r *ROT18) Encipher(text string) string {
+	return NewROT13().Encipher(NewROT5().Encipher(text))
 }
 
-// ROT18Decipher deciphers string using ROT-18 cipher. Identical to ROT18Encipher.
+// Decipher deciphers string using ROT-18 cipher. Identical to ROT18Encipher.
 // e.g. "STUFGHIJK" becomes "ABCXYZ012".
-func ROT18Decipher(text string) string {
-	return ROT18Encipher(text)
+func (r *ROT18) Decipher(text string) string {
+	return r.Encipher(text)
 }
 
-// ROT47Encipher enciphers string using ROT-47 cipher. Identical to ROT47Decipher.
-// e.g. "ABCabc" becomes "pqr234".
-func ROT47Encipher(text string) string {
-	return ROTEncipherRange(text, 47, '!', '~')
-}
-
-// ROT47Decipher deciphers string using ROT-47 cipher. Identical to ROT47Encipher.
-// e.g. "pqr234" becomes "ABCabc".
-func ROT47Decipher(text string) string {
-	return ROT47Encipher(text)
+// NewROT47 creates a ROTRange struct to encipher and decipher string using ROT-47 cipher.
+// e.g. "ABCabc" <-> "pqr234". Encipher and Decipher are identical.
+func NewROT47() *ROTRange {
+	return &ROTRange{47, '!', '~'}
 }
