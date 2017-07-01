@@ -29,3 +29,10 @@ func TestMorseDecode(t *testing.T) {
 	}
 	assert.Equal(t, expected, actual)
 }
+
+func TestMorseToBulletEnDash(t *testing.T) {
+	text := "...---... / . .. ... - -- ---"
+	expected := "•••–––••• / • •• ••• – –– –––"
+	actual := MorseToBulletEnDash(text)
+	assert.Equal(t, expected, actual)
+}
