@@ -16,6 +16,7 @@ const (
 	MorseInternational MorseAlphabet = iota
 	MorseSymbols
 	MorseProsigns
+	MorseAbbrNumbers
 	MorseNonEnglish
 	MorseGreek
 	MorseRussian
@@ -29,6 +30,7 @@ var morseAlphabets = [][][]string{
 	MorseInternational: morseInternational,
 	MorseSymbols:       morseSymbols,
 	MorseProsigns:      morseProsigns,
+	MorseAbbrNumbers:   morseAbbrNumbers,
 	MorseNonEnglish:    morseNonEnglish,
 	MorseGreek:         morseGreek,
 	MorseRussian:       morseRussian,
@@ -45,7 +47,7 @@ var morseInternational = [][]string{
 	{"C", "-.-."},
 	{"D", "-.."},
 	{"E", "."},
-	{"É", "..-.."}, // accented
+	{"É", "..-.."}, // Accented
 	{"F", "..-."},
 	{"G", "--."},
 	{"H", "...."},
@@ -79,36 +81,34 @@ var morseInternational = [][]string{
 	{"9", "----."},
 	{"0", "-----"},
 	// Punctuation marks and miscellaneous signs
-	{".", ".-.-.-"},                // Full stop (period)
-	{",", "--..--"},                // Comma
-	{":", "---..."},                // Colon or division sign
-	{"?", "..--.."},                // Question mark (note of interrogation or request for repetition of a transmission not understood)
-	{"'", ".----."},                // Apostrophe ’
-	{"-", "-....-"},                // Hyphen or dash or subtraction sign –
-	{"/", "-..-."},                 // Fraction bar or division sign
-	{"(", "-.--."},                 // Left-hand bracket (parenthesis)
-	{")", "-.--.-"},                // Right-hand bracket (parenthesis)
-	{"\"", ".-..-."},               // Inverted commas (quotation marks) (before and after the words) “”
-	{"=", "-...-"},                 // Double hyphen
-	{"<Understood>", "...-."},      // Understood
-	{"<Error>", "........"},        // Error (eight dots)
-	{"+", ".-.-."},                 // Cross or addition sign
-	{"K", "-.-"},                   // Invitation to transmit
-	{"<Wait>", ".-..."},            // Wait
-	{"<End of work>", "...-.-"},    // End of work
-	{"<Starting signal>", "-.-.-"}, // Starting signal (to precede every transmission)
-	{"×", "-..-"},                  // Multiplication sign
-	{"@", ".--.-."},                // Commercial at
+	{".", ".-.-.-"},                    // Full stop (period)
+	{",", "--..--"},                    // Comma
+	{":", "---..."},                    // Colon or division sign
+	{"?", "..--.."},                    // Question mark (note of interrogation or request for repetition of a transmission not understood)
+	{"'", "’", ".----."},               // Apostrophe
+	{"-", "–", "-....-"},               // Hyphen or dash or subtraction sign
+	{"/", "-..-."},                     // Fraction bar or division sign
+	{"(", "-.--."},                     // Left-hand bracket (parenthesis)
+	{")", "-.--.-"},                    // Right-hand bracket (parenthesis)
+	{"\"", "“", "”", ".-..-."},         // Inverted commas (quotation marks) (before and after the words)
+	{"=", "-...-"},                     // Double hyphen
+	{"<SN>", "<VE>", "...-."},          // Understood
+	{"<HH>", "<EEEEEEEE>", "........"}, // Error (eight dots)
+	{"+", ".-.-."},                     // Cross or addition sign (<AR> digraph)
+	{"<K>", "-.-"},                     // Invitation to transmit
+	{"<AS>", ".-..."},                  // Wait
+	{"<SK>", "<VA>", "...-.-"},         // End of work
+	{"<CT>", "<KA>", "-.-.-"},          // Starting signal (to precede every transmission)
+	{"×", "-..-"},                      // Multiplication sign
+	{"@", ".--.-."},                    // Commercial at (<AC> digraph)
 }
 
 var morseSymbols = [][]string{
-	{"!", "-.-.--"}, // <KW>
-	{"&", ".-..."},  // <AS>, Not in ITU-R recommendation
+	{"!", "-.-.--"}, // <KW> digraph, Not in ITU-R recommendation
+	{"&", ".-..."},  // <AS> digraph, Not in ITU-R recommendation
 	{";", "-.-.-."},
-	{"+", ".-.-."},   // <AR>
 	{"_", "..--.-"},  // Not in ITU-R recommendation
 	{"$", "...-..-"}, // <SX>, Not in ITU-R recommendation
-	{"@", ".--.-."},  // <AC>
 }
 
 // https://en.wikipedia.org/wiki/Prosigns_for_Morse_code
@@ -130,6 +130,21 @@ var morseProsigns = [][]string{
 	{"<SK>", "<VA>", "...-.-"},         // End of contact
 	{"<SN>", "<VE>", "...-."},          // Understood
 	{"<SOS>", "...---..."},             // International distress signal
+}
+
+// Conflicts with ABDGNSTUVW
+// http://www.kent-engineers.com/thecode.htm
+var morseAbbrNumbers = [][]string{
+	{"1", ".-"},   // Conflicts with A
+	{"2", "..-"},  // Conflicts with U
+	{"3", ".--"},  // Conflicts with W
+	{"4", "...-"}, // Conflicts with V
+	{"5", "..."},  // Conflicts with S
+	{"6", "-..."}, // Conflicts with B
+	{"7", "--."},  // Conflicts with G
+	{"8", "-.."},  // Conflicts with D
+	{"9", "-."},   // Conflicts with N
+	{"0", "-"},    // Conflicts with T
 }
 
 var morseNonEnglish = [][]string{
