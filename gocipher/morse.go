@@ -27,15 +27,18 @@ func NewMorse(alphabets ...MorseAlphabet) *Morse {
 	for _, alphabet := range alphabets {
 		mappings = append(mappings, morseAlphabets[alphabet]...)
 	}
-	for _, pair := range mappings {
-		char, morse := pair[0], pair[1]
+	for _, item := range mappings {
+		chars := item[:len(item)-1]
+		morse := item[len(item)-1]
 		if _, exists := morseToText[morse]; !exists {
-			morseToText[morse] = char
+			morseToText[morse] = chars[0]
 		}
-		char = strings.ToUpper(char)
-		textToMorse[char] = morse
-		if len([]rune(char)) > 1 {
-			prosigns = append(prosigns, char)
+		for _, char := range chars {
+			char = strings.ToUpper(char)
+			textToMorse[char] = morse
+			if len([]rune(char)) > 1 {
+				prosigns = append(prosigns, char)
+			}
 		}
 	}
 	return &Morse{textToMorse, morseToText, prosigns}

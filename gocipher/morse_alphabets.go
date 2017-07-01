@@ -114,40 +114,40 @@ var morseSymbols = [][]string{
 // https://en.wikipedia.org/wiki/Prosigns_for_Morse_code
 // http://www.kent-engineers.com/prosigns.htm
 var morseProsigns = [][]string{
-	{"<AA>", ".-.-"},                     // New Line (space down one line)
-	{"<AR>", ".-.-."},                    // New Page (space down several lines); End of transmission
-	{"<AS>", ".-..."},                    // Wait
-	{"<BK>", "-...-.-"},                  // Break; Invite receiving station to transmit
-	{"<BT>", "-...-"},                    // New Paragraph (space down two lines); Pause
-	{"<CL>", "-.-..-.."},                 // Closing
-	{"<CQ>", "-.-.--.-"},                 // Calling any amateur radio station
-	{"<CT>", "-.-.-"}, {"<KA>", "-.-.-"}, // Attention
-	{"<HH>", "........"}, {"<EEEEEEEE>", "........"}, // Error
-	{"<K>", "-.-"},                         // Invitation for any station to transmit
-	{"<KN>", "-.--."},                      // Invitation for named station to transmit
-	{"<NJ>", "-..---"}, {"<DO>", "-..---"}, // Shift to Wabun code
-	{"<R>", ".-."},                         // All received OK
-	{"<SK>", "...-.-"}, {"<VA>", "...-.-"}, // End of contact
-	{"<SN>", "...-."}, {"<VE>", "...-."}, // Understood
-	{"<SOS>", "...---..."}, // International distress signal
+	{"<AA>", ".-.-"},                   // New Line (space down one line)
+	{"<AR>", ".-.-."},                  // New Page (space down several lines); End of transmission
+	{"<AS>", ".-..."},                  // Wait
+	{"<BK>", "-...-.-"},                // Break; Invite receiving station to transmit
+	{"<BT>", "-...-"},                  // New Paragraph (space down two lines); Pause
+	{"<CL>", "-.-..-.."},               // Closing
+	{"<CQ>", "-.-.--.-"},               // Calling any amateur radio station
+	{"<CT>", "<KA>", "-.-.-"},          // Attention
+	{"<HH>", "<EEEEEEEE>", "........"}, // Error
+	{"<K>", "-.-"},                     // Invitation for any station to transmit
+	{"<KN>", "-.--."},                  // Invitation for named station to transmit
+	{"<NJ>", "<DO>", "-..---"},         // Shift to Wabun code
+	{"<R>", ".-."},                     // All received OK
+	{"<SK>", "<VA>", "...-.-"},         // End of contact
+	{"<SN>", "<VE>", "...-."},          // Understood
+	{"<SOS>", "...---..."},             // International distress signal
 }
 
 var morseNonEnglish = [][]string{
-	{"À", ".--.-"}, {"Å", ".--.-"},
-	{"Ä", ".-.-"}, {"Æ", ".-.-"}, {"Ą", ".-.-"},
-	{"Ć", "-.-.."}, {"Ĉ", "-.-.."}, {"Ç", "-.-.."},
-	{"CH", "----"}, {"Ĥ", "----"}, {"Š", "----"},
-	{"Đ", "..-.."}, {"É", "..-.."}, {"Ę", "..-.."},
+	{"À", "Å", ".--.-"},
+	{"Ä", "Æ", "Ą", ".-.-"},
+	{"Ć", "Ĉ", "Ç", "-.-.."},
+	{"CH", "Ĥ", "Š", "----"},
+	{"Đ", "É", "Ę", "..-.."},
 	{"Ð", "..--."},
-	{"È", ".-..-"}, {"Ł", ".-..-"},
+	{"È", "Ł", ".-..-"},
 	{"Ĝ", "--.-."},
 	{"Ĵ", ".---."},
-	{"Ń", "--.--"}, {"Ñ", "--.--"},
-	{"Ó", "---."}, {"Ö", "---."}, {"Ø", "---."},
+	{"Ń", "Ñ", "--.--"},
+	{"Ó", "Ö", "Ø", "---."},
 	{"Ś", "...-..."},
 	{"Ŝ", "...-."}, // <SN> <VE>
 	{"Þ", ".--.."},
-	{"Ü", "..--"}, {"Ŭ", "..--"},
+	{"Ü", "Ŭ", "..--"},
 	{"Ź", "--..-."},
 	{"Ż", "--..-"},
 }
