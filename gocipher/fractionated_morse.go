@@ -36,7 +36,7 @@ func NewFracMorse(key string) (*FracMorse, error) {
 
 // Encipher enciphers text using the fractionated Morse cipher acccording to the initialized key.
 func (f *FracMorse) Encipher(text string) (string, error) {
-	morse, err := NewMorse(false, false).Encode(text)
+	morse, err := NewMorse().Encode(text)
 	if err != nil {
 		return "", err
 	}
@@ -71,7 +71,7 @@ func (f *FracMorse) Decipher(text string) (string, error) {
 	}
 	morse = replacePattern(morse, "/", " ")
 	morse = replacePattern(morse, "  ", " / ")
-	text, err := NewMorse(false, false).Decode(morse)
+	text, err := NewMorse().Decode(morse)
 	if err != nil {
 		return "", err
 	}

@@ -7,10 +7,10 @@ import (
 )
 
 func TestMorseEncode(t *testing.T) {
-	morse := NewMorse(true, true)
+	morse := NewMorse()
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	expected := ".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --.."
-	expected = expected + " " + expected
+	expected += " " + expected
 	actual, err := morse.Encode(text)
 	if err != nil {
 		t.Error("Unexpected error", err)
@@ -19,11 +19,21 @@ func TestMorseEncode(t *testing.T) {
 }
 
 func TestMorseDecode(t *testing.T) {
-	morse := NewMorse(true, true)
+	morse := NewMorse()
 	text := ".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --.."
-	text = text + " " + text
-	expected := "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	expected := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	actual, err := morse.Decode(text)
+	if err != nil {
+		t.Error("Unexpected error", err)
+	}
+	assert.Equal(t, expected, actual)
+}
+
+func TestMorseEncodeProsigns(t *testing.T) {
+	morse := NewMorse(MorseInternational, MorseNonEnglish, MorseProsigns)
+	text := "AÉCCHA<SOS>A<UndERSTOOD>A"
+	expected := ".- ..-.. -.-. ---- .- ...---... .- ...-. .-"
+	actual, err := morse.Encode(text)
 	if err != nil {
 		t.Error("Unexpected error", err)
 	}

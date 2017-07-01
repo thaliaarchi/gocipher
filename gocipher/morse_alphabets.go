@@ -2,19 +2,50 @@ package gocipher
 
 /*
  * https://en.wikipedia.org/wiki/Morse_code
- * https://en.wikipedia.org/wiki/Prosigns_for_Morse_code
  * https://en.wikipedia.org/wiki/Morse_code_for_non-Latin_alphabets
  * https://en.wikipedia.org/wiki/Russian_Morse_code
  * https://fa.wikipedia.org/wiki/%DA%A9%D8%AF_%D9%85%D9%88%D8%B1%D8%B3
  * https://en.wikipedia.org/wiki/Wabun_code
  */
 
-var morseChars = [][]string{
+type MorseAlphabet uint
+
+const (
+	// MorseInternational is the International Morse code Remommendation ITU-R M.1677-1
+	// http://www.itu.int/rec/R-REC-M.1677-1-200910-I/
+	MorseInternational MorseAlphabet = iota
+	MorseSymbols
+	MorseProsigns
+	MorseNonEnglish
+	MorseGreek
+	MorseRussian
+	MorseBulgarian
+	MorseHebrew
+	MorseArabic
+	MorsePersian
+)
+
+var morseAlphabets = [][][]string{
+	MorseInternational: morseInternational,
+	MorseSymbols:       morseSymbols,
+	MorseProsigns:      morseProsigns,
+	MorseNonEnglish:    morseNonEnglish,
+	MorseGreek:         morseGreek,
+	MorseRussian:       morseRussian,
+	MorseBulgarian:     morseBulgarian,
+	MorseHebrew:        morseHebrew,
+	MorseArabic:        morseArabic,
+	MorsePersian:       morsePersian,
+}
+
+var morseInternational = [][]string{
+	// Letters
 	{"A", ".-"},
 	{"B", "-..."},
 	{"C", "-.-."},
 	{"D", "-.."},
 	{"E", "."},
+	{"É", "..-.."}, // accented
 	{"F", "..-."},
 	{"G", "--."},
 	{"H", "...."},
@@ -36,7 +67,7 @@ var morseChars = [][]string{
 	{"X", "-..-"},
 	{"Y", "-.--"},
 	{"Z", "--.."},
-	{"0", "-----"},
+	// Figures
 	{"1", ".----"},
 	{"2", "..---"},
 	{"3", "...--"},
@@ -46,42 +77,59 @@ var morseChars = [][]string{
 	{"7", "--..."},
 	{"8", "---.."},
 	{"9", "----."},
-	{".", ".-.-.-"},
-	{",", "--..--"},
-	{"?", "..--.."},
-	{"'", ".----."},
-	{"!", "-.-.--"}, // <KW>
-	{"/", "-..-."},
-	{"(", "-.--."},
-	{")", "-.--.-"},
-	{"&", ".-..."}, // <AS>, Not in ITU-R recommendation
-	{":", "---..."},
-	{";", "-.-.-."},
-	{"=", "-...-"},
-	{"+", ".-.-."}, // <AR>
-	{"-", "-....-"},
-	{"_", "..--.-"}, // Not in ITU-R recommendation
-	{"\"", ".-..-."},
-	{"$", "...-..-"}, // <SX>, Not in ITU-R recommendation
-	{"@", ".--.-."},  // <AC>
-	{" ", "/"},
+	{"0", "-----"},
+	// Punctuation marks and miscellaneous signs
+	{".", ".-.-.-"},                // Full stop (period)
+	{",", "--..--"},                // Comma
+	{":", "---..."},                // Colon or division sign
+	{"?", "..--.."},                // Question mark (note of interrogation or request for repetition of a transmission not understood)
+	{"'", ".----."},                // Apostrophe ’
+	{"-", "-....-"},                // Hyphen or dash or subtraction sign –
+	{"/", "-..-."},                 // Fraction bar or division sign
+	{"(", "-.--."},                 // Left-hand bracket (parenthesis)
+	{")", "-.--.-"},                // Right-hand bracket (parenthesis)
+	{"\"", ".-..-."},               // Inverted commas (quotation marks) (before and after the words) “”
+	{"=", "-...-"},                 // Double hyphen
+	{"<Understood>", "...-."},      // Understood
+	{"<Error>", "........"},        // Error (eight dots)
+	{"+", ".-.-."},                 // Cross or addition sign
+	{"K", "-.-"},                   // Invitation to transmit
+	{"<Wait>", ".-..."},            // Wait
+	{"<End of work>", "...-.-"},    // End of work
+	{"<Starting signal>", "-.-.-"}, // Starting signal (to precede every transmission)
+	{"×", "-..-"},                  // Multiplication sign
+	{"@", ".--.-."},                // Commercial at
 }
 
+var morseSymbols = [][]string{
+	{"!", "-.-.--"}, // <KW>
+	{"&", ".-..."},  // <AS>, Not in ITU-R recommendation
+	{";", "-.-.-."},
+	{"+", ".-.-."},   // <AR>
+	{"_", "..--.-"},  // Not in ITU-R recommendation
+	{"$", "...-..-"}, // <SX>, Not in ITU-R recommendation
+	{"@", ".--.-."},  // <AC>
+}
+
+// https://en.wikipedia.org/wiki/Prosigns_for_Morse_code
+// http://www.kent-engineers.com/prosigns.htm
 var morseProsigns = [][]string{
-	{"<AA>", ".-.-"},
-	{"<AR>", ".-.-."},
-	{"<AS>", ".-..."},
-	{"<BK>", "-...-.-"},
-	{"<BT>", "-...-"},
-	{"<CL>", "-.-..-.."},
-	{"<CT>", "-.-.-"},
-	{"<HH>", "........"}, {"<EEEEEEEE>", "........"},
-	{"<KN>", "-.--."},
-	{"<DO>", "-..---"}, {"<NJ>", "-..---"},
-	{"<SK>", "...-.-"},
-	{"<SN>", "...-."}, {"<VE>", "...-."},
-	{"<VA>", "...-.-"},
-	{"<SOS>", "...---..."},
+	{"<AA>", ".-.-"},                     // New Line (space down one line)
+	{"<AR>", ".-.-."},                    // New Page (space down several lines); End of transmission
+	{"<AS>", ".-..."},                    // Wait
+	{"<BK>", "-...-.-"},                  // Break; Invite receiving station to transmit
+	{"<BT>", "-...-"},                    // New Paragraph (space down two lines); Pause
+	{"<CL>", "-.-..-.."},                 // Closing
+	{"<CQ>", "-.-.--.-"},                 // Calling any amateur radio station
+	{"<CT>", "-.-.-"}, {"<KA>", "-.-.-"}, // Attention
+	{"<HH>", "........"}, {"<EEEEEEEE>", "........"}, // Error
+	{"<K>", "-.-"},                         // Invitation for any station to transmit
+	{"<KN>", "-.--."},                      // Invitation for named station to transmit
+	{"<NJ>", "-..---"}, {"<DO>", "-..---"}, // Shift to Wabun code
+	{"<R>", ".-."},                         // All received OK
+	{"<SK>", "...-.-"}, {"<VA>", "...-.-"}, // End of contact
+	{"<SN>", "...-."}, {"<VE>", "...-."}, // Understood
+	{"<SOS>", "...---..."}, // International distress signal
 }
 
 var morseNonEnglish = [][]string{
@@ -94,7 +142,7 @@ var morseNonEnglish = [][]string{
 	{"È", ".-..-"}, {"Ł", ".-..-"},
 	{"Ĝ", "--.-."},
 	{"Ĵ", ".---."},
-	{"Ń", "..-.."}, {"Ñ", "..-.."},
+	{"Ń", "--.--"}, {"Ñ", "--.--"},
 	{"Ó", "---."}, {"Ö", "---."}, {"Ø", "---."},
 	{"Ś", "...-..."},
 	{"Ŝ", "...-."}, // <SN> <VE>

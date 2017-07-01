@@ -2,7 +2,6 @@ package gocipher
 
 import (
 	"errors"
-	"regexp"
 	"strings"
 )
 
@@ -12,29 +11,34 @@ import (
  */
 
 type Morse struct {
-	useProsigns bool
 	textToMorse map[string]string
 	morseToText map[string]string
+	prosigns    []string
 }
 
-func NewMorse(useProsigns bool, useNonEnglish bool) *Morse {
+func NewMorse(alphabets ...MorseAlphabet) *Morse {
 	var textToMorse = map[string]string{}
 	var morseToText = map[string]string{}
-	mappings := morseChars
-	if useProsigns {
-		mappings = append(mappings, morseChars...)
+	var prosigns = []string{}
+	mappings := [][]string{{" ", "/"}}
+	if len(alphabets) == 0 {
+		mappings = append(mappings, morseInternational...)
 	}
-	if useNonEnglish {
-		mappings = append(mappings, morseNonEnglish...)
+	for _, alphabet := range alphabets {
+		mappings = append(mappings, morseAlphabets[alphabet]...)
 	}
 	for _, pair := range mappings {
 		char, morse := pair[0], pair[1]
-		textToMorse[char] = morse
 		if _, exists := morseToText[morse]; !exists {
 			morseToText[morse] = char
 		}
+		char = strings.ToUpper(char)
+		textToMorse[char] = morse
+		if len([]rune(char)) > 1 {
+			prosigns = append(prosigns, char)
+		}
 	}
-	return &Morse{useProsigns, textToMorse, morseToText}
+	return &Morse{textToMorse, morseToText, prosigns}
 }
 
 // Encode converts text into Morse code
@@ -48,15 +52,16 @@ func (m *Morse) Encode(text string) (string, error) {
 	hasError := false
 	tokens := []string{}
 	for len(text) > 0 {
+		textRunes := []rune(text)
 		tokenLength := 1
-		if m.useProsigns {
-			prosign := regexp.MustCompile("^<...?>").FindString(text)
-			if prosign != "" {
-				tokenLength = len(prosign)
+		for _, prosign := range m.prosigns {
+			prosignLength := len([]rune(prosign))
+			if prosign == string(textRunes[:prosignLength]) {
+				tokenLength = prosignLength
 			}
 		}
-		tokens = append(tokens, text[:tokenLength])
-		text = text[tokenLength:]
+		tokens = append(tokens, string(textRunes[:tokenLength]))
+		text = string(textRunes[tokenLength:])
 	}
 	for _, token := range tokens {
 		if char, ok := m.textToMorse[token]; ok {
