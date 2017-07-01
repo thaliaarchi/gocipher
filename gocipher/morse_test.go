@@ -10,12 +10,11 @@ func TestMorseEncode(t *testing.T) {
 	morse := NewMorse()
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	expected := ".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --.."
-	expected += " " + expected
 	actual, err := morse.Encode(text)
 	if err != nil {
 		t.Error("Unexpected error", err)
 	}
-	assert.Equal(t, expected, actual)
+	assert.Equal(t, expected+" "+expected, actual)
 }
 
 func TestMorseDecode(t *testing.T) {
@@ -31,7 +30,7 @@ func TestMorseDecode(t *testing.T) {
 
 func TestMorseEncodeProsigns(t *testing.T) {
 	morse := NewMorse(MorseInternational, MorseNonEnglish, MorseProsigns)
-	text := "AÉCCHA<SOS>A<UndERSTOOD>A"
+	text := "AÉCChA<sos>A<SN>A"
 	expected := ".- ..-.. -.-. ---- .- ...---... .- ...-. .-"
 	actual, err := morse.Encode(text)
 	if err != nil {
@@ -40,9 +39,17 @@ func TestMorseEncodeProsigns(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
-func TestMorseToBulletEnDash(t *testing.T) {
+func TestMorseFormatBullets(t *testing.T) {
 	text := "...---... / . .. ... - -- ---"
 	expected := "•••–––••• / • •• ••• – –– –––"
-	actual := MorseToBulletEnDash(text)
+	actual := MorseFormatBullets(text)
+	assert.Equal(t, expected, actual)
+}
+
+// Test from: https://en.wikipedia.org/wiki/Morse_code#Spoken_representation
+func TestMorseFormatSpoken(t *testing.T) {
+	text := "-- --- .-. ... . / -.-. --- -.. ." // text for: Morse Code
+	expected := "Dah-dah dah-dah-dah di-dah-dit di-di-dit dit, Dah-di-dah-dit dah-dah-dah dah-di-dit dit."
+	actual := MorseFormatSpoken(text)
 	assert.Equal(t, expected, actual)
 }

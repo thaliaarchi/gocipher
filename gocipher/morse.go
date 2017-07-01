@@ -110,11 +110,40 @@ func (m *Morse) Decode(morse string) (string, error) {
 	return text, nil
 }
 
-// MorseToBulletEnDash replaces the .- characters in Morse text with •– so the characters are vertially centered.
-func MorseToBulletEnDash(morse string) string {
+// MorseFormatBullets replaces the .- characters in Morse text with •– so the characters are vertially centered.
+func MorseFormatBullets(morse string) string {
 	morse = strings.Replace(morse, "-", "–", -1)
 	morse = strings.Replace(morse, ".", "•", -1)
 	return morse
+}
+
+// MorseFormatSpoken replaces dots and dashes with dits and dahs in Morse text.
+// https://en.wikipedia.org/wiki/Morse_code#Spoken_representation
+func MorseFormatSpoken(morse string) string {
+	words := strings.Split(morse, " / ")
+	for i, word := range words {
+		letters := strings.Split(word, " ")
+		for j, letter := range letters {
+			chars := []rune(letter)
+			syllables := make([]string, len(letter))
+			for k, char := range chars {
+				if char == '-' {
+					syllables[k] = "dah"
+				} else if char == '.' {
+					if k == len(chars)-1 {
+						syllables[k] = "dit"
+					} else {
+						syllables[k] = "di"
+					}
+				}
+			}
+			letters[j] = strings.Join(syllables, "-")
+		}
+		word = strings.Join(letters, " ")
+		chars := []rune(word)
+		words[i] = strings.ToUpper(string(chars[0])) + string(chars[1:])
+	}
+	return strings.Join(words, ", ") + "."
 }
 
 func tidyMorseText(text string) string {

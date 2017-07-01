@@ -3,16 +3,11 @@ package gocipher
 /*
  * https://en.wikipedia.org/wiki/Morse_code
  * https://en.wikipedia.org/wiki/Morse_code_for_non-Latin_alphabets
- * https://en.wikipedia.org/wiki/Russian_Morse_code
- * https://fa.wikipedia.org/wiki/%DA%A9%D8%AF_%D9%85%D9%88%D8%B1%D8%B3
- * https://en.wikipedia.org/wiki/Wabun_code
  */
 
 type MorseAlphabet uint
 
 const (
-	// MorseInternational is the International Morse code Remommendation ITU-R M.1677-1
-	// http://www.itu.int/rec/R-REC-M.1677-1-200910-I/
 	MorseInternational MorseAlphabet = iota
 	MorseSymbols
 	MorseProsigns
@@ -40,6 +35,9 @@ var morseAlphabets = [][][]string{
 	MorsePersian:       morsePersian,
 }
 
+// International Morse code Remommendation ITU-R M.1677-1
+// http://www.itu.int/rec/R-REC-M.1677-1-200910-I/
+// https://en.wikipedia.org/wiki/Morse_code
 var morseInternational = [][]string{
 	// Letters
 	{"A", ".-"},
@@ -103,6 +101,8 @@ var morseInternational = [][]string{
 	{"@", ".--.-."},                    // Commercial at (<AC> digraph)
 }
 
+// Additional symbols not in ITU-R recommendation
+// https://en.wikipedia.org/wiki/Morse_code
 var morseSymbols = [][]string{
 	{"!", "-.-.--"}, // <KW> digraph, Not in ITU-R recommendation
 	{"&", ".-..."},  // <AS> digraph, Not in ITU-R recommendation
@@ -111,6 +111,7 @@ var morseSymbols = [][]string{
 	{"$", "...-..-"}, // <SX>, Not in ITU-R recommendation
 }
 
+// Prosigns
 // https://en.wikipedia.org/wiki/Prosigns_for_Morse_code
 // http://www.kent-engineers.com/prosigns.htm
 var morseProsigns = [][]string{
@@ -132,6 +133,7 @@ var morseProsigns = [][]string{
 	{"<SOS>", "...---..."},             // International distress signal
 }
 
+// Abbreviated numbers
 // Conflicts with ABDGNSTUVW
 // http://www.kent-engineers.com/thecode.htm
 var morseAbbrNumbers = [][]string{
@@ -160,13 +162,16 @@ var morseNonEnglish = [][]string{
 	{"Ń", "Ñ", "--.--"},
 	{"Ó", "Ö", "Ø", "---."},
 	{"Ś", "...-..."},
-	{"Ŝ", "...-."}, // <SN> <VE>
+	{"Ŝ", "...-."}, // Conflicts with <SN> and <VE>
 	{"Þ", ".--.."},
 	{"Ü", "Ŭ", "..--"},
 	{"Ź", "--..-."},
 	{"Ż", "--..-"},
 }
 
+// Greek
+// The Greek diphthongs are specified in old Greek Morse-code tables but they are
+// never used in actual communication, the two vowels being sent separately.
 var morseGreek = [][]string{
 	// Letters
 	{"Α", ".-"},
@@ -194,9 +199,6 @@ var morseGreek = [][]string{
 	{"Ψ", "--.-"},
 	{"Ω", ".--"},
 	// Diphthongs
-	// The Greek diphthongs are specified in old Greek Morse-code tables
-	// but they are never used in actual communication,
-	// the two vowels being sent separately.
 	{"HY", "...-"},
 	{"OI", "---.."},
 	{"AY", "..--"},
@@ -207,6 +209,7 @@ var morseGreek = [][]string{
 	{"AI", ".-.-"},
 }
 
+// Russian and Bulgarian Morse have only a few differences
 var morseCyrillicPartA = [][]string{
 	{"A", ".-"},
 	{"Б", "-..."},
@@ -267,14 +270,22 @@ var morseCyrillicPartB = [][]string{
 	{"/", "-..-."},
 	{"?", "..--.."},
 	{"!", "--..--"},
-	{"Hyphen", "-...-"}, // Hyphen is above, so...
-	{"Error/redo", "........"},
+	{"=", "-...-"},                     // Hyphen
+	{"<HH>", "<EEEEEEEE>", "........"}, // Error/redo
 	{"@", ".--.-."},
 }
 
+// Russian
+// https://en.wikipedia.org/wiki/Russian_Morse_code
+// https://en.wikipedia.org/wiki/Morse_code_for_non-Latin_alphabets#Cyrillic
 var morseRussian = append(append(morseCyrillicPartA, morseRussianPart...), morseCyrillicPartB...)
+
+// Bulgarian
+// https://en.wikipedia.org/wiki/Morse_code_for_non-Latin_alphabets#Cyrillic
 var morseBulgarian = append(append(morseCyrillicPartA, morseBulgarianPart...), morseCyrillicPartB...)
 
+// Hebrew
+// https://en.wikipedia.org/wiki/Morse_code_for_non-Latin_alphabets#Hebrew
 var morseHebrew = [][]string{
 	{"א", ".-"},
 	{"ב", "-..."},
@@ -300,6 +311,8 @@ var morseHebrew = [][]string{
 	{"ת", "-"},
 }
 
+// Arabic
+// https://en.wikipedia.org/wiki/Morse_code_for_non-Latin_alphabets#Arabic
 var morseArabic = [][]string{
 	{"ا", ".-"},
 	{"ب", "-..."},
@@ -332,7 +345,11 @@ var morseArabic = [][]string{
 	{"ﺀ", "."},
 }
 
+// Persian
+// https://fa.wikipedia.org/wiki/%DA%A9%D8%AF_%D9%85%D9%88%D8%B1%D8%B3
+// https://en.wikipedia.org/wiki/Morse_code_for_non-Latin_alphabets#Persian
 var morsePersian = [][]string{
+	// Alphabet
 	{"ا", ".-"},    // A
 	{"ب", "-..."},  // B
 	{"پ", ".--."},  // P
@@ -356,7 +373,7 @@ var morsePersian = [][]string{
 	{"ع", "---"},   // O
 	{"غ", "..--"},  // Ü
 	{"ف", "..-."},  // F
-	{"ق", "---..."},
+	{"ق", "...---"},
 	{"ک", "-.-"},  // K
 	{"گ", "--.-"}, // Q
 	{"ل", ".-.."}, // L
@@ -365,7 +382,7 @@ var morsePersian = [][]string{
 	{"و", ".--"},  // W
 	{"ه", "."},    // E
 	{"ی", ".."},   // I
-
+	// Numbers
 	{"۰", "-----"}, // 0
 	{"۱", ".----"}, // 1
 	{"۲", "..---"}, // 2
@@ -376,7 +393,7 @@ var morsePersian = [][]string{
 	{"۷", "--..."}, // 7
 	{"۸", "---.."}, // 8
 	{"۹", "----."}, // 9
-
+	// Punctuation
 	{".", "......"},
 	{"،", ".-.-.-"}, // translates to ,
 	{"؛", "-.-.-"},  // ‍translates to ;
@@ -391,4 +408,18 @@ var morsePersian = [][]string{
 	{")", "-.--.-"},
 }
 
+// Japanese (Wabun code)
+// https://en.wikipedia.org/wiki/Wabun_code
 var wabun = [][]string{}
+
+// Chinese (Chinese telegraph code)
+// https://en.wikipedia.org/wiki/Chinese_telegraph_code
+var morseChinese = [][]string{}
+
+// Korean (SKATS - Standard Korean Alphabet Transliteration System)
+// https://en.wikipedia.org/wiki/SKATS
+var morseKorean = [][]string{}
+
+// Thai
+// https://th.wikipedia.org/wiki/%E0%B8%A3%E0%B8%AB%E0%B8%B1%E0%B8%AA%E0%B8%A1%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%AA
+var morseThai = [][]string{}
