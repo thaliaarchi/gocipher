@@ -10,14 +10,10 @@ func TestFracMorseEncipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	expected := "FJHDVGSLMSCCEQFDHQHOEHKTGCPFAPOJQEWCFJHDVGSLMSCCEQFDHQHOEHKTGCPFAPOJQEWC"
 	key := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	f, err := NewFracMorse(key)
-	if err != nil {
-		t.Error("Unexpected error", err)
-	}
-	actual, err := f.Encipher(text)
-	if err != nil {
-		t.Error("Unexpected error", err)
-	}
+	frac, err := NewFracMorse(key)
+	assert.Nil(t, err)
+	actual, err := frac.Encipher(text)
+	assert.Nil(t, err)
 	assert.Equal(t, expected, actual)
 }
 
@@ -25,13 +21,9 @@ func TestFracMorseDecipher(t *testing.T) {
 	text := "FJHDVGSLMSCCEQFDHQHOEHKTGCPFAPOJQEWCFJHDVGSLMSCCEQFDHQHOEHKTGCPFAPOJQEWC"
 	expected := "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	key := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	f, err := NewFracMorse(key)
-	if err != nil {
-		t.Error("Unexpected error", err)
-	}
-	actual, err := f.Decipher(text)
-	if err != nil {
-		t.Error("Unexpected error", err)
-	}
+	frac, err := NewFracMorse(key)
+	assert.Nil(t, err)
+	actual, err := frac.Decipher(text)
+	assert.Nil(t, err)
 	assert.Equal(t, expected, actual)
 }

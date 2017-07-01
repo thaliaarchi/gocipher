@@ -8,7 +8,7 @@ import (
  * Fractionated Morse cipher
  */
 
-var fracMorse = []string{
+var fracMorseAlphabet = []string{
 	"...", "..-", "../", ".-.", ".--", ".-/", "./.", "./-", ".//", "-..", "-.-", "-./", "--.",
 	"---", "--/", "-/.", "-/-", "-//", "/..", "/.-", "/./", "/-.", "/--", "/-/", "//.", "//-"}
 
@@ -27,7 +27,7 @@ func NewFracMorse(key string) (*FracMorse, error) {
 	morseToChar := map[string]rune{}
 	chars := []rune(key)
 	for i, char := range chars {
-		morse := fracMorse[i]
+		morse := fracMorseAlphabet[i]
 		charToMorse[char] = morse
 		morseToChar[morse] = char
 	}

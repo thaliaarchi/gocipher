@@ -11,9 +11,7 @@ func TestMorseEncode(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	expected := ".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --.."
 	actual, err := morse.Encode(text)
-	if err != nil {
-		t.Error("Unexpected error", err)
-	}
+	assert.Nil(t, err)
 	assert.Equal(t, expected+" "+expected, actual)
 }
 
@@ -22,9 +20,7 @@ func TestMorseDecode(t *testing.T) {
 	text := ".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --.."
 	expected := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	actual, err := morse.Decode(text)
-	if err != nil {
-		t.Error("Unexpected error", err)
-	}
+	assert.Nil(t, err)
 	assert.Equal(t, expected, actual)
 }
 
@@ -33,9 +29,7 @@ func TestMorseEncodeProsigns(t *testing.T) {
 	text := "AÉCChA<sos>A<SN>A"
 	expected := ".- ..-.. -.-. ---- .- ...---... .- ...-. .-"
 	actual, err := morse.Encode(text)
-	if err != nil {
-		t.Error("Unexpected error", err)
-	}
+	assert.Nil(t, err)
 	assert.Equal(t, expected, actual)
 }
 

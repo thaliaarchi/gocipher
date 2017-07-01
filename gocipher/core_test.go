@@ -10,19 +10,11 @@ import (
 func TestRandomKey(t *testing.T) {
 	for length := 10; length < 20; length++ {
 		key, err := RandomKey(length)
-		if err != nil {
-			t.Error("Unexpected error", err)
-		}
-		if len(key) != length {
-			t.Errorf("Expected %q to have length of %d, but got %d", key, len(key), length)
-		}
+		assert.Nil(t, err)
+		assert.Equal(t, len(key), length)
 		match, err := regexp.MatchString("[A-Z]", key)
-		if !match {
-			t.Errorf("Expected alphabetical key with only A-Z, but got %q", key)
-		}
-		if err != nil {
-			t.Error("Unexpected error", err)
-		}
+		assert.Nil(t, err)
+		assert.True(t, match, "Key must be alphabetical with only A-Z")
 	}
 }
 

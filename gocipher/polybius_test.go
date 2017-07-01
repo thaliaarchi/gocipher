@@ -23,9 +23,7 @@ func TestPolybiusEncipher(t *testing.T) {
 			"FBFFFECDDFBDBFECBEBECBCEDBDDFCEBBCEDEEFDBBCFEFDECCDCFBFFFECDDFBDBFECBEBECBCEDBDDFCEBBCEDEEFDBBCFEFDECCDC"}}
 	for _, test := range tests {
 		p, err := NewPolybius(test.key, test.size, test.chars)
-		if err != nil {
-			t.Error("Unexpected error", err)
-		}
+		assert.Nil(t, err)
 		actual := p.Encipher(text)
 		assert.Equal(t, strings.ToUpper(test.ciphertext), strings.ToUpper(actual))
 	}
@@ -40,9 +38,7 @@ func TestPolybiusDecipher(t *testing.T) {
 			"FBFFFECDDFBDBFECBEBECBCEDBDDFCEBBCEDEEFDBBCFEFDECCDCFBFFFECDDFBDBFECBEBECBCEDBDDFCEBBCEDEEFDBBCFEFDECCDC"}}
 	for _, test := range tests {
 		p, err := NewPolybius(test.key, test.size, test.chars)
-		if err != nil {
-			t.Error("Unexpected error", err)
-		}
+		assert.Nil(t, err)
 		actual := p.Decipher(test.ciphertext)
 		assert.Equal(t, strings.ToUpper(text), strings.ToUpper(actual))
 	}

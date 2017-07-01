@@ -31,9 +31,7 @@ func TestBase64Encode(t *testing.T) {
 func TestBase64Decode(t *testing.T) {
 	for _, test := range base64Tests {
 		decoded, err := test.newFunc().Decode(test.ciphertext)
-		if err != nil {
-			t.Error("Unexpected error", err)
-		}
+		assert.Nil(t, err)
 		assert.Equal(t, test.plaintext, decoded)
 	}
 }

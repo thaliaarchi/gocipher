@@ -22,9 +22,7 @@ func TestAffineEncipher(t *testing.T) {
 		{"pmjgdaxurolifczwtqnkhebyvsPMJGDAXUROLIFCZWTQNKHEBYVS", []int{23, 15}}}
 	for _, test := range tests {
 		key, err := NewAffine(test.key[0], test.key[1])
-		if err != nil {
-			t.Error("Key creation error")
-		}
+		assert.Nil(t, err)
 		actual := key.Encipher(text)
 		assert.Equal(t, test.expected, actual)
 	}
@@ -41,9 +39,7 @@ func TestAffineDecipher(t *testing.T) {
 		{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", []int{23, 15}}}
 	for _, test := range tests {
 		key, err := NewAffine(test.key[0], test.key[1])
-		if err != nil {
-			t.Error("Key creation error")
-		}
+		assert.Nil(t, err)
 		actual := key.Decipher(text)
 		assert.Equal(t, test.expected, actual)
 	}
@@ -52,9 +48,7 @@ func TestAffineDecipher(t *testing.T) {
 func TestAffinePunctuation(t *testing.T) {
 	text := "!@$%%^&*()_-+={}[]|\":;<>,./?"
 	key, err := NewAffine(7, 8)
-	if err != nil {
-		t.Error("Key creation error")
-	}
+	assert.Nil(t, err)
 	actual := key.Encipher(text)
 	assert.Equal(t, text, actual) // Punctuation should remain unmodified
 }
