@@ -22,6 +22,8 @@ const (
 	MorseArabic
 	MorsePersian
 	Wabun
+	//SKATS
+	MorseThai
 )
 
 var morseAlphabets = [][][]string{
@@ -39,6 +41,8 @@ var morseAlphabets = [][][]string{
 	MorseArabic:            morseArabic,
 	MorsePersian:           morsePersian,
 	Wabun:                  wabun,
+	MorseThai:              morseThai,
+	//SKATS:                skats,
 }
 
 // International Morse code Remommendation ITU-R M.1677-1
@@ -150,6 +154,7 @@ var morseProsignsMultiLine = [][]string{
 
 // Abbreviated numbers
 // Conflicts with International ABDENYUV
+// http://cromwell-intl.com/radio/morse-code.html
 var morseAbbrNumbers = [][]string{
 	{"1", ".-"},    // A
 	{"2", "..-"},   // U
@@ -605,14 +610,100 @@ var wabun = [][]string{
 	{"ピョ", "PYO", "--..- ..--. --"},
 }
 
-// Chinese (Chinese telegraph code)
-// https://en.wikipedia.org/wiki/Chinese_telegraph_code
-var morseChinese = [][]string{}
-
 // Korean (SKATS - Standard Korean Alphabet Transliteration System)
 // https://en.wikipedia.org/wiki/SKATS
-var morseKorean = [][]string{}
+// https://ko.wikipedia.org/wiki/%EB%AA%A8%EC%8A%A4_%EB%B6%80%ED%98%B8
+var skats = [][]string{
+	{"ㄱ", "L"},
+	{"ㄴ", "F"},
+	{"ㄷ", "B"},
+	{"ㄹ", "V"},
+	{"ㅁ", "M"},
+	{"ㅂ", "W"},
+	{"ㅅ", "G"},
+	{"ㅇ", "K"},
+	{"ㅈ", "P"},
+	{"ㅊ", "C"},
+	{"ㅋ", "X"},
+	{"ㅌ", "Z"},
+	{"ㅍ", "O"},
+	{"ㅎ", "J"},
+	{"ㅏ", "E"},
+	{"ㅑ", "I"},
+	{"ㅓ", "T"},
+	{"ㅕ", "S"},
+	{"ㅗ", "A"},
+	{"ㅛ", "N"},
+	{"ㅜ", "H"},
+	{"ㅠ", "R"},
+	{"ㅡ", "D"},
+	{"ㅣ", "U"},
+	{"ㅔ", "TU"},
+	{"ㅐ", "EU"},
+	{"ㅖ", "SU"},
+	{"ㅒ", "IU"},
+}
 
 // Thai
 // https://th.wikipedia.org/wiki/%E0%B8%A3%E0%B8%AB%E0%B8%B1%E0%B8%AA%E0%B8%A1%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%AA
-var morseThai = [][]string{}
+var morseThai = [][]string{
+	// Consonants (พยัญชนะ)
+	{"ก", "--."},     // G
+	{"ข ฃ", "-.-."},  // C
+	{"ค ฅ ฆ", "-.-"}, // K
+	{"ง", "-.--."},   // (
+	{"จ", "-..-."},   // /
+	{"ฉ", "----"},    // CH, Ĥ, and Š
+	{"ช", "-..-"},    // X
+	{"ซ", "--.."},    // Z
+	{"ญ", ".---"},    // J
+	{"ด ฎ", "-.."},   // D
+	{"ต ฏ", "-"},     // T
+	{"ถ ฐ", "-.-.."}, // Ć, Ĉ, and Ç
+	{"ท ธ ฑ ฒ", "-..--"},
+	{"น ณ", "-."},    // N
+	{"บ", "-..."},    // B
+	{"ป", ".--."},    // P
+	{"ผ", "--.-"},    // Q
+	{"ฝ", "-.-.-"},   // <CT> and <KA>
+	{"พ ภ", ".--.."}, // Þ
+	{"ฟ", "..-."},    // F
+	{"ม", "--"},      // M
+	{"ย", "-.--"},    // Y
+	{"ร", ".-."},     // R
+	{"ล ฬ", ".-.."},  // L
+	{"ว", ".--"},     // W
+	{"ศ ษ ส", "..."}, // S
+	{"ห", "...."},    // H
+	{"อ", "-...-"},   // =
+	{"ฮ", "--.--"},   // Ń and Ñ
+	{"ฤ ฤๅ", ".-.--"},
+	// สระ
+	{"สระ ะ", ".-..."},  // <AS>
+	{"สระ า", ".-"},     // A
+	{"สระ อิ", "..-.."}, // Đ, É, and Ę
+	{"สระ อี", ".."},    // I
+	{"สระ อึ", "..--."}, // Ð
+	{"สระ อื", "..--"},  // Ü and Ŭ
+	{"สระ อุ", "..-.-"},
+	{"สระ อู", "---."},  // Ó, Ö, and Ø
+	{"สระ เ", "."},      // E
+	{"สระ แ", ".-.-"},   // <AA>
+	{"ไ ใ", ".-..-"},    // È, Ł
+	{"โ", "---"},        // O
+	{"สระ อำ", "...-."}, // <SN>, <VE>, and Ŝ
+	// วรรณยุกต์
+	{"ไม้เอก", "..-"},     // U
+	{"ไม้โท", "...-"},     // V
+	{"ไม้ตรี", "--..."},   // 7
+	{"ไม้จัตวา", ".-.-."}, // <AR>
+	// เครื่องหมาย
+	{"ไม้หันอากาศ", ".--.-"}, // À and Å
+	{"ไม้ไต่คู้", "---.."},   // 8
+	{"การันต์", "--..-"},     // Ż
+	{"ไม้ยมก", "-.---"},
+	{"ฯ", "--.-."}, // Ĝ
+	{"ฯลฯ", "---.-"},
+	{" ", ".-..-."},   // "
+	{"( )", "-.--.-"}, // )
+}
