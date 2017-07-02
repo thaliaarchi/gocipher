@@ -11,7 +11,9 @@ const (
 	MorseInternational MorseAlphabet = iota
 	MorseSymbols
 	MorseProsigns
+	MorseProsignsMultiLine
 	MorseAbbrNumbers
+	MorseAbbrNumbers2
 	MorseNonEnglish
 	MorseGreek
 	MorseRussian
@@ -23,18 +25,20 @@ const (
 )
 
 var morseAlphabets = [][][]string{
-	MorseInternational: morseInternational,
-	MorseSymbols:       morseSymbols,
-	MorseProsigns:      morseProsigns,
-	MorseAbbrNumbers:   morseAbbrNumbers,
-	MorseNonEnglish:    morseNonEnglish,
-	MorseGreek:         morseGreek,
-	MorseRussian:       morseRussian,
-	MorseBulgarian:     morseBulgarian,
-	MorseHebrew:        morseHebrew,
-	MorseArabic:        morseArabic,
-	MorsePersian:       morsePersian,
-	Wabun:              wabun,
+	MorseInternational:     morseInternational,
+	MorseSymbols:           morseSymbols,
+	MorseProsigns:          morseProsigns,
+	MorseProsignsMultiLine: morseProsignsMultiLine,
+	MorseAbbrNumbers:       morseAbbrNumbers,
+	MorseAbbrNumbers2:      morseAbbrNumbers2,
+	MorseNonEnglish:        morseNonEnglish,
+	MorseGreek:             morseGreek,
+	MorseRussian:           morseRussian,
+	MorseBulgarian:         morseBulgarian,
+	MorseHebrew:            morseHebrew,
+	MorseArabic:            morseArabic,
+	MorsePersian:           morsePersian,
+	Wabun:                  wabun,
 }
 
 // International Morse code Remommendation ITU-R M.1677-1
@@ -85,7 +89,7 @@ var morseInternational = [][]string{
 	{",", "--..--"},                    // Comma
 	{":", "---..."},                    // Colon or division sign
 	{"?", "..--.."},                    // Question mark (note of interrogation or request for repetition of a transmission not understood)
-	{"'", "’", ".----."},               // Apostrophe
+	{"'", "’", "‘", ".----."},          // Apostrophe
 	{"-", "–", "-....-"},               // Hyphen or dash or subtraction sign
 	{"/", "-..-."},                     // Fraction bar or division sign
 	{"(", "-.--."},                     // Left-hand bracket (parenthesis)
@@ -115,13 +119,15 @@ var morseSymbols = [][]string{
 
 // Prosigns
 // https://en.wikipedia.org/wiki/Prosigns_for_Morse_code
+// https://infogalactic.com/info/Prosigns_for_Morse_code
 // http://www.kent-engineers.com/prosigns.htm
+// http://www.worldlibrary.org/articles/prosigns_for_morse_code
 var morseProsigns = [][]string{
 	{"<AA>", ".-.-"},                   // New Line (space down one line)
-	{"<AR>", ".-.-."},                  // New Page (space down several lines); End of transmission
+	{"<AR>", ".-.-."},                  // New Page (space down several lines). End of transmission
 	{"<AS>", ".-..."},                  // Wait
-	{"<BK>", "-...-.-"},                // Break; Invite receiving station to transmit
-	{"<BT>", "-...-"},                  // New Paragraph (space down two lines); Pause
+	{"<BK>", "-...-.-"},                // Break. Invite receiving station to transmit
+	{"<BT>", "-...-"},                  // New Paragraph (space down two lines). Pause
 	{"<CL>", "-.-..-.."},               // Closing
 	{"<CQ>", "-.-.--.-"},               // Calling any amateur radio station
 	{"<CT>", "<KA>", "-.-.-"},          // Attention
@@ -129,60 +135,83 @@ var morseProsigns = [][]string{
 	{"<K>", "-.-"},                     // Invitation for any station to transmit
 	{"<KN>", "-.--."},                  // Invitation for named station to transmit
 	{"<NJ>", "<DO>", "-..---"},         // Shift to Wabun code
-	{"<R>", ".-."},                     // All received OK
 	{"<SK>", "<VA>", "...-.-"},         // End of contact
 	{"<SN>", "<VE>", "...-."},          // Understood
 	{"<SOS>", "...---..."},             // International distress signal
 }
 
+// https://en.wikipedia.org/wiki/Prosigns_for_Morse_code
+var morseProsignsMultiLine = [][]string{
+	{"CR-LF", "\r\n", "\n", ".-.-"},         // <AA> Typewritten as CR-LF
+	{"CR-LF-LF", "\r\n\n", "\n\n", "-...-"}, // <BT> Typewritten as CR-LF-LF. Single-line display may use printed "=".
+	{"CR-LF-LF-LF", "CR-LF-LF-LF-LF", "CR-LF-LF-LF-LF-LF", "\r\n\n\n", "\r\n\n\n\n", "\r\n\n\n\n\n",
+		"\n\n\n", "\n\n\n\n", "\n\n\n\n\n", ".-.-."}, // <AR> Space down several lines. Single-line display may use printed "+".
+}
+
+// Abbreviated numbers
+// Conflicts with International ABDENYUV
+var morseAbbrNumbers = [][]string{
+	{"1", ".-"},    // A
+	{"2", "..-"},   // U
+	{"3", "...-"},  // V
+	{"4", "....-"}, // 4 (no conflict)
+	{"5", "....."}, // 5 (no conflict)
+	{"5", "."},     // E
+	{"6", "-...."}, // 6 (no conflict)
+	{"7", "-..."},  // B
+	{"8", "-.."},   // D
+	{"9", "-."},    // N
+	{"0", "-"},     // T
+}
+
 // Abbreviated numbers
 // Conflicts with ABDGNSTUVW
 // http://www.kent-engineers.com/thecode.htm
-var morseAbbrNumbers = [][]string{
-	{"1", ".-"},   // Conflicts with A
-	{"2", "..-"},  // Conflicts with U
-	{"3", ".--"},  // Conflicts with W
-	{"4", "...-"}, // Conflicts with V
-	{"5", "..."},  // Conflicts with S
-	{"6", "-..."}, // Conflicts with B
-	{"7", "--."},  // Conflicts with G
-	{"8", "-.."},  // Conflicts with D
-	{"9", "-."},   // Conflicts with N
-	{"0", "-"},    // Conflicts with T
+var morseAbbrNumbers2 = [][]string{
+	{"1", ".-"},   // A
+	{"2", "..-"},  // U
+	{"3", ".--"},  // W
+	{"4", "...-"}, // V
+	{"5", "..."},  // S
+	{"6", "-..."}, // B
+	{"7", "--."},  // G
+	{"8", "-.."},  // D
+	{"9", "-."},   // N
+	{"0", "-"},    // T
 }
 
 // US Navy Morse code
 // https://web.archive.org/web/20101109183046/http://homepages.cwi.nl:80/~dik/english/codes/morse.html#usnavy
 var morseUSNavy = [][]string{
-	{"I", "."},              // Conflicts with E
-	{"T", "-"},              // Also T in International
-	{"N", ".."},             // Conflicts with I
-	{"E", ".-"},             // Conflicts with A
-	{"O", "-."},             // Conflicts with N
-	{"A", "--"},             // Conflicts with M
-	{"Y", "..."},            // Conflicts with S
-	{"U", "..-"},            // Conflicts with U
-	{"C", ".-."},            // Conflicts with R
-	{"H", ".--"},            // Conflicts with W
-	{"R", "-.."},            // Conflicts with D
-	{"S", "-.-"},            // Conflicts with K
-	{"L", "--."},            // Conflicts with G
-	{"D", "---"},            // Conflicts with O
-	{"1", "...."},           // Conflicts with H
-	{"3", "...-"},           // Conflicts with V
-	{"W", "..-."},           // Conflicts with F
-	{"5", "..--"},           // Conflicts with Ü and Ŭ
-	{"Q", ".-.."},           // Conflicts with L
-	{"P", ".-.-"},           // Conflicts with <AA>
-	{"M", "9", ".--."},      // Conflicts with P
-	{"J", "V", "7", ".---"}, // Conflicts with J
-	{"8", "-..."},           // Conflicts with B
-	{"B", "X", "0", "-..-"}, // Conflicts with X (no conflict for X)
-	{"K", "-.-."},           // Conflicts with C
-	{"G", "6", "--.."},      // Conflicts with Z
-	{"2", "--.-"},           // Conflicts with Q
-	{"F", "4", "---."},      // Conflicts with Ó, Ö, and Ø
-	{"Z", "----"},           // Conflicts with CH, Ĥ, and Š
+	{"I", "."},              // E
+	{"T", "-"},              // T (no conflict)
+	{"N", ".."},             // I
+	{"E", ".-"},             // A
+	{"O", "-."},             // N
+	{"A", "--"},             // M
+	{"Y", "..."},            // S
+	{"U", "..-"},            // U
+	{"C", ".-."},            // R
+	{"H", ".--"},            // W
+	{"R", "-.."},            // D
+	{"S", "-.-"},            // K
+	{"L", "--."},            // G
+	{"D", "---"},            // O
+	{"1", "...."},           // H
+	{"3", "...-"},           // V
+	{"W", "..-."},           // F
+	{"5", "..--"},           // Ü and Ŭ
+	{"Q", ".-.."},           // L
+	{"P", ".-.-"},           // <AA>
+	{"M", "9", ".--."},      // P
+	{"J", "V", "7", ".---"}, // J
+	{"8", "-..."},           // B
+	{"B", "X", "0", "-..-"}, // X (no conflict for X)
+	{"K", "-.-."},           // C
+	{"G", "6", "--.."},      // Z
+	{"2", "--.-"},           // Q
+	{"F", "4", "---."},      // Ó, Ö, and Ø
+	{"Z", "----"},           // CH, Ĥ, and Š
 }
 
 var morseNonEnglish = [][]string{
@@ -198,7 +227,7 @@ var morseNonEnglish = [][]string{
 	{"Ń", "Ñ", "--.--"},
 	{"Ó", "Ö", "Ø", "---."},
 	{"Ś", "...-..."},
-	{"Ŝ", "...-."}, // Conflicts with <SN> and <VE>
+	{"Ŝ", "...-."}, // <SN> and <VE>
 	{"Þ", ".--.."},
 	{"Ü", "Ŭ", "..--"},
 	{"Ź", "--..-."},
@@ -246,44 +275,46 @@ var morseGreek = [][]string{
 }
 
 // Russian and Bulgarian Morse have only a few differences
+// https://en.wikipedia.org/wiki/Morse_code_for_non-Latin_alphabets#Cyrillic
+// http://www.cvni.net/radio/nsnl/nsnl011/nsnl11morse.html
 var morseCyrillicPartA = [][]string{
-	{"A", ".-"},
-	{"Б", "-..."},
-	{"В", ".--"},
-	{"Г", "--."},
-	{"Д", "-.."},
-	{"Е", "."},
-	{"Ж", "...-"},
-	{"З", "--.."},
-	{"И", ".."},
-	{"Й", ".---"},
-	{"К", "-.-"},
-	{"Л", ".-.."},
-	{"М", "--"},
-	{"H", "-."},
-	{"О", "---"},
-	{"П", ".--."},
-	{"P", ".-."},
-	{"С", "..."},
-	{"Т", "-"},
-	{"У", "..-"},
-	{"Ф", "..-."},
-	{"Х", "...."},
-	{"Ц", "-.-."},
-	{"Ч", "---."},
-	{"Ш", "----"},
-	{"Щ", "--.-"}}
+	{"A", ".-"},     // A
+	{"Б", "-..."},   // B
+	{"В", ".--"},    // W
+	{"Г", "--."},    // G
+	{"Д", "-.."},    // D
+	{"Е", "Ё", "."}, // E
+	{"Ж", "...-"},   // V
+	{"З", "--.."},   // Z
+	{"И", ".."},     // I
+	{"Й", ".---"},   // J
+	{"К", "-.-"},    // K
+	{"Л", ".-.."},   // L
+	{"М", "--"},     // M
+	{"H", "-."},     // N
+	{"О", "---"},    // O
+	{"П", ".--."},   // P
+	{"P", ".-."},    // R
+	{"С", "..."},    // S
+	{"Т", "-"},      // T
+	{"У", "..-"},    // U
+	{"Ф", "..-."},   // F
+	{"Х", "...."},   // H
+	{"Ц", "-.-."},   // C
+	{"Ч", "---."},   // Ö
+	{"Ш", "----"},   // CH
+	{"Щ", "--.-"}}   // Q
 var morseRussianPart = [][]string{
-	{"Ъ", "--.--"},
-	{"Ы", "-.--"},
-	{"Ь", "-..-"}}
+	{"Ъ", "--.--"}, // Ñ
+	{"Ы", "-.--"},  // Y
+	{"Ь", "-..-"}}  // X
 var morseBulgarianPart = [][]string{
-	{"Ъ", "-..-"},
-	{"Ь", "-.--"}}
+	{"Ъ", "-..-"}, // X
+	{"Ь", "-.--"}} // Y
 var morseCyrillicPartB = [][]string{
-	{"Э", "..-.."},
-	{"Ю", "..--"},
-	{"Я", ".-.-"},
+	{"Э", "..-.."}, // É
+	{"Ю", "..--"},  // Ü
+	{"Я", ".-.-"},  // Ä
 	{"1", ".----"},
 	{"2", "..---"},
 	{"3", "...--"},
@@ -323,62 +354,62 @@ var morseBulgarian = append(append(morseCyrillicPartA, morseBulgarianPart...), m
 // Hebrew
 // https://en.wikipedia.org/wiki/Morse_code_for_non-Latin_alphabets#Hebrew
 var morseHebrew = [][]string{
-	{"א", ".-"},
-	{"ב", "-..."},
-	{"ג", "--."},
-	{"ד", "-.."},
-	{"ה", "---"},
-	{"ו", "."},
-	{"ז", "--.."},
-	{"ח", "...."},
-	{"ט", "..-"},
-	{"י", ".."},
-	{"כ", "-.-"},
-	{"ל", ".-.."},
-	{"מ", "--"},
-	{"נ", "-."},
-	{"ס", "-.-."},
-	{"ע", ".---"},
-	{"פ", ".--."},
-	{"צ", ".--"},
-	{"ק", "--.-"},
-	{"ר", ".-."},
-	{"ש", "..."},
-	{"ת", "-"},
+	{"א", ".-"},   // A
+	{"ב", "-..."}, // B
+	{"ג", "--."},  // G
+	{"ד", "-.."},  // D
+	{"ה", "---"},  // O
+	{"ו", "."},    // E
+	{"ז", "--.."}, // Z
+	{"ח", "...."}, // H
+	{"ט", "..-"},  // U
+	{"י", ".."},   // I
+	{"כ", "-.-"},  // K
+	{"ל", ".-.."}, // L
+	{"מ", "--"},   // M
+	{"נ", "-."},   // N
+	{"ס", "-.-."}, // C
+	{"ע", ".---"}, // J
+	{"פ", ".--."}, // P
+	{"צ", ".--"},  // W
+	{"ק", "--.-"}, // Q
+	{"ר", ".-."},  // R
+	{"ש", "..."},  // S
+	{"ת", "-"},    // T
 }
 
 // Arabic
 // https://en.wikipedia.org/wiki/Morse_code_for_non-Latin_alphabets#Arabic
 var morseArabic = [][]string{
-	{"ا", ".-"},
-	{"ب", "-..."},
-	{"ت", "-"},
-	{"ث", "-.-."},
-	{"ج", ".---"},
-	{"ح", "...."},
-	{"خ", "---"},
-	{"د", "-.."},
-	{"ذ", "--.."},
-	{"ر", ".-."},
-	{"ز", "---."},
-	{"س", "..."},
-	{"ش", "----"},
-	{"ص", "-..-"},
-	{"ض", "...-"},
-	{"ط", "..-"},
-	{"ظ", "-.--"},
-	{"ع", ".-.-"},
-	{"غ", "--."},
-	{"ف", "..-."},
-	{"ق", "--.-"},
-	{"ك", "-.-"},
-	{"ل", ".-.."},
-	{"م", "--"},
-	{"ن", "-."},
-	{"ه", "..-.."},
-	{"و", ".--"},
-	{"ي", ".."},
-	{"ﺀ", "."},
+	{"ا", ".-"},    // A
+	{"ب", "-..."},  // B
+	{"ت", "-"},     // T
+	{"ث", "-.-."},  // C
+	{"ج", ".---"},  // J
+	{"ح", "...."},  // H
+	{"خ", "---"},   // O
+	{"د", "-.."},   // D
+	{"ذ", "--.."},  // Z
+	{"ر", ".-."},   // R
+	{"ز", "---."},  // Ö
+	{"س", "..."},   // S
+	{"ش", "----"},  // CH
+	{"ص", "-..-"},  // X
+	{"ض", "...-"},  // V
+	{"ط", "..-"},   // U
+	{"ظ", "-.--"},  // Y
+	{"ع", ".-.-"},  // Ä
+	{"غ", "--."},   // G
+	{"ف", "..-."},  // F
+	{"ق", "--.-"},  // Q
+	{"ك", "-.-"},   // K
+	{"ل", ".-.."},  // L
+	{"م", "--"},    // M
+	{"ن", "-."},    // N
+	{"ه", "..-.."}, // É
+	{"و", ".--"},   // W
+	{"ي", ".."},    // I
+	{"ﺀ", "."},     // E
 }
 
 // Persian
@@ -431,15 +462,15 @@ var morsePersian = [][]string{
 	{"۹", "----."}, // 9
 	// Punctuation
 	{".", "......"},
-	{"،", ".-.-.-"}, // translates to ,
-	{"؛", "-.-.-"},  // ‍translates to ;
+	{"،", ".-.-.-"}, // ,
+	{"؛", "-.-.-"},  // ‍;
 	{":", "---..."},
-	{"؟", "..--.."}, // translates to ?
+	{"؟", "..--.."}, // ?
 	{"!", "--..--"},
 	{"\n", ".-.-."},
 	{"-", "-....-"},
 	{"/", "------"},
-	{"ـ", "..--.-"}, // translates to _
+	{"ـ", "..--.-"}, // _
 	{"(", "-.--.-"},
 	{")", "-.--.-"},
 }
