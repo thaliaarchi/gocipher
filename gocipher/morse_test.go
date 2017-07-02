@@ -24,11 +24,58 @@ func TestMorseDecode(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
+func TestMorseEncodeErr(t *testing.T) {
+	morse := NewMorse()
+	text := "abc%d#"
+	expected := ".- -... -.-. # -.. #"
+	expectedErr := "error in input: ABC#%#D###"
+	actual, err := morse.Encode(text)
+	assert.Equal(t, expectedErr, err.Error())
+	assert.Equal(t, expected, actual)
+}
+
+func TestMorseDecodeErr(t *testing.T) {
+	morse := NewMorse()
+	text := ".- -... -.-. % -.. # ....-.-"
+	expected := "ABC#D##"
+	expectedErr := "error in input: .- -... -.-. #%# -.. ### #....-.-#"
+	actual, err := morse.Decode(text)
+	assert.Equal(t, expectedErr, err.Error())
+	assert.Equal(t, expected, actual)
+}
+
 func TestMorseEncodeProsigns(t *testing.T) {
 	morse := NewMorse(MorseInternational, MorseNonEnglish, MorseProsigns)
-	text := "AÉCChA<sos>A<SN>A"
+	text := "AÉCChA<sos>A<sN>a"
 	expected := ".- ..-.. -.-. ---- .- ...---... .- ...-. .-"
 	actual, err := morse.Encode(text)
+	assert.Nil(t, err)
+	assert.Equal(t, expected, actual)
+}
+
+func TestMorseDecodeProsigns(t *testing.T) {
+	morse := NewMorse(MorseInternational, MorseNonEnglish, MorseProsigns)
+	text := ".- ..-.. -.-. ---- .- ...---... .- ...-. .-"
+	expected := "AÉCCHA<SOS>A<SN>A"
+	actual, err := morse.Decode(text)
+	assert.Nil(t, err)
+	assert.Equal(t, expected, actual)
+}
+
+func TestMorseEncodeWabun(t *testing.T) {
+	morse := NewMorse(Wabun)
+	text := "アキャボモジャ" // a-kya-bo-mo-ja
+	expected := "--.-- -.-.. .-- -.. .. -..-. --.-. .. .--"
+	actual, err := morse.Encode(text)
+	assert.Nil(t, err)
+	assert.Equal(t, expected, actual)
+}
+
+func TestMorseDecodeWabun(t *testing.T) {
+	morse := NewMorse(Wabun)
+	text := "--.-- -.-.. .-- -.. .. -..-. --.-. .. .--"
+	expected := "アキャボモジャ" // a-kya-bo-mo-ja
+	actual, err := morse.Decode(text)
 	assert.Nil(t, err)
 	assert.Equal(t, expected, actual)
 }

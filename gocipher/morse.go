@@ -2,6 +2,7 @@ package gocipher
 
 import (
 	"errors"
+	"sort"
 	"strings"
 )
 
@@ -11,103 +12,107 @@ import (
  */
 
 type Morse struct {
-	textToMorse map[string]string
-	morseToText map[string]string
-	prosigns    []string
+	textToMorse  map[string]string
+	morseToText  map[string]string
+	textLengths  []int // For multi-character tokens like prosigns and CH
+	morseLengths []int // For multi-character Morse tokens in Wabun
 }
 
 func NewMorse(alphabets ...MorseAlphabet) *Morse {
-	var textToMorse = map[string]string{}
-	var morseToText = map[string]string{}
-	var prosigns = []string{}
+	textToMorse := map[string]string{}
+	morseToText := map[string]string{}
+	textLengthMap := map[int]bool{}
+	morseLengthMap := map[int]bool{}
+	textLengths := []int{}
+	morseLengths := []int{}
+
+	// Load alphabet mappings. If none provided, use International Morse
 	mappings := [][]string{{" ", "/"}}
-	if len(alphabets) == 0 {
+	if len(alphabets) < 1 {
 		mappings = append(mappings, morseInternational...)
 	}
 	for _, alphabet := range alphabets {
 		mappings = append(mappings, morseAlphabets[alphabet]...)
 	}
+
+	// Add each character, morse translation, and the lengths to maps.
 	for _, item := range mappings {
 		chars := item[:len(item)-1]
 		morse := item[len(item)-1]
-		if _, exists := morseToText[morse]; !exists {
-			morseToText[morse] = chars[0]
-		}
 		for _, char := range chars {
 			char = strings.ToUpper(char)
 			textToMorse[char] = morse
-			if len([]rune(char)) > 1 {
-				prosigns = append(prosigns, char)
-			}
+			textLengthMap[len([]rune(char))] = true
+		}
+		if _, exists := morseToText[morse]; !exists {
+			morseToText[morse] = chars[0]
+			length := len(strings.Split(morse, " "))
+			morseLengthMap[length] = true
 		}
 	}
-	return &Morse{textToMorse, morseToText, prosigns}
+
+	// Convert length maps to descending sorted slices.
+	for length := range textLengthMap {
+		if length > 0 {
+			textLengths = append(textLengths, length)
+		}
+	}
+	for length := range morseLengthMap {
+		if length > 0 {
+			morseLengths = append(morseLengths, length)
+		}
+	}
+	sort.Sort(sort.Reverse(sort.IntSlice(textLengths)))
+	sort.Sort(sort.Reverse(sort.IntSlice(morseLengths)))
+
+	return &Morse{textToMorse, morseToText, textLengths, morseLengths}
 }
 
 // Encode converts text into Morse code
 func (m *Morse) Encode(text string) (string, error) {
-	text = tidyMorseText(text)
-	if text == "" {
-		return "", nil
-	}
-	morse := ""
-	err := ""
-	hasError := false
-	tokens := []string{}
-	for len(text) > 0 {
-		textRunes := []rune(text)
-		tokenLength := 1
-		for _, prosign := range m.prosigns {
-			prosignLength := len([]rune(prosign))
-			if prosign == string(textRunes[:prosignLength]) {
-				tokenLength = prosignLength
-			}
-		}
-		tokens = append(tokens, string(textRunes[:tokenLength]))
-		text = string(textRunes[tokenLength:])
-	}
-	for _, token := range tokens {
-		if char, ok := m.textToMorse[token]; ok {
-			morse += char + " "
-			err += token
-		} else {
-			morse += "# "
-			err += "#" + token + "#"
-			hasError = true
-		}
-	}
-	morse = morse[:len(morse)-1]
-	if hasError {
-		return morse, errors.New("error in input: " + err)
-	}
-	return morse, nil
+	return morseFunc(tidyMorseText(text), m.textToMorse, m.textLengths, "", " ")
 }
 
 // Decode converts Morse code into text
 func (m *Morse) Decode(morse string) (string, error) {
-	morse = tidyMorse(morse)
-	if morse == "" {
+	return morseFunc(tidyMorse(morse), m.morseToText, m.morseLengths, " ", "")
+}
+
+func morseFunc(text string, tokenMap map[string]string, lengths []int, splitSep, joinSep string) (string, error) {
+	if text == "" {
 		return "", nil
 	}
-	text := ""
-	err := ""
+	tokens := strings.Split(text, splitSep)
+	res := []string{}
+	err := []string{}
 	hasError := false
-	tokens := strings.Split(morse, " ")
-	for _, token := range tokens {
-		if char, ok := m.morseToText[token]; ok {
-			text += char
-			err += token + " "
-		} else {
-			text += "#"
-			err += "#" + token + "# "
+	for i := 0; i < len(tokens); i++ {
+		found := false
+		// Check each token length starting at the largest.
+		for _, length := range lengths {
+			if i+length > len(tokens) {
+				continue
+			}
+			token := strings.Join(tokens[i:i+length], splitSep)
+			if char, ok := tokenMap[token]; ok {
+				res = append(res, char)
+				err = append(err, token)
+				i += length - 1
+				found = true
+				break
+			}
+		}
+		if !found {
+			res = append(res, "#")
+			err = append(err, "#"+tokens[i]+"#")
 			hasError = true
 		}
 	}
+	result := strings.Join(res, joinSep)
 	if hasError {
-		err = err[:len(err)-1]
-		return text, errors.New("error in input: " + err)
+		return result, errors.New("error in input: " + strings.Join(err, splitSep))
 	}
-	return text, nil
+	return result, nil
 }
 
 // MorseFormatBullets replaces the .- characters in Morse text with •– so the characters are vertially centered.
