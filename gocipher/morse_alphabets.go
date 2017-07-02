@@ -19,6 +19,7 @@ const (
 	MorseHebrew
 	MorseArabic
 	MorsePersian
+	Wabun
 )
 
 var morseAlphabets = [][][]string{
@@ -33,6 +34,7 @@ var morseAlphabets = [][][]string{
 	MorseHebrew:        morseHebrew,
 	MorseArabic:        morseArabic,
 	MorsePersian:       morsePersian,
+	Wabun:              wabun,
 }
 
 // International Morse code Remommendation ITU-R M.1677-1
@@ -147,6 +149,40 @@ var morseAbbrNumbers = [][]string{
 	{"8", "-.."},  // Conflicts with D
 	{"9", "-."},   // Conflicts with N
 	{"0", "-"},    // Conflicts with T
+}
+
+// US Navy Morse code
+// https://web.archive.org/web/20101109183046/http://homepages.cwi.nl:80/~dik/english/codes/morse.html#usnavy
+var morseUSNavy = [][]string{
+	{"I", "."},              // Conflicts with E
+	{"T", "-"},              // Also T in International
+	{"N", ".."},             // Conflicts with I
+	{"E", ".-"},             // Conflicts with A
+	{"O", "-."},             // Conflicts with N
+	{"A", "--"},             // Conflicts with M
+	{"Y", "..."},            // Conflicts with S
+	{"U", "..-"},            // Conflicts with U
+	{"C", ".-."},            // Conflicts with R
+	{"H", ".--"},            // Conflicts with W
+	{"R", "-.."},            // Conflicts with D
+	{"S", "-.-"},            // Conflicts with K
+	{"L", "--."},            // Conflicts with G
+	{"D", "---"},            // Conflicts with O
+	{"1", "...."},           // Conflicts with H
+	{"3", "...-"},           // Conflicts with V
+	{"W", "..-."},           // Conflicts with F
+	{"5", "..--"},           // Conflicts with Ü and Ŭ
+	{"Q", ".-.."},           // Conflicts with L
+	{"P", ".-.-"},           // Conflicts with <AA>
+	{"M", "9", ".--."},      // Conflicts with P
+	{"J", "V", "7", ".---"}, // Conflicts with J
+	{"8", "-..."},           // Conflicts with B
+	{"B", "X", "0", "-..-"}, // Conflicts with X (no conflict for X)
+	{"K", "-.-."},           // Conflicts with C
+	{"G", "6", "--.."},      // Conflicts with Z
+	{"2", "--.-"},           // Conflicts with Q
+	{"F", "4", "---."},      // Conflicts with Ó, Ö, and Ø
+	{"Z", "----"},           // Conflicts with CH, Ĥ, and Š
 }
 
 var morseNonEnglish = [][]string{
@@ -275,7 +311,7 @@ var morseCyrillicPartB = [][]string{
 	{"@", ".--.-."},
 }
 
-// Russian
+// Russian Morse code
 // https://en.wikipedia.org/wiki/Russian_Morse_code
 // https://en.wikipedia.org/wiki/Morse_code_for_non-Latin_alphabets#Cyrillic
 var morseRussian = append(append(morseCyrillicPartA, morseRussianPart...), morseCyrillicPartB...)
@@ -410,7 +446,61 @@ var morsePersian = [][]string{
 
 // Japanese (Wabun code)
 // https://en.wikipedia.org/wiki/Wabun_code
-var wabun = [][]string{}
+var wabun = [][]string{
+	{"ア", "--.--"},  // a
+	{"イ", ".-"},     // i
+	{"ウ", "..-"},    // u
+	{"エ", "-.---"},  // e
+	{"オ", ".-..."},  // o
+	{"カ", ".-.."},   // ka
+	{"キ", "-.-.."},  // ki
+	{"ク", "...-"},   // ku
+	{"ケ", "-.--"},   // ke
+	{"コ", "----"},   // ko
+	{"サ", "-.-.-"},  // sa
+	{"シ", "--.-."},  // shi
+	{"ス", "---.-"},  // su
+	{"セ", ".---."},  // se
+	{"ソ", "---."},   // so
+	{"タ", "-."},     // ta
+	{"チ", "..-."},   // chi
+	{"ツ", ".--."},   // tsu
+	{"テ", ".-.--"},  // te
+	{"ト", "..-.."},  // to
+	{"ナ", ".-."},    // na
+	{"ニ", "-.-."},   // ni
+	{"ヌ", "...."},   // nu
+	{"ネ", "--.-"},   // ne
+	{"ノ", "..--"},   // no
+	{"ハ", "-..."},   // ha
+	{"ヒ", "--..-"},  // hi
+	{"フ", "--.."},   // fu
+	{"ヘ", "."},      // he
+	{"ホ", "-.."},    // ho
+	{"マ", "-..-"},   // ma
+	{"ミ", "..-.-"},  // mi
+	{"ム", "-"},      // mu
+	{"メ", "-...-"},  // me
+	{"モ", "-..-."},  // mo
+	{"ヤ", ".--"},    // ya
+	{"ユ", "-..--"},  // yu
+	{"ヨ", "--"},     // yo
+	{"ラ", "..."},    // ra
+	{"リ", "--."},    // ri
+	{"ル", "-.--."},  // ru
+	{"レ", "---"},    // re
+	{"ロ", ".-.-"},   // ro
+	{"ワ", "-.-"},    // wa
+	{"ヰ", ".-..-"},  // wi
+	{"ン", ".-.-."},  // n
+	{"ヱ", ".--.."},  // we
+	{"ヲ", ".---"},   // wo
+	{"゛", ".."},     // Dakuten
+	{"゜", "..--."},  // Handakuten
+	{"̄", ".--.-"},  // Long vowel (combining macron)
+	{"、", ".-.-.-"}, // Comma
+	{"。", ".-.-.."}, // Full stop
+}
 
 // Chinese (Chinese telegraph code)
 // https://en.wikipedia.org/wiki/Chinese_telegraph_code
