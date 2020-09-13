@@ -94,3 +94,12 @@ func SortPossibilities(possible []string) []possibility {
 	})
 	return poss
 }
+
+func caesarEncipher(text string, key int) string {
+	if key == 0 {
+		return text
+	}
+	return mapAlpha(text, func(i, char int) int {
+		return char + key
+	})
+}

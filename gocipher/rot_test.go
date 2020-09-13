@@ -52,54 +52,54 @@ func TestROTRangeDecipher(t *testing.T) {
 func TestROT5Encipher(t *testing.T) {
 	text := "0123456789"
 	expected := "5678901234"
-	actual := NewROT5().Encipher(text)
+	actual := ROT5.Encipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT5Decipher(t *testing.T) {
 	text := "5678901234"
 	expected := "0123456789"
-	actual := NewROT5().Decipher(text)
+	actual := ROT5.Decipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT13Encipher(t *testing.T) {
 	var text = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	var expected = "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM"
-	actual := NewROT13().Encipher(text)
+	actual := ROT13.Encipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT13Decipher(t *testing.T) {
 	var text = "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM"
 	var expected = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	actual := NewROT13().Decipher(text)
+	actual := ROT13.Decipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT18Encipher(t *testing.T) {
 	var text = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	var expected = "nopqrstuvwxyzabcdefghijklm5678901234NOPQRSTUVWXYZABCDEFGHIJKLM5678901234"
-	actual := NewROT18().Encipher(text)
+	actual := ROT18.Encipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT18Decipher(t *testing.T) {
 	var text = "nopqrstuvwxyzabcdefghijklm5678901234NOPQRSTUVWXYZABCDEFGHIJKLM5678901234"
 	var expected = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	actual := NewROT18().Decipher(text)
+	actual := ROT18.Decipher(text)
 	assert.Equal(t, expected, actual)
 }
 func TestROT47Encipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	expected := "23456789:;<=>?@ABCDEFGHIJKpqrstuvwxyz{|}~!\"#$%&'()*+"
-	actual := NewROT47().Encipher(text)
+	actual := ROT47.Encipher(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestROT47Decipher(t *testing.T) {
 	text := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	expected := "23456789:;<=>?@ABCDEFGHIJKpqrstuvwxyz{|}~!\"#$%&'()*+"
-	actual := NewROT47().Decipher(text)
+	actual := ROT47.Decipher(text)
 	assert.Equal(t, expected, actual)
 }

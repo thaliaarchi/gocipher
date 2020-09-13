@@ -101,38 +101,28 @@ func rotEncipherRange(text string, key int, min, max rune) string {
 	return string(runes)
 }
 
-// NewROT5 creates a ROTRange struct to encipher and decipher string using ROT-5 cipher.
-// e.g. "1234567890" <-> "5678901234". Encipher and Decipher are identical.
-func NewROT5() *ROTRange {
-	return &ROTRange{5, '0', '9'}
+// ROT5 is the ROT-5 symmetric cipher.
+// For example, "1234567890" becomes "5678901234".
+var ROT5 = &ROTRange{5, '0', '9'}
+
+// ROT13 is the ROT-13 symmetric cipher.
+// For example, "ABCDEFGHIJKLM" becomes "NOPQRSTUVWXYZ".
+var ROT13 = Affine{1, 13, 1}
+
+// ROT18 is the ROT-18 symmetric cipher.
+// For example, "ABCXYZ012" becomes "STUFGHijk"
+var ROT18 = rot18{}
+
+type rot18 struct{}
+
+func (r *rot18) Encipher(text string) string {
+	return ROT13.Encipher(ROT5.Encipher(text))
 }
 
-// NewROT13 creates a Caesar struct to encipher and decipher string using ROT-13 cipher.
-// e.g. "ABCDEFGHIJKLM" <-> "NOPQRSTUVWXYZ". Encipher and Decipher are identical.
-func NewROT13() *Caesar {
-	return NewCaesar(13)
-}
-
-type ROT18 struct{}
-
-func NewROT18() *ROT18 {
-	return &ROT18{}
-}
-
-// Encipher enciphers string using ROT-18 cipher. Identical to ROT18Decipher.
-// e.g. "ABCXYZ012" becomes "STUFGHijk".
-func (r *ROT18) Encipher(text string) string {
-	return NewROT13().Encipher(NewROT5().Encipher(text))
-}
-
-// Decipher deciphers string using ROT-18 cipher. Identical to ROT18Encipher.
-// e.g. "STUFGHIJK" becomes "ABCXYZ012".
-func (r *ROT18) Decipher(text string) string {
+func (r *rot18) Decipher(text string) string {
 	return r.Encipher(text)
 }
 
-// NewROT47 creates a ROTRange struct to encipher and decipher string using ROT-47 cipher.
-// e.g. "ABCabc" <-> "pqr234". Encipher and Decipher are identical.
-func NewROT47() *ROTRange {
-	return &ROTRange{47, '!', '~'}
-}
+// ROT47 is the ROT-47 symmetric cipher.
+// For example, "ABCabc" becomes "pqr234".
+var ROT47 = &ROTRange{47, '!', '~'}

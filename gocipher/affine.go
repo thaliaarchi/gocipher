@@ -1,9 +1,5 @@
 package gocipher
 
-/*
- * Affine cipher
- */
-
 import "fmt"
 
 // Affine is a key for an Affine cipher
@@ -11,7 +7,8 @@ type Affine struct {
 	a, b, aInv int
 }
 
-// NewAffine creates an Affine.
+// NewAffine creates an Affine. For a one-to-one mapping, a must be
+// invertable, as in gcd(a, 26) == 1.
 func NewAffine(a, b int) (*Affine, error) {
 	aInv, ok := modInverse(a, 26)
 	if !ok {
@@ -33,4 +30,12 @@ func (key *Affine) Decipher(text string) string {
 	return mapAlpha(text, func(i, char int) int {
 		return key.aInv * (char - key.b)
 	})
+}
+
+// Atbash is the Atbash symmetric cipher.
+var Atbash = Affine{25, -1, 25}
+
+// NewCaesar constructs a Caesar cipher.
+func NewCaesar(shift int) *Affine {
+	return &Affine{1, shift, 1}
 }
