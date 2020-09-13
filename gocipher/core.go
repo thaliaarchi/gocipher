@@ -24,7 +24,7 @@ func RandomKey(length int) (string, error) {
 
 // KeyedAlphabet creates an alphabet starting with a keyword.
 // e.g. "Hello, World!", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" becomes "HELOWRDABCFGIJKMNPQSTUVXYZ"
-func KeyedAlphabet(key string, alphabet string) string {
+func KeyedAlphabet(key, alphabet string) string {
 	alphabet = strings.ToUpper(alphabet)
 	alpha := ""
 	chars := []rune(strings.ToUpper(key) + alphabet)
@@ -68,7 +68,7 @@ func RemoveDuplicates(text string) string {
 
 // RestorePunctuation - If punctuation was accidently removed, use this function to restore it.
 // Requires the original string with punctuation.
-func RestorePunctuation(original string, modified string) (string, error) {
+func RestorePunctuation(original, modified string) (string, error) {
 	res, chars := []rune(original), []rune(modified)
 	count := 0
 	for i, char := range res {
@@ -113,14 +113,4 @@ func alphaIndex(char rune) int {
 		return int(char - 'a')
 	}
 	return -1
-}
-
-// mod returns the modulus `a mod b` in the interval [0, b).
-func mod(a int, b int) int {
-	return (a%b + b) % b
-}
-
-// mod returns the modulus `a mod b` in the interval [0, b) for runes.
-func modRune(a rune, b rune) rune {
-	return (a%b + b) % b
 }
