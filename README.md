@@ -39,7 +39,7 @@
         | [dCode](http://www.dcode.fr/keyboard-shift-cipher)
     - ✔ **Keyed caesar cipher**
         | [Rumkin.com](http://rumkin.com/tools/cipher/caesar-keyed.php)
-    - ✔ **Letter-to-number**
+    - Letter-to-number
         | [dCode](http://www.dcode.fr/letter-number-cipher)
         | [Rumkin.com](http://rumkin.com/tools/cipher/numbers.php)
     - ✔ **[Morse Code](https://en.wikipedia.org/wiki/Morse_code)**
@@ -162,7 +162,7 @@
     | [Practical Cryptography](http://www.practicalcryptography.com/ciphers/classical-era/running-key/)
 - Skip
     | [Rumkin.com](http://rumkin.com/tools/cipher/skip.php)
-- ✔ **[URL encode](https://en.wikipedia.org/wiki/Percent-encoding)**
+- [URL encode](https://en.wikipedia.org/wiki/Percent-encoding)
     | [Web Utils](http://www.webutils.pl/URLencode)
 - Vigenére cipher
     | [dCode](http://www.dcode.fr/vigenere-cipher)
@@ -209,7 +209,7 @@
 - [Base16](https://en.wikipedia.org/wiki/Base64)
 - [Base32](https://en.wikipedia.org/wiki/Base32)
 - [Base58](https://en.wikipedia.org/wiki/Base58)
-- ✔ **[Base64](https://en.wikipedia.org/wiki/Base64)**
+- [Base64](https://en.wikipedia.org/wiki/Base64)
     | [dCode](http://www.dcode.fr/base-64-coding)
     | [Rumkin.com](http://rumkin.com/tools/cipher/base64.php)
     | [Wikibooks](https://en.wikibooks.org/wiki/Algorithm_Implementation/Miscellaneous/Base64)
