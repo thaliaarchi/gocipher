@@ -1,4 +1,4 @@
-package gocipher
+package ngrams
 
 import (
 	"bufio"
@@ -9,8 +9,10 @@ import (
 	"strings"
 )
 
-var englishUnigrams = LoadNgrams("english", 1)
-var englishBigrams = LoadNgrams("english", 2)
+var (
+	EnglishUnigrams = LoadNgrams("english", 1)
+	EnglishBigrams  = LoadNgrams("english", 2)
+)
 
 type NgramSet struct {
 	language   string
@@ -28,7 +30,6 @@ type Ngram struct {
 
 func (set *NgramSet) GetNgram(ngram string) (*Ngram, bool) {
 	n, ok := set.ngramMap[ngram]
-	//log.Println(ngram, n, ok)
 	return n, ok
 }
 
@@ -54,9 +55,8 @@ func (set *NgramSet) GetEntropy(text string) float64 {
 }
 
 // LoadNgrams reads and parses all n-grams from a file.
-// See: https://stackoverflow.com/a/23667119/3238709.
 func LoadNgrams(language string, n int) *NgramSet {
-	fileName := "ngrams/" + language + "_" + strconv.Itoa(n) + "-grams.txt"
+	fileName := "testdata/" + language + "_" + strconv.Itoa(n) + "-grams.txt"
 	if fileName == "" {
 		fmt.Println("Filename must not be empty")
 		os.Exit(2)

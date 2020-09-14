@@ -1,6 +1,10 @@
 package gocipher
 
-import "sort"
+import (
+	"sort"
+
+	"github.com/andrewarchi/gocipher/ngrams"
+)
 
 /*
  * Cracks the Vigenère cipher by testing every possible key of given length and ordering by ngrams
@@ -39,7 +43,6 @@ func joinChunks(chunks []string) string {
 }
 
 // cartesianProduct returns the cartestian product of multiple slices.
-// See: https://stackoverflow.com/a/15310051/3238709
 func cartesianProduct(slices [][]string) [][]string {
 	product := [][]string{}
 	max := len(slices) - 1
@@ -87,7 +90,7 @@ type possibility struct {
 func SortPossibilities(possible []string) []possibility {
 	poss := make([]possibility, len(possible))
 	for i, p := range possible {
-		poss[i] = possibility{p, englishBigrams.GetEntropy(p)}
+		poss[i] = possibility{p, ngrams.EnglishBigrams.GetEntropy(p)}
 	}
 	sort.Slice(poss, func(i, j int) bool {
 		return poss[i].entropy <= poss[j].entropy

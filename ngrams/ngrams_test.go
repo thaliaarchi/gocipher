@@ -1,4 +1,4 @@
-package gocipher
+package ngrams
 
 import (
 	"testing"
@@ -9,14 +9,14 @@ import (
 func TestGetUnigramEntropy(t *testing.T) {
 	text := "HELLOWORLD"
 	expected := 4.303018577099257
-	actual := englishUnigrams.GetEntropy(text)
+	actual := EnglishUnigrams.GetEntropy(text)
 	assert.Equal(t, expected, actual)
 }
 
 func TestGetBigramEntropy(t *testing.T) {
 	text := "HELLOWORLD"
 	expected := 7.86033946544012
-	actual := englishBigrams.GetEntropy(text)
+	actual := EnglishBigrams.GetEntropy(text)
 	assert.Equal(t, expected, actual)
 }
 
