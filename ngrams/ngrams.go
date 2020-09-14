@@ -1,8 +1,10 @@
 package ngrams
 
 import (
+	"archive/zip"
 	"bufio"
 	"fmt"
+	"io"
 	"math"
 	"os"
 	"strconv"
@@ -10,8 +12,8 @@ import (
 )
 
 var (
-	EnglishUnigrams = LoadNgrams("english", 1)
-	EnglishBigrams  = LoadNgrams("english", 2)
+	EnglishUnigrams *NgramSet
+	EnglishBigrams  *NgramSet
 )
 
 type NgramSet struct {
@@ -54,31 +56,50 @@ func (set *NgramSet) GetEntropy(text string) float64 {
 	return -sum / math.Log(2) / float64(len(ngrams)-ignored)
 }
 
-// LoadNgrams reads and parses all n-grams from a file.
-func LoadNgrams(language string, n int) *NgramSet {
-	fileName := "testdata/" + language + "_" + strconv.Itoa(n) + "-grams.txt"
-	if fileName == "" {
-		fmt.Println("Filename must not be empty")
-		os.Exit(2)
+// LoadNgramsFile reads and parses all n-grams from a file.
+func LoadNgramsFile(language string, n int) (*NgramSet, error) {
+	filename := fmt.Sprintf("testdata/%s_%d.txt", language, n)
+	var r io.Reader
+	if stat, err := os.Stat(filename + ".zip"); err == nil {
+		filename += ".zip"
+		file, err := os.Open(filename)
+		if err != nil {
+			return nil, err
+		}
+		zr, err := zip.NewReader(file, stat.Size())
+		if len(zr.File) != 1 {
+			return nil, fmt.Errorf("zip should contain only 1 file: %s", filename)
+		}
+		fr, err := zr.File[0].Open()
+		if err != nil {
+			return nil, err
+		}
+		r = fr
+	} else {
+		file, err := os.Open(filename)
+		if err != nil {
+			return nil, err
+		}
+		r = file
 	}
-	file, err := os.Open(fileName)
-	if err != nil {
-		panic(fmt.Sprintf("error opening file %q: %v", fileName, err))
-	}
+	return LoadNgrams(language, n, r)
+}
+
+// LoadNgrams reads and parses all n-grams from a reader.
+func LoadNgrams(language string, n int, r io.Reader) (*NgramSet, error) {
 	var ngrams = []*Ngram{}
 	var ngramMap = make(map[string]*Ngram)
 	totalCount := 0
-	scanner := bufio.NewScanner(file)
+	scanner := bufio.NewScanner(r)
 	for i := 0; scanner.Scan(); i++ {
 		if err := scanner.Err(); err != nil {
-			fmt.Fprintln(os.Stderr, "error reading from file:", err)
-			os.Exit(3)
+			return nil, err
 		}
 		text := scanner.Text()
 		split := strings.IndexByte(text, ' ')
 		count, err := strconv.ParseInt(text[split+1:], 10, 0)
 		if err != nil {
-			fmt.Println("N-gram count cannot be parsed to integer:", text, err)
+			return nil, err
 		}
 		entry := &Ngram{chars: text[:split], count: int(count)}
 		ngrams = append(ngrams, entry)
@@ -88,5 +109,17 @@ func LoadNgrams(language string, n int) *NgramSet {
 	for i := range ngrams {
 		ngrams[i].freq = float64(ngrams[i].count) / float64(totalCount)
 	}
-	return &NgramSet{language, n, ngrams, ngramMap, totalCount}
+	return &NgramSet{language, n, ngrams, ngramMap, totalCount}, nil
+}
+
+func init() {
+	var err error
+	EnglishUnigrams, err = LoadNgramsFile("en", 1)
+	if err != nil {
+		panic(err)
+	}
+	EnglishBigrams, err = LoadNgramsFile("en", 2)
+	if err != nil {
+		panic(err)
+	}
 }
