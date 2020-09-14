@@ -1,7 +1,4 @@
-# Gitignore for Go
-# https://github.com/github/gitignore/blob/master/Go.gitignore
-
-# Binaries for programs and plugins
+# Binaries
 *.exe
 *.dll
 *.so
@@ -12,6 +9,3 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-
-# Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
-.glide/
