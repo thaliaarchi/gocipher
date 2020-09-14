@@ -11,33 +11,35 @@ import (
 	"strings"
 )
 
+//go:generate go run generate_monograms.go
+
 var (
 	EnglishUnigrams *NgramSet
 	EnglishBigrams  *NgramSet
 )
 
 type NgramSet struct {
-	language   string
-	n          int
-	ngrams     []*Ngram
-	ngramMap   map[string]*Ngram
-	totalCount int
+	Language   string
+	N          int
+	Ngrams     []*Ngram
+	NgramMap   map[string]*Ngram
+	TotalCount int
 }
 
 type Ngram struct {
-	chars string
-	count int
-	freq  float64
+	Chars string
+	Count int
+	Freq  float64
 }
 
 func (set *NgramSet) GetNgram(ngram string) (*Ngram, bool) {
-	n, ok := set.ngramMap[ngram]
+	n, ok := set.NgramMap[ngram]
 	return n, ok
 }
 
 // GetEntropy gets the entropy of a string according to English n-gram frequencies.
 func (set *NgramSet) GetEntropy(text string) float64 {
-	n := set.n
+	n := set.N
 	runes := []rune(text)
 	ngrams := make([]string, len(runes)-n+1)
 	for i := 0; i <= len(runes)-n; i++ {
@@ -47,8 +49,8 @@ func (set *NgramSet) GetEntropy(text string) float64 {
 	var ignored int
 	for _, ngramName := range ngrams {
 		ngram, hasFreq := set.GetNgram(ngramName)
-		if hasFreq && ngram.freq != 0 {
-			sum += math.Log(ngram.freq)
+		if hasFreq && ngram.Freq != 0 {
+			sum += math.Log(ngram.Freq)
 		} else {
 			ignored++
 		}
@@ -66,6 +68,7 @@ func LoadNgramsFile(language string, n int) (*NgramSet, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer file.Close()
 		zr, err := zip.NewReader(file, stat.Size())
 		if len(zr.File) != 1 {
 			return nil, fmt.Errorf("zip should contain only 1 file: %s", filename)
@@ -80,6 +83,7 @@ func LoadNgramsFile(language string, n int) (*NgramSet, error) {
 		if err != nil {
 			return nil, err
 		}
+		defer file.Close()
 		r = file
 	}
 	return LoadNgrams(language, n, r)
@@ -101,13 +105,13 @@ func LoadNgrams(language string, n int, r io.Reader) (*NgramSet, error) {
 		if err != nil {
 			return nil, err
 		}
-		entry := &Ngram{chars: text[:split], count: int(count)}
+		entry := &Ngram{Chars: text[:split], Count: int(count)}
 		ngrams = append(ngrams, entry)
-		ngramMap[entry.chars] = entry
+		ngramMap[entry.Chars] = entry
 		totalCount += int(count)
 	}
 	for i := range ngrams {
-		ngrams[i].freq = float64(ngrams[i].count) / float64(totalCount)
+		ngrams[i].Freq = float64(ngrams[i].Count) / float64(totalCount)
 	}
 	return &NgramSet{language, n, ngrams, ngramMap, totalCount}, nil
 }

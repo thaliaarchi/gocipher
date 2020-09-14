@@ -46,10 +46,10 @@ func TestLoadNgrams(t *testing.T) {
 			if err != nil {
 				t.Errorf("err for %s %d: %v", lang.name, n, err)
 			}
-			if set.language != lang.name || set.n != n {
-				t.Errorf("want language %s %d, got language %s %d", lang.name, n, set.language, set.n)
+			if set.Language != lang.name || set.N != n {
+				t.Errorf("want language %s %d, got language %s %d", lang.name, n, set.Language, set.N)
 			}
-			if len(set.ngramMap) == 0 {
+			if len(set.NgramMap) == 0 {
 				t.Errorf("empty set: %s %d", lang.name, n)
 			}
 		}
