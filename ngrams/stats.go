@@ -1,4 +1,4 @@
-package gocipher
+package ngrams
 
 import "math"
 
@@ -17,7 +17,7 @@ func IC(text string) float64 {
 }
 
 // NgramCount - Returns a map containing each ngram and how many times it occurred
-// monograms (letters), bigrams (letter pairs), trigrams, quadgrams, quintgrams, etc.
+// unigrams (letters), bigrams (letter pairs), trigrams, quadgrams, quintgrams, etc.
 func NgramCount(text string, n int) map[string]int {
 	counts := make(map[string]int)
 	for i := 0; i < len(text)-n+1; i++ {

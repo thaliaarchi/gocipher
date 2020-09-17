@@ -2,19 +2,26 @@
 
 package ngrams
 
-// Alphabets for various languages.
-var (
-	AlphaDA = "ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ"
-	AlphaDE = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß"
-	AlphaEN = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	AlphaES = "ABCDEFGHIJKLMNOPQRSTUVWXYZÑ"
-	AlphaFI = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ"
-	AlphaFR = "AÀÂÆBCÇDEÉÈÊËFGHIÎÏJKLMNOÔŒPQRSTUÙÛÜVWXYŸZ"
-	AlphaIS = "AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ"
-	AlphaPL = "AĄBCĆDEĘFGHIJKLŁMNŃOÓPRSŚTUWYZŹŻ"
-	AlphaRU = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-	AlphaSV = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ"
-)
+// Lang is a language with an alphabet and letter frequencies.
+type Lang struct {
+	Name  string
+	Alpha string
+	Freqs []float64
+}
+
+// Langs is the set of all recognized languages.
+var Langs = []Lang{
+	{"da", AlphaDA, FreqsDA},
+	{"de", AlphaDE, FreqsDE},
+	{"en", AlphaEN, FreqsEN},
+	{"es", AlphaES, FreqsES},
+	{"fi", AlphaFI, FreqsFI},
+	{"fr", AlphaFR, FreqsFR},
+	{"is", AlphaIS, FreqsIS},
+	{"pl", AlphaPL, FreqsPL},
+	{"ru", AlphaRU, FreqsRU},
+	{"sv", AlphaSV, FreqsSV},
+}
 
 // Letter frequencies for various languages.
 // Positions correspond to letters in the alphabet.
