@@ -1,6 +1,10 @@
 package gocipher
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/andrewarchi/gocipher/mod"
+)
 
 /*
  * Keyed Caesar cipher
@@ -32,9 +36,9 @@ func caesarKeyedEncipher(text, alphabet string, shift int) string {
 	runes := []rune(text)
 	for i, char := range runes {
 		if char >= 'A' && char <= 'Z' {
-			runes[i] = alpha[modRune(char+s-'A', 26)]
+			runes[i] = alpha[mod.ModRune(char+s-'A', 26)]
 		} else if char >= 'a' && char <= 'z' {
-			runes[i] = alpha[modRune(char+s-'a', 26)] - 'A' + 'a'
+			runes[i] = alpha[mod.ModRune(char+s-'a', 26)] - 'A' + 'a'
 		}
 	}
 	return string(runes)

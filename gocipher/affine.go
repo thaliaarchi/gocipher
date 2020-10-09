@@ -1,6 +1,10 @@
 package gocipher
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/andrewarchi/gocipher/mod"
+)
 
 // Affine is a key for an Affine cipher
 type Affine struct {
@@ -10,11 +14,11 @@ type Affine struct {
 // NewAffine creates an Affine. For a one-to-one mapping, a must be
 // invertable, as in gcd(a, 26) == 1.
 func NewAffine(a, b int) (*Affine, error) {
-	aInv, ok := modInverse(a, 26)
+	aInv, ok := mod.Inverse(a, 26)
 	if !ok {
 		return nil, fmt.Errorf("no inverse exists for a=%d", a)
 	}
-	b = mod(b, 26)
+	b = mod.Mod(b, 26)
 	return &Affine{a, b, aInv}, nil
 }
 

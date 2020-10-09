@@ -3,6 +3,8 @@ package gocipher
 import (
 	"strings"
 	"unicode"
+
+	"github.com/andrewarchi/gocipher/mod"
 )
 
 /*
@@ -39,7 +41,7 @@ func rotEncipher(text string, key int, alphabet string) string {
 	runes := []rune(text)
 	for i, char := range runes {
 		if pos := strings.IndexRune(alphabet, char); pos != -1 {
-			runes[i] = alphaRunes[mod(pos+key, size)]
+			runes[i] = alphaRunes[mod.Mod(pos+key, size)]
 		}
 	}
 	return string(runes)
@@ -55,7 +57,7 @@ func rotEncipherCaps(text string, key int, alphabet string) string {
 	for i, char := range runes {
 		charLower := unicode.ToLower(char)
 		if pos := strings.IndexRune(alphabet, charLower); pos != -1 {
-			shifted := alphaRunes[mod(pos+key, size)]
+			shifted := alphaRunes[mod.Mod(pos+key, size)]
 			if unicode.IsUpper(char) {
 				shifted = unicode.ToUpper(shifted)
 			}
@@ -95,7 +97,7 @@ func rotEncipherRange(text string, key int, min, max rune) string {
 	runes := []rune(text)
 	for i, char := range runes {
 		if char >= min && char <= max {
-			runes[i] = modRune(char+shift-min, size) + min
+			runes[i] = mod.ModRune(char+shift-min, size) + min
 		}
 	}
 	return string(runes)

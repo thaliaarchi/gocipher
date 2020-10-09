@@ -6,6 +6,8 @@ import (
 	"math/big"
 	"regexp"
 	"strings"
+
+	"github.com/andrewarchi/gocipher/mod"
 )
 
 // RandomKey creates a cryptographically secure pseudorandom key
@@ -97,9 +99,9 @@ func mapAlpha(text string, f func(i, char int) int) string {
 	runes := []rune(text)
 	for i, char := range runes {
 		if char >= 'A' && char <= 'Z' {
-			runes[i] = rune(mod(f(i, int(char-'A')), 26)) + 'A'
+			runes[i] = rune(mod.Mod(f(i, int(char-'A')), 26)) + 'A'
 		} else if char >= 'a' && char <= 'z' {
-			runes[i] = rune(mod(f(i, int(char-'a')), 26)) + 'a'
+			runes[i] = rune(mod.Mod(f(i, int(char-'a')), 26)) + 'a'
 		}
 	}
 	return string(runes)
