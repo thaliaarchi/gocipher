@@ -8,7 +8,7 @@ import (
 
 // Affine is a key for an Affine cipher
 type Affine struct {
-	a, b, aInv int
+	A, B, AInv int
 }
 
 // NewAffine creates an Affine. For a one-to-one mapping, a must be
@@ -25,14 +25,14 @@ func NewAffine(a, b int) (*Affine, error) {
 // Encipher enciphers string using Affine cipher according to key.
 func (key *Affine) Encipher(text string) string {
 	return mapAlpha(text, func(i, char int) int {
-		return key.a*char + key.b
+		return key.A*char + key.B
 	})
 }
 
 // Decipher deciphers string using Affine cipher according to key.
 func (key *Affine) Decipher(text string) string {
 	return mapAlpha(text, func(i, char int) int {
-		return key.aInv * (char - key.b)
+		return key.AInv * (char - key.B)
 	})
 }
 

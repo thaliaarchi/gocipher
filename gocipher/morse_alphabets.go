@@ -538,7 +538,7 @@ var wabun = [][]string{
 	{"、", ",", ".-.-.-"}, // Comma
 	{"。", ".", ".-.-.."}, // Full stop
 
-	// Diacritics (gojūon with dakuten)
+	// Diacritics (gojūon with dakuten)
 	{"ガ", "GA", ".-.. .."},
 	{"ギ", "GI", "-.-.. .."},
 	{"グ", "GU", "...- .."},
@@ -560,7 +560,7 @@ var wabun = [][]string{
 	{"ベ", "BE", ". .."},
 	{"ボ", "BO", "-.. .."},
 
-	// Diacritics (gojūon with handakuten)
+	// Diacritics (gojūon with handakuten)
 	{"パ", "PA", "-... ..--."},
 	{"ピ", "PI", "--.. ..--."},
 	{"プ", "PU", "--.. ..--."},
@@ -590,7 +590,7 @@ var wabun = [][]string{
 	{"リュ", "RYU", "--. -..--"},
 	{"リョ", "RYO", "--. --"},
 
-	// Digraphs with diacritics (yōon with dakuten)
+	// Digraphs with diacritics (yōon with dakuten)
 	{"ギャ", "GYA", "-.-.. .. .--"},
 	{"ギュ", "GYU", "-.-.. .. -..--"},
 	{"ギョ", "GYO", "-.-.. .. --"},
@@ -604,7 +604,7 @@ var wabun = [][]string{
 	{"ビュ", "BYU", "--..- .. -..--"},
 	{"ビョ", "BYO", "--..- .. --"},
 
-	// Digraphs with diacritics (yōon with handakuten)
+	// Digraphs with diacritics (yōon with handakuten)
 	{"ピャ", "PYA", "--..- ..--. .--"},
 	{"ピュ", "PYU", "--..- ..--. -..--"},
 	{"ピョ", "PYO", "--..- ..--. --"},
