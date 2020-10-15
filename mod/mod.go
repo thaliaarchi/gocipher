@@ -7,6 +7,13 @@ func Mod(x, n int) int {
 	return (x%n + n) % n
 }
 
+// ModInt8 computes the modulo x mod n in the interval [0, n). The
+// result takes the sign of the divisor n whereas % takes the sign of
+// the dividend x.
+func ModInt8(x, n int8) int8 {
+	return (x%n + n) % n
+}
+
 // ModRune computes the modulo x mod n in the interval [0, n) with rune
 // operands. The result takes the sign of the divisor n whereas % takes
 // the sign of the dividend x.

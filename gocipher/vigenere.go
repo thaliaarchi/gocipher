@@ -1,8 +1,10 @@
 package gocipher
 
 import (
-	"fmt"
 	"math"
+	"strings"
+
+	"github.com/andrewarchi/gocipher/mod"
 )
 
 var englishFreq = [26]float64{
@@ -12,54 +14,87 @@ var englishFreq = [26]float64{
 	0.02135891, 0.001204689, 0.062794207, 0.065127666, 0.092755648,
 	0.027297018, 0.010532516, 0.016756642, 0.002348569, 0.016649801, 0.000899507}
 
-func VigenereDecrypt(text string, key []int) string {
-	plain := make([]rune, len(text))
-	for i, c := range text {
-		switch {
-		case 'a' <= c && c <= 'z':
-			plain[i] = (c-'a'+rune(key[i%len(key)]))%26 + 'a'
-		case 'A' <= c && c <= 'Z':
-			plain[i] = (c-'A'+rune(key[i%len(key)]))%26 + 'A'
-		default:
-			plain[i] = c
-		}
-	}
-	return string(plain)
+// Vigenere is a Vigenère cipher key.
+type Vigenere struct {
+	shifts []int8
 }
 
-func VigenereKey(text string, keyLen int) ([]int, error) {
-	freqs := make([][26]float64, keyLen)
-	for i, c := range text {
-		switch {
-		case 'a' <= c && c <= 'z':
-			freqs[i%keyLen][c-'a']++
-		case 'A' <= c && c <= 'Z':
-			freqs[i%keyLen][c-'A']++
-		default:
-			return nil, fmt.Errorf("illegal character at index %d: %c", i, c)
+// NewVigenere constructs a Vigenère cipher key.
+func NewVigenere(key []int8) *Vigenere {
+	shifts := make([]int8, len(key))
+	for i := range key {
+		shifts[i] = mod.ModInt8(key[i], 26)
+	}
+	return &Vigenere{shifts}
+}
+
+// Encrypt encrypts the plaintext with the Vigenère cipher.
+func (v *Vigenere) Encrypt(plain string) string {
+	return v.crypt(plain, false)
+}
+
+// Decrypt decrypts the plaintext with the Vigenère cipher.
+func (v *Vigenere) Decrypt(cipher string) string {
+	return v.crypt(cipher, true)
+}
+
+func (v *Vigenere) crypt(text string, decrypt bool) string {
+	var b strings.Builder
+	b.Grow(len(text))
+	j := 0
+	for i := 0; i < len(text); i++ {
+		ch := text[i]
+		if !isLetter(ch) {
+			b.WriteByte(ch)
+			continue
 		}
+		n := toOrd(ch)
+		if decrypt {
+			n += byte(26 - v.shifts[j])
+		} else {
+			n += byte(v.shifts[j])
+		}
+		b.WriteByte(n%26 + getCase(ch))
+		j = (j + 1) % len(v.shifts)
+	}
+	return b.String()
+}
+
+// VigenereCrack finds the key with the letter frequencies closest to
+// English.
+func VigenereCrack(cipher string, keyLen int) []int8 {
+	freqs := make([][26]float64, keyLen)
+	j := 0
+	cipherLen := 0
+	for i := 0; i < len(cipher); i++ {
+		ch := cipher[i]
+		if !isLetter(ch) {
+			continue
+		}
+		freqs[j][toOrd(ch)]++
+		j = (j + 1) % keyLen
+		cipherLen++
 	}
 
 	for k := 0; k < keyLen; k++ {
-		n := float64((len(text) + keyLen - k) / keyLen)
+		n := float64((cipherLen + keyLen - k) / keyLen)
 		for i := 0; i < 26; i++ {
 			freqs[k][i] /= n
 		}
 	}
 
-	key := make([]int, keyLen)
+	key := make([]int8, keyLen)
 	for k := 0; k < keyLen; k++ {
 		best := math.MaxFloat64
 		for i := 0; i < 26; i++ {
 			chi := chiSquared(&freqs[k], &englishFreq, i)
 			if chi < best {
 				best = chi
-				key[k] = i
+				key[k] = int8(i)
 			}
 		}
 	}
-
-	return key, nil
+	return key
 }
 
 func chiSquared(observeFreq, expectFreq *[26]float64, shift int) float64 {
@@ -69,4 +104,22 @@ func chiSquared(observeFreq, expectFreq *[26]float64, shift int) float64 {
 		sum += f * f / expectFreq[i]
 	}
 	return sum
+}
+
+func isLetter(ch byte) bool {
+	upper := toUpper(ch)
+	return 'A' <= upper && upper <= 'Z'
+}
+
+func toUpper(ch byte) byte {
+	return ch &^ 0x20 // a-z -> A-Z
+}
+
+func toOrd(ch byte) byte {
+	return (ch - 1) & 0x1f // a-z or A-Z -> 0-25
+}
+
+// getCase returns A for uppercase, a for lowercase, invalid otherwise.
+func getCase(ch byte) byte {
+	return ch&^0x1f + 1
 }
