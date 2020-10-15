@@ -1,5 +1,9 @@
 # gocipher
 
+gocipher is a collection of classical ciphers and cryptanalysis tools.
+gocipher is not cryptographically secure. Algorithms do not use
+constant-time operations and are thus susceptible to timing attacks.
+
 ## Classical ciphers
 
 - [Alberti cipher](https://en.wikipedia.org/wiki/Alberti_cipher)
