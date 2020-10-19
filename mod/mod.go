@@ -40,7 +40,7 @@ func Inverse(x, n int) (inv int, ok bool) {
 	return t, true
 }
 
-// Exp computes the modular exponation x ** y (mod n).
+// Exp computes the modular exponation x ^ y (mod n).
 func Exp(x, y, n int) int {
 	if y < 1 {
 		return 1
