@@ -36,6 +36,20 @@ func (k *PublicKey) AttackShortPlaintext(c *big.Int, bits int) (m *big.Int) {
 	return m
 }
 
+func FactorClosePrimes(n, diff *big.Int) (p, q *big.Int, ok bool) {
+	ni2, sqrt, t := new(big.Int), new(big.Int), new(big.Int)
+	for i := new(big.Int); i.Cmp(diff) < 1; i.Add(i, one) {
+		ni2.Add(n, t.Mul(i, i)) // n + i^2
+		sqrt.Sqrt(ni2)
+		if t.Mul(sqrt, sqrt).Cmp(ni2) == 0 { // n + i^2 is a perfect square
+			p = new(big.Int).Sub(sqrt, i)
+			q = new(big.Int).Add(sqrt, i)
+			return p, q, true
+		}
+	}
+	return nil, nil, false
+}
+
 // bigMap is a hash table for *big.Int keys. Keys are not copied and
 // must not be modified after insertion.
 type bigMap map[uint64][]mapPair
