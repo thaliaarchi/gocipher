@@ -3,7 +3,7 @@ package rsa
 import "math/big"
 
 // AttackShortPlaintext exploits short plaintexts to compute the key.
-func (k *PublicKey) AttackShortPlaintext(c *big.Int, bits int) (m *big.Int) {
+func (k *PublicKey) AttackShortPlaintext(c *big.Int, bits int) (m *big.Int, ok bool) {
 	// Described in Introduction to Cryptography with Coding Theory by
 	// Trappe and Washington, section 6.2.2.
 
@@ -29,11 +29,14 @@ func (k *PublicKey) AttackShortPlaintext(c *big.Int, bits int) (m *big.Int) {
 		}
 	}
 
+	if x == nil || y == nil {
+		return nil, false
+	}
 	// c*(x^-e) = y^e (mod n)
 	// c = (x*y)^e    (mod n)
 	// m = x*y        (mod n)
 	m = tmp.Mod(tmp.Mul(x, y), k.N)
-	return m
+	return m, true
 }
 
 func FactorClosePrimes(n, diff *big.Int) (p, q *big.Int, ok bool) {

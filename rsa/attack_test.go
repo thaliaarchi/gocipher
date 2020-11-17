@@ -13,9 +13,9 @@ func TestAttackShortPlaintext(t *testing.T) {
 	e := big.NewInt(17)
 	k := PublicKey{n, e}
 	c := k.EncryptInt(m)
-	m1 := k.AttackShortPlaintext(c, 32)
-	if m.Cmp(m1) != 0 {
-		t.Errorf("got %s, want %s", m1, m)
+	m1, ok := k.AttackShortPlaintext(c, 32)
+	if !ok || m.Cmp(m1) != 0 {
+		t.Errorf("got %s %t, want %s true", m1, ok, m)
 	}
 }
 
